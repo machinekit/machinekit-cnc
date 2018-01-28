@@ -30,7 +30,7 @@
 #include "rtapi_common.h"	// RTAPI macros and decls
 #include "ring.h"
 #include "rtapi_heap.h"
-#include "shmdrv.h"
+#include "shmdrv/shmdrv.h"
 
 
 #ifdef MODULE

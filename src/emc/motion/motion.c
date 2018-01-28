@@ -13,7 +13,7 @@
 #include "rtapi.h"		/* RTAPI realtime OS API */
 #include "rtapi_app.h"		/* RTAPI realtime module decls */
 #include "rtapi_string.h"       /* memset */
-#include "hal.h"		/* decls for HAL implementation */
+#include "../../../include/hal.h"		/* decls for HAL implementation */
 #include "emcmotglb.h"
 #include "motion.h"
 #include "motion_debug.h"

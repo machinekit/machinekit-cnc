@@ -73,7 +73,7 @@
 #endif
 #endif
 
-#include "hal.h"
+#include "../../../include/hal.h"
 
 struct haldata {
     hal_float_t *bx, *cx, *cy;
@@ -348,7 +348,7 @@ int main(int argc, char *argv[])
 
 #include "rtapi.h"		/* RTAPI realtime OS API */
 #include "rtapi_app.h"		/* RTAPI realtime module decls */
-#include "hal.h"
+#include "../../../include/hal.h"
 
 static vtkins_t vtk = {
     .kinematicsForward = kinematicsForward,

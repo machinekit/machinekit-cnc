@@ -1,4 +1,4 @@
-INCLUDES += emc/motion
+INCLUDES += emc/motion $(EMC2_HOME)/include
 
 ../include/%.h: ./emc/motion/%.h
 	cp $^ $@

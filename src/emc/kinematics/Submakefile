@@ -1,4 +1,4 @@
-INCLUDES += emc/kinematics
+INCLUDES += emc/kinematics $(EMC2_HOME/include)
 
 GENSERKINSSRCS := \
 	emc/kinematics/genserkins.c

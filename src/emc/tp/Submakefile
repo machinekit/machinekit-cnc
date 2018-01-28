@@ -1,5 +1,5 @@
 TP_DIR := emc/tp
-INCLUDES += $(TP_DIR)
+INCLUDES += $(TP_DIR) ../include
 
 
 ../include/%.h: ./$(TP_DIR)/%.h

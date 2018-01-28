@@ -15,7 +15,7 @@
 
 #include "posemath.h"
 #include "rtapi.h"
-#include "hal.h"
+#include "../../../include/hal.h"
 #include "emcmotglb.h"
 #include "motion.h"
 #include "mot_priv.h"

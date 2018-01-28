@@ -80,7 +80,7 @@ using namespace google::protobuf;
 #include "rtapi_export.h"
 #include "hal.h"
 #include "hal_priv.h"
-#include "shmdrv.h"
+#include "shmdrv/shmdrv.h"
 
 #include "mk-backtrace.h"
 #include "setup_signals.h"

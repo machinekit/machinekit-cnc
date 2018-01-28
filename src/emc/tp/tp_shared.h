@@ -1,7 +1,7 @@
 #ifndef _TP_SHARED_H
 #define _TP_SHARED_H
 
-#include "hal.h"
+#include "../../../include/hal.h"
 #include "rtapi_math.h"
 #include "emcpose.h"
 

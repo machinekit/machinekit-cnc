@@ -40,7 +40,7 @@
 #include "rtapi_compat.h"       /* global_data_t */
 #include "ring.h"
 #include "rtapi_heap.h"
-#include "shmdrv.h"  /* common shm driver API */
+#include "shmdrv/shmdrv.h"  /* common shm driver API */
 
 MODULE_AUTHOR("Michael Haberler");
 MODULE_DESCRIPTION("RTAPI module support - userland threads");

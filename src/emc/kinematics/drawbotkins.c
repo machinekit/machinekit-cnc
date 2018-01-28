@@ -27,7 +27,7 @@
 #include "rtapi_app.h"
 #include "rtapi_math.h"
 #include "posemath.h"
-#include "hal.h"
+#include "../../../include/hal.h"
 
 #define VTVERSION VTKINEMATICS_VERSION1
 

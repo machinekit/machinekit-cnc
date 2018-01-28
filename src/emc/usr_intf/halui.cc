@@ -22,7 +22,7 @@
 #include <signal.h>
 #include "rtapi_math.h"
 
-#include "hal.h"		/* access to HAL functions/definitions */
+#include "../../../include/hal.h"		/* access to HAL functions/definitions */
 #include "rtapi.h"		/* rtapi_print_msg */
 #include "rcs.hh"
 #include "posemath.h"		// PM_POSE, TO_RAD

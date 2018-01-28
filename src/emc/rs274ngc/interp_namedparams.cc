@@ -36,8 +36,8 @@ namespace bp = boost::python;
 #include "inifile.hh"
 
 // for HAL pin variables
-#include "hal.h"
-#include "hal_priv.h"
+#include "../../../include/hal.h"
+#include "../../../include/hal_priv.h"
 
 enum predefined_named_parameters {
     NP_LINE,

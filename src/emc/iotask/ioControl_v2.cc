@@ -58,7 +58,7 @@
 #include <ctype.h>
 #include <getopt.h>
 
-#include "hal.h"		/* access to HAL functions/definitions */
+#include "../../../include/hal.h"		/* access to HAL functions/definitions */
 #include "rtapi.h"		/* rtapi_print_msg */
 #include "rcs.hh"		/* RCS_CMD_CHANNEL */
 #include "emc.hh"		/* EMC NML */

@@ -19,7 +19,7 @@
 
 #include "kinematics.h"
 #include "posemath.h"
-#include "hal.h"
+#include "../../../include/hal.h"
 
 #define d2r(d) ((d)*PM_PI/180.0)
 #define r2d(r) ((r)*180.0/PM_PI)

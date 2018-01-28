@@ -11,9 +11,9 @@
  ********************************************************************/
 #include "kinematics.h" /* these decls */
 #include "posemath.h"
-#include "hal.h"
-#include "rtapi.h"
-#include "rtapi_math.h"
+#include "../../../include/hal.h"
+#include "../../../include/rtapi.h"
+#include "../../../include/rtapi_math.h"
 
 #define VTVERSION VTKINEMATICS_VERSION1
 
@@ -84,7 +84,7 @@ static KINEMATICS_TYPE kinematicsType()
 
 #include "rtapi.h" /* RTAPI realtime OS API */
 #include "rtapi_app.h" /* RTAPI realtime module decls */
-#include "hal.h"
+#include "../../../include/hal.h"
 
 MODULE_LICENSE("GPL");
 

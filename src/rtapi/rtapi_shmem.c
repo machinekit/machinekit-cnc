@@ -25,7 +25,7 @@
 #include "config.h"		// build configuration
 #include "rtapi.h"		// these functions
 #include "rtapi_common.h"
-#include "shmdrv.h"
+#include "shmdrv/shmdrv.h"
 
 #ifdef BUILD_SYS_USER_DSO
 #include <fcntl.h>

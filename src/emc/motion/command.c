@@ -61,8 +61,8 @@
 #include <float.h>
 #include "posemath.h"
 #include "rtapi.h"
-#include "hal.h"
-#include "hal_priv.h"
+#include "../../../include/hal.h"
+#include "../../../include/hal_priv.h"
 #include "motion.h"
 #include "motion_debug.h"
 #include "motion_struct.h"
