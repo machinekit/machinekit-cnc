@@ -151,10 +151,6 @@ ifeq ($(RUN_IN_PLACE)+$(BUILD_DRIVERS),yes+yes)
 		    \( 0`stat -c %u ../libexec/rtapi_app_$$f 2>/dev/null` \
 			-ne 0 -o ! -u ../libexec/rtapi_app_$$f \) \
 		&& need_setuid=1; \
-	    ln -sf $(EMC2_HOME)/rtlib/prubin/pru_generic.bin ../rtlib/$$f/pru_generic.bin; \
-	    ln -sf $(EMC2_HOME)/rtlib/prubin/pru_generic.dbg ../rtlib/$$f/pru_generic.dbg; \
-	    ln -sf $(EMC2_HOME)/rtlib/prubin/pru_decamux.bin ../rtlib/$$f/pru_decamux.bin; \
-	    ln -sf $(EMC2_HOME)/rtlib/prubin/pru_decamux.dbg ../rtlib/$$f/pru_decamux.dbg; \
 	done; \
 	test "$$need_setuid" = 1 && \
 	    $(VECHO) -n "You now need to run 'sudo make setuid' " && \
@@ -316,15 +312,6 @@ Makefile: $(GENERATED) $(PROTO_DEPS)
 -include $(PROTO_DEPS)
 endif
 
-ifdef TARGET_PLATFORM_BEAGLEBONE
-ifneq ($(PRU_DEPS),)
-Makefile: $(PRU_DEPS)
-READ_PRU_DEPS = $(wildcard $(PRU_DEPS))
-$(shell echo 1>&2 Reading $(words $(READ_PRU_DEPS))/$(words $(PRU_DEPS)) PRU dependency files)
--include $(wildcard $(READ_PRU_DEPS))
-endif
-endif
-
 # Find the dependency filenames, then include them all
 DEPS := $(sort $(patsubst %.o,%.d,$(CUSEROBJS) $(CXXUSEROBJS) \
 	$(CUSEROBJS_BUILD)))
@@ -362,7 +349,7 @@ DEBUG := -g -Wall -funwind-tables
 PROFILE_CFLAGS :=
 PROFILE_LDFLAGS :=
 
-CFLAGS := $(INCLUDE) $(OPT) $(DEBUG) $(PROFILE_CFLAGS) -DULAPI $(call cc-option,-std=gnu99 -fgnu89-inline)
+CFLAGS := $(INCLUDE) -I$(EMC2_HOME)/include $(OPT) $(DEBUG) $(PROFILE_CFLAGS) -DULAPI $(call cc-option,-std=gnu99 -fgnu89-inline)
 
 # enable runtime comparison of GIT_CONFIG_SHA (config.h) and GIT_BUILD_SHA
 CFLAGS += -DGIT_BUILD_SHA=\"'$(GIT_BUILD_SHA)'\"
@@ -896,11 +883,11 @@ endif
 
 install-kernel-indep: install-dirs
 	$(FILE) objects/*.msg $(DESTDIR)$(tcldir)/msgs
-	$(EXE) ../scripts/realtime $(DESTDIR)$(bindir)
-	$(EXE) ../scripts/halrun $(DESTDIR)$(bindir)
-	$(EXE) ../scripts/haltcl $(DESTDIR)$(bindir)
-	$(EXE) ../scripts/simulate_probe $(DESTDIR)$(bindir)
-	$(EXE) ../scripts/sim_pin $(DESTDIR)$(bindir)
+#	$(EXE) ../scripts/realtime $(DESTDIR)$(bindir)
+#	$(EXE) ../scripts/halrun $(DESTDIR)$(bindir)
+#	$(EXE) ../scripts/haltcl $(DESTDIR)$(bindir)
+#	$(EXE) ../scripts/simulate_probe $(DESTDIR)$(bindir)
+#	$(EXE) ../scripts/sim_pin $(DESTDIR)$(bindir)
 	$(FILE) ../*.png ../*.gif $(DESTDIR)$(datadir)/linuxcnc
 
 	# install all the sample configs, including subdirs (tar is required on debian systems, and common on others)
@@ -954,10 +941,10 @@ endif
 	$(FILE) ../src/emc/usr_intf/pncconf/pncconf-help/*.txt $(DESTDIR)$(prefix)/share/linuxcnc/pncconf/pncconf-help
 	$(FILE) ../src/emc/usr_intf/pncconf/pncconf-help/*.png $(DESTDIR)$(prefix)/share/linuxcnc/pncconf/pncconf-help
 
-	$(FILE) ../lib/python/gladevcp/hal_python.xml $(DESTDIR)$(datadir)/glade3/catalogs/
-	$(FILE) ../lib/python/gladevcp/widget*.png  $(DESTDIR)$(datadir)/glade3/pixmaps/
+#	$(FILE) ../lib/python/gladevcp/hal_python.xml $(DESTDIR)$(datadir)/glade3/catalogs/
+#	$(FILE) ../lib/python/gladevcp/widget*.png  $(DESTDIR)$(datadir)/glade3/pixmaps/
 
-	$(FILE) ../share/gtksourceview-2.0/language-specs/*.lang  $(DESTDIR)$(datadir)/gtksourceview-2.0/language-specs/
+#	$(FILE) ../share/gtksourceview-2.0/language-specs/*.lang  $(DESTDIR)$(datadir)/gtksourceview-2.0/language-specs/
 	$(FILE) rtapi/rsyslogd-linuxcnc.conf $(DESTDIR)$(sysconfdir)/rsyslog.d/linuxcnc.conf
 	$(FILE) rtapi/shmdrv/limits.d-machinekit.conf \
 		$(DESTDIR)$(sysconfdir)/security/limits.d/machinekit.conf
@@ -1007,23 +994,23 @@ install-python: install-dirs
 	$(FILE) ../lib/python/fdm/*.py $(DESTDIR)$(SITEPY)/fdm
 	$(FILE) ../lib/python/fdm/config/*.py $(DESTDIR)$(SITEPY)/fdm/config
 	$(FILE) ../lib/python/drivers/*.py $(DESTDIR)$(SITEPY)/drivers
-	$(EXE) ../bin/stepconf $(DESTDIR)$(bindir)
-	$(EXE) ../bin/pncconf $(DESTDIR)$(bindir)
-	$(EXE) ../bin/hal_input $(DESTDIR)$(bindir)
-	$(EXE) ../bin/hal_gpio_mcp23017 $(DESTDIR)$(bindir)
-	$(EXE) ../bin/hal_pwm_pca9685 $(DESTDIR)$(bindir)
-	$(EXE) ../bin/hal_storage $(DESTDIR)$(bindir)
-	$(EXE) ../bin/hal_temp_ads7828 $(DESTDIR)$(bindir)
-	$(EXE) ../bin/hal_temp_bbb $(DESTDIR)$(bindir)
-	$(EXE) ../bin/hal_temp_atlas $(DESTDIR)$(bindir)
-	$(EXE) ../bin/pyvcp $(DESTDIR)$(bindir)
-	$(EXE) ../bin/gladevcp $(DESTDIR)$(bindir)
+#	$(EXE) ../bin/stepconf $(DESTDIR)$(bindir)
+#	$(EXE) ../bin/pncconf $(DESTDIR)$(bindir)
+#	$(EXE) ../bin/hal_input $(DESTDIR)$(bindir)
+#	$(EXE) ../bin/hal_gpio_mcp23017 $(DESTDIR)$(bindir)
+#	$(EXE) ../bin/hal_pwm_pca9685 $(DESTDIR)$(bindir)
+#	$(EXE) ../bin/hal_storage $(DESTDIR)$(bindir)
+#	$(EXE) ../bin/hal_temp_ads7828 $(DESTDIR)$(bindir)
+#	$(EXE) ../bin/hal_temp_bbb $(DESTDIR)$(bindir)
+#	$(EXE) ../bin/hal_temp_atlas $(DESTDIR)$(bindir)
+#	$(EXE) ../bin/pyvcp $(DESTDIR)$(bindir)
+#	$(EXE) ../bin/gladevcp $(DESTDIR)$(bindir)
 	$(EXE) ../bin/axis $(DESTDIR)$(bindir)
 	$(EXE) ../bin/axis-remote $(DESTDIR)$(bindir)
 	$(EXE) ../bin/debuglevel $(DESTDIR)$(bindir)
 	$(EXE) ../bin/linuxcnctop $(DESTDIR)$(bindir)
 	$(EXE) ../bin/mdi $(DESTDIR)$(bindir)
-	$(EXE) ../bin/hal_manualtoolchange $(DESTDIR)$(bindir)
+#	$(EXE) ../bin/hal_manualtoolchange $(DESTDIR)$(bindir)
 	$(EXE) ../bin/image-to-gcode $(DESTDIR)$(bindir)
 	$(EXE) ../bin/touchy $(DESTDIR)$(bindir)
 	$(EXE) ../bin/gscreen $(DESTDIR)$(bindir)
@@ -1052,19 +1039,19 @@ install-python: install-dirs
 	$(EXE) ../scripts/hal-graph $(DESTDIR)$(bindir)
 endif
 
-install-kernel-dep: install-dirs
-	$(SETUID) ../libexec/rtapi_app_* $(DESTDIR)$(EMC2_LIBEXEC_DIR)
-ifeq ($(HAVE_KERNEL_THREADS),yes)
-	$(SETUID) ../libexec/linuxcnc_module_helper $(DESTDIR)$(EMC2_LIBEXEC_DIR)
-endif
-ifeq ($(BUILD_DRIVERS),yes)
-	$(SETUID) ../libexec/pci_write $(DESTDIR)$(EMC2_LIBEXEC_DIR)
-	$(SETUID) ../libexec/pci_read $(DESTDIR)$(EMC2_LIBEXEC_DIR)
-endif
-	$(EXE) ../libexec/inivar $(DESTDIR)$(EMC2_LIBEXEC_DIR)
-	$(EXE) ../libexec/rtapi_msgd $(DESTDIR)$(EMC2_LIBEXEC_DIR)
-	$(EXE) ../libexec/flavor $(DESTDIR)$(EMC2_LIBEXEC_DIR)
-	$(FILE) ../etc/linuxcnc/rtapi.ini $(DESTDIR)$(sysconfdir)/linuxcnc
+#install-kernel-dep: install-dirs
+#	$(SETUID) ../libexec/rtapi_app_* $(DESTDIR)$(EMC2_LIBEXEC_DIR)
+#ifeq ($(HAVE_KERNEL_THREADS),yes)
+#	$(SETUID) ../libexec/linuxcnc_module_helper $(DESTDIR)$(EMC2_LIBEXEC_DIR)
+#endif
+#ifeq ($(BUILD_DRIVERS),yes)
+#	$(SETUID) ../libexec/pci_write $(DESTDIR)$(EMC2_LIBEXEC_DIR)
+#	$(SETUID) ../libexec/pci_read $(DESTDIR)$(EMC2_LIBEXEC_DIR)
+#endif
+#	$(EXE) ../libexec/inivar $(DESTDIR)$(EMC2_LIBEXEC_DIR)
+#	$(EXE) ../libexec/rtapi_msgd $(DESTDIR)$(EMC2_LIBEXEC_DIR)
+#	$(EXE) ../libexec/flavor $(DESTDIR)$(EMC2_LIBEXEC_DIR)
+#	$(FILE) ../etc/linuxcnc/rtapi.ini $(DESTDIR)$(sysconfdir)/linuxcnc
 
 	# RTAPI modules:  install userland flavor .so modules into
 	# e.g. /usr/lib/linuxcnc/modules and kthread flavor .ko
