@@ -16,7 +16,7 @@
 #include "kinematics.h"		/* these decls */
 #include "rtapi.h"		/* RTAPI realtime OS API */
 #include "rtapi_app.h"		/* RTAPI realtime module decls */
-#include "../../../include/hal.h"
+#include "hal.h"
 
 #define VTVERSION VTKINEMATICS_VERSION1
 

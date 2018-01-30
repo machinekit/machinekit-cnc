@@ -1,4 +1,6 @@
-INCLUDES += emc/kinematics $(EMC2_HOME/include)
+INCLUDES += emc/kinematics
+
+CFLAGS += "-I../../../include"
 
 GENSERKINSSRCS := \
 	emc/kinematics/genserkins.c

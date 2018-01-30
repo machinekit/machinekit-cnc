@@ -12,7 +12,7 @@
 
 #include "kinematics.h"		/* these decls */
 #include "posemath.h"
-#include "../../../include/hal.h"
+#include "hal.h"
 #include "rtapi.h"
 #include "rtapi_math.h"
 

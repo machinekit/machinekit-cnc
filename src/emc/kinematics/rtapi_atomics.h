@@ -25,7 +25,7 @@
 
 #include "config.h" // HAVE_CK
 #include "rtapi_int.h"
-#include "../../include/hal_types.h"
+#include "hal_types.h"
 
 
 #ifdef HAVE_CK

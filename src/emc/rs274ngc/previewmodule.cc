@@ -22,8 +22,8 @@
 
 #include <google/protobuf/message_lite.h>
 
-#include <machinetalk/protobuf/types.pb.h>
-#include <machinetalk/protobuf/message.pb.h>
+#include "types.pb.h"
+#include "message.pb.h"
 using namespace google::protobuf;
 
 #include "rs274ngc.hh"

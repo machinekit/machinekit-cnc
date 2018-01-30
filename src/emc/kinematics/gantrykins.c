@@ -11,7 +11,7 @@
 ********************************************************************/
 
 #include "motion.h"		/* these decls */
-#include "../../../include/hal.h"
+#include "hal.h"
 #include "rtapi.h"
 #include "rtapi_math.h"
 #include "rtapi_string.h"

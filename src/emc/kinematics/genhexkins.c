@@ -890,7 +890,7 @@ int main(int argc, char *argv[])
 #ifdef RTAPI
 #include "rtapi.h"		/* RTAPI realtime OS API */
 #include "rtapi_app.h"		/* RTAPI realtime module decls */
-#include "../../../include/hal.h"
+#include "hal.h"
 
 MODULE_LICENSE("GPL");
 

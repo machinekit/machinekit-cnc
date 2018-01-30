@@ -42,7 +42,7 @@
 #include "rtapi_app.h"
 #endif
 
-#include "../../../include/hal.h"
+#include "hal.h"
 struct haldata {
     hal_float_t *a[GENSER_MAX_JOINTS];
     hal_float_t *alpha[GENSER_MAX_JOINTS];
