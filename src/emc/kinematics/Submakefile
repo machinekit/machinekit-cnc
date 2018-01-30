@@ -1,6 +1,6 @@
 INCLUDES += emc/kinematics
 
-CFLAGS += "-I../../../include"
+CFLAGS += -I../include
 
 GENSERKINSSRCS := \
 	emc/kinematics/genserkins.c
