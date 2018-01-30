@@ -138,24 +138,24 @@ modules:  userspace
 	    )\
 	)
 
-ifeq ($(HAVE_KERNEL_THREADS),yes)
-    @test -f ../libexec/linuxcnc_module_helper -a \
-	\( `stat -c %u ../libexec/linuxcnc_module_helper` -ne 0 -o \
-	    ! -u ../libexec/linuxcnc_module_helper \) \
-        && need_setuid=1; 
-endif
-
-ifeq ($(RUN_IN_PLACE)+$(BUILD_DRIVERS),yes+yes)
-	for f in $(filter-out %-kernel,$(BUILD_THREAD_FLAVORS)); do \
-	    test -f ../libexec/rtapi_app_$$f -a \
-		    \( 0`stat -c %u ../libexec/rtapi_app_$$f 2>/dev/null` \
-			-ne 0 -o ! -u ../libexec/rtapi_app_$$f \) \
-		&& need_setuid=1; \
-	done; \
-	test "$$need_setuid" = 1 && \
-	    $(VECHO) -n "You now need to run 'sudo make setuid' " && \
-	    $(VECHO) "in order to run in place." || true
-endif
+#ifeq ($(HAVE_KERNEL_THREADS),yes)
+#    @test -f ../libexec/linuxcnc_module_helper -a \
+#	\( `stat -c %u ../libexec/linuxcnc_module_helper` -ne 0 -o \
+#	    ! -u ../libexec/linuxcnc_module_helper \) \
+#        && need_setuid=1; 
+#endif
+#
+#ifeq ($(RUN_IN_PLACE)+$(BUILD_DRIVERS),yes+yes)
+#	for f in $(filter-out %-kernel,$(BUILD_THREAD_FLAVORS)); do \
+#	    test -f ../libexec/rtapi_app_$$f -a \
+#		    \( 0`stat -c %u ../libexec/rtapi_app_$$f 2>/dev/null` \
+#			-ne 0 -o ! -u ../libexec/rtapi_app_$$f \) \
+#		&& need_setuid=1; \
+#	done; \
+#	test "$$need_setuid" = 1 && \
+#	    $(VECHO) -n "You now need to run 'sudo make setuid' " && \
+#	    $(VECHO) "in order to run in place." || true
+#endif
 
 endif # BUILD_ALL_FLAVORS
 
@@ -196,19 +196,6 @@ INSTALL_DIRS :=
 SUBDIRS := \
 	\
 	../man \
-	machinetalk \
-	machinetalk/support \
-	machinetalk/messagebus \
-	machinetalk/msgcomponents \
-	machinetalk/lib \
-	machinetalk/config-service \
-	machinetalk/haltalk \
-	machinetalk/mkwrapper \
-	machinetalk/mklauncher \
-	machinetalk/videoserver \
-	\
-	rtapi/rtapi_math \
-	\
 	libnml/linklist \
 	libnml/cms \
 	libnml/rcs \
@@ -217,12 +204,6 @@ SUBDIRS := \
 	libnml/nml \
 	libnml/buffer \
 	libnml/posemath libnml \
-	\
-	rtapi/examples/timer \
-	rtapi/examples/shmem \
-	rtapi/examples \
-	rtapi \
-	rtapi/shmdrv \
 	\
 	emc/usr_intf/axis \
 	emc/usr_intf/touchy \
@@ -251,9 +232,6 @@ ifeq ($(HAVE_KERNEL_THREADS),yes)
 SUBDIRS += module_helper
 endif
 
-ifeq ($(BUILD_WEBTALK),yes)
-SUBDIRS += machinetalk/webtalk
-endif
 
 # moved to src/rtapi/Submakefile
 # ULAPISRCS := rtapi/$(RTPREFIX)_ulapi.c
@@ -429,7 +407,6 @@ INFILES = \
 	../scripts/linuxcnc \
 	../scripts/realtime \
 	../scripts/haltcl \
-	../scripts/gen-rtapi.ini.sh \
 	Makefile.inc \
 	Makefile.modinc \
 	../tcl/linuxcnc.tcl \
@@ -540,81 +517,7 @@ HEADERS := \
     libnml/rcs/rcs.hh \
     libnml/rcs/rcs_exit.hh \
     libnml/rcs/rcs_print.hh \
-    libnml/rcs/rcsversion.h \
-    machinetalk/build/machinetalk/protobuf/message.pb.h \
-    machinetalk/build/machinetalk/protobuf/types.pb.h \
-    machinetalk/build/machinetalk/protobuf/canon.npb.h \
-    machinetalk/build/machinetalk/protobuf/config.pb.h \
-    machinetalk/build/machinetalk/protobuf/firmware.npb.h \
-    machinetalk/build/machinetalk/protobuf/jplan.pb.h \
-    machinetalk/build/machinetalk/protobuf/message.npb.h \
-    machinetalk/build/machinetalk/protobuf/motcmds.pb.h \
-    machinetalk/build/machinetalk/protobuf/object.npb.h \
-    machinetalk/build/machinetalk/protobuf/preview.pb.h \
-    machinetalk/build/machinetalk/protobuf/rtapicommand.npb.h \
-    machinetalk/build/machinetalk/protobuf/rtapi_message.pb.h \
-    machinetalk/build/machinetalk/protobuf/task.npb.h \
-    machinetalk/build/machinetalk/protobuf/test.pb.h \
-    machinetalk/build/machinetalk/protobuf/value.npb.h \
-    machinetalk/build/machinetalk/protobuf/canon.pb.h \
-    machinetalk/build/machinetalk/protobuf/emcclass.npb.h \
-    machinetalk/build/machinetalk/protobuf/firmware.pb.h \
-    machinetalk/build/machinetalk/protobuf/log.npb.h \
-    machinetalk/build/machinetalk/protobuf/nanopb.npb.h \
-    machinetalk/build/machinetalk/protobuf/object.pb.h \
-    machinetalk/build/machinetalk/protobuf/ros.npb.h \
-    machinetalk/build/machinetalk/protobuf/rtapicommand.pb.h \
-    machinetalk/build/machinetalk/protobuf/status.npb.h \
-    machinetalk/build/machinetalk/protobuf/task.pb.h \
-    machinetalk/build/machinetalk/protobuf/types.npb.h \
-    machinetalk/build/machinetalk/protobuf/value.pb.h \
-    machinetalk/build/machinetalk/protobuf/config.npb.h \
-    machinetalk/build/machinetalk/protobuf/emcclass.pb.h \
-    machinetalk/build/machinetalk/protobuf/jplan.npb.h \
-    machinetalk/build/machinetalk/protobuf/log.pb.h \
-    machinetalk/build/machinetalk/protobuf/motcmds.npb.h \
-    machinetalk/build/machinetalk/protobuf/nanopb.pb.h \
-    machinetalk/build/machinetalk/protobuf/preview.npb.h \
-    machinetalk/build/machinetalk/protobuf/ros.pb.h \
-    machinetalk/build/machinetalk/protobuf/rtapi_message.npb.h \
-    machinetalk/build/machinetalk/protobuf/status.pb.h \
-    machinetalk/build/machinetalk/protobuf/test.npb.h \
-    machinetalk/nanopb/pb.h \
-    machinetalk/nanopb/pb_common.h \
-    machinetalk/nanopb/pb_encode.h \
-    machinetalk/nanopb/pb_decode.h \
-    rtapi/multiframe_flag.h \
-    rtapi/rtapi.h \
-    rtapi/rtapi_app.h \
-    rtapi/rtapi_atomics.h \
-    rtapi/rtapi_bitops.h \
-    rtapi/rtapi_byteorder.h \
-    rtapi/rtapi_export.h \
-    rtapi/rtapi_compat.h \
-    rtapi/rtapi_hexdump.h \
-    rtapi/rtapi_int.h \
-    rtapi/rtapi_kdetect.h \
-    rtapi/rtapi_limits.h \
-    rtapi/rtapi_math.h \
-    rtapi/rtapi_math64.h \
-    rtapi/rtapi_common.h \
-    rtapi/rtapi_exception.h \
-    rtapi/rtapi_global.h \
-    rtapi/rtapi_shmkeys.h \
-    rtapi/rtapi_io.h \
-    rtapi/rtapi_ctype.h \
-    rtapi/rtapi_errno.h \
-    rtapi/rtapi_string.h \
-    rtapi/rtapi_pci.h \
-    rtapi/rtapi_proc.h \
-    rtapi/rtapi_heap.h \
-    rtapi/rtapi_heap_private.h \
-    rtapi/ring.h \
-    rtapi/triple-buffer.h \
-    rtapi/multiframe.h \
-    rtapi/rtapi_mbarrier.h \
-    rtapi/$(THREADS_SOURCE).h \
-    rtapi/shmdrv/shmdrv.h
+    libnml/rcs/rcsversion.h 
 
 
     
@@ -716,7 +619,7 @@ endif  # BUILD_SYS == 'kbuild'
 #
 # Then in the above 'modules:' target, cd to the link tree and call
 # kbuild.
-MODULE_SOURCE_DIRS = emc hal libnml rtapi workaround machinetalk
+MODULE_SOURCE_DIRS = emc libnml workaround
 MODULE_SOURCES = Makefile* config* modsilent.py
 $(OBJDIR)/.separate-kbuild-artifacts-hack.stamp:
 	mkdir -p $(OBJDIR)
@@ -768,23 +671,23 @@ clean: depclean modclean docclean
 # So that nothing is built as root, this rule does not depend on the touched
 # files (Note that files in depends/ might be rebuilt, and there's little that
 # can be done about it)
-fix_perms = test -f $(1) && chown root $(1) && chmod 4750 $(1) || true
-
-ifeq ($(BUILD_DRIVERS),yes)
-ifeq ($(HAVE_KERNEL_THREADS),yes)
-CHECK_KFLAV_SWITCH=-k
-endif
-setuid:
-ifeq ($(HAVE_KERNEL_THREADS),yes)
-	$(call fix_perms,../libexec/linuxcnc_module_helper)
-endif
-	$(call fix_perms,../libexec/pci_read)
-	$(call fix_perms,../libexec/pci_write)
-	$(foreach f,$(BUILD_THREAD_FLAVORS),\
-	    $(call fix_perms,../libexec/rtapi_app_$(f));)
+#fix_perms = test -f $(1) && chown root $(1) && chmod 4750 $(1) || true
+#
+#ifeq ($(BUILD_DRIVERS),yes)
+#ifeq ($(HAVE_KERNEL_THREADS),yes)
+#CHECK_KFLAV_SWITCH=-k
+#endif
+#setuid:
+#ifeq ($(HAVE_KERNEL_THREADS),yes)
+#	$(call fix_perms,../libexec/linuxcnc_module_helper)
+#endif
+#	$(call fix_perms,../libexec/pci_read)
+#	$(call fix_perms,../libexec/pci_write)
+#	$(foreach f,$(BUILD_THREAD_FLAVORS),\
+#	    $(call fix_perms,../libexec/rtapi_app_$(f));)
 # check system configuration:  logging, ulimits, udev
-	@-../scripts/check-system-configuration.sh $(CHECK_KFLAV_SWITCH)
-else
+#	@-../scripts/check-system-configuration.sh $(CHECK_KFLAV_SWITCH)
+#else
 setuid:
 	@echo "'make setuid' is not needed if hardware drivers are not used"
 endif
@@ -877,9 +780,9 @@ ifeq ($(BUILD_EMCWEB),yes)
 		$(DESTDIR)$(datadir)/linuxcnc/doc-root/js \
 		$(DESTDIR)$(datadir)/linuxcnc/doc-root/res
 endif
-ifeq ($(USERMODE_PCI),yes)
-	$(DIR)	$(DESTDIR)$(includedir)/linuxcnc/userpci
-endif
+#ifeq ($(USERMODE_PCI),yes)
+#	$(DIR)	$(DESTDIR)$(includedir)/linuxcnc/userpci
+#endif
 
 install-kernel-indep: install-dirs
 	$(FILE) objects/*.msg $(DESTDIR)$(tcldir)/msgs
@@ -945,11 +848,11 @@ endif
 #	$(FILE) ../lib/python/gladevcp/widget*.png  $(DESTDIR)$(datadir)/glade3/pixmaps/
 
 #	$(FILE) ../share/gtksourceview-2.0/language-specs/*.lang  $(DESTDIR)$(datadir)/gtksourceview-2.0/language-specs/
-	$(FILE) rtapi/rsyslogd-linuxcnc.conf $(DESTDIR)$(sysconfdir)/rsyslog.d/linuxcnc.conf
-	$(FILE) rtapi/shmdrv/limits.d-machinekit.conf \
-		$(DESTDIR)$(sysconfdir)/security/limits.d/machinekit.conf
-	$(FILE) rtapi/shmdrv/shmdrv.rules \
-		$(DESTDIR)$(sysconfdir)/udev/rules.d/50-shmdrv.rules
+#	$(FILE) rtapi/rsyslogd-linuxcnc.conf $(DESTDIR)$(sysconfdir)/rsyslog.d/linuxcnc.conf
+#	$(FILE) rtapi/shmdrv/limits.d-machinekit.conf \
+#		$(DESTDIR)$(sysconfdir)/security/limits.d/machinekit.conf
+#	$(FILE) rtapi/shmdrv/shmdrv.rules \
+#		$(DESTDIR)$(sysconfdir)/udev/rules.d/50-shmdrv.rules
 ifeq ($(BUILD_EMCWEB),yes)
 	$(FILE) ../www/css/images/* $(DESTDIR)$(datadir)/linuxcnc/doc-root/css/images
 	$(FILE) ../www/css/*css $(DESTDIR)$(datadir)/linuxcnc/doc-root/css
@@ -972,8 +875,6 @@ install-python: install-dirs
 	$(DIR) $(DESTDIR)$(SITEPY)/stepconf
 	$(DIR) $(DESTDIR)$(SITEPY)/machinekit
 	$(DIR) $(DESTDIR)$(SITEPY)/machinekit/nosetests
-	$(DIR) $(DESTDIR)$(SITEPY)/machinetalk
-	$(DIR) $(DESTDIR)$(SITEPY)/machinetalk/protobuf
 	$(DIR) $(DESTDIR)$(SITEPY)/fdm
 	$(DIR) $(DESTDIR)$(SITEPY)/fdm/config
 	$(DIR) $(DESTDIR)$(datadir)/fdm/thermistor_tables
@@ -989,8 +890,6 @@ install-python: install-dirs
 	$(FILE) ../lib/python/machinekit/*.py $(DESTDIR)$(SITEPY)/machinekit/
 	$(FILE) ../lib/python/machinekit/nosetests/*.py $(DESTDIR)$(SITEPY)/machinekit/nosetests
 	$(FILE) ../lib/python/machinekit/*.so $(DESTDIR)$(SITEPY)/machinekit/
-	$(FILE) ../lib/python/machinetalk/*.py $(DESTDIR)$(SITEPY)/machinetalk/
-	$(FILE) ../lib/python/machinetalk/protobuf/*.py $(DESTDIR)$(SITEPY)/machinetalk/protobuf/
 	$(FILE) ../lib/python/fdm/*.py $(DESTDIR)$(SITEPY)/fdm
 	$(FILE) ../lib/python/fdm/config/*.py $(DESTDIR)$(SITEPY)/fdm/config
 	$(FILE) ../lib/python/drivers/*.py $(DESTDIR)$(SITEPY)/drivers
@@ -1072,14 +971,14 @@ endif
 		done; \
 	    fi; \
 	done
-ifeq ($(USE_SHMDRV),yes)
-	for srcdir in ../rtlib/shmdrv/*; do \
-	    kver=`basename $$srcdir`; \
-	    echo Installing shmdrv.ko module for kernel version $$kver; \
-	    $(DIR) $(DESTDIR)/lib/modules/$$kver/linuxcnc; \
-	    $(FILE) $$srcdir/* $(DESTDIR)/lib/modules/$$kver/linuxcnc; \
-	done;
-endif
+#ifeq ($(USE_SHMDRV),yes)
+#	for srcdir in ../rtlib/shmdrv/*; do \
+#	    kver=`basename $$srcdir`; \
+#	    echo Installing shmdrv.ko module for kernel version $$kver; \
+#	    $(DIR) $(DESTDIR)/lib/modules/$$kver/linuxcnc; \
+#	    $(FILE) $$srcdir/* $(DESTDIR)/lib/modules/$$kver/linuxcnc; \
+#	done;
+#endif
 endif # ! RUN_IN_PLACE
 
 CONF=../configs
@@ -1135,7 +1034,7 @@ $(call CONFILES,core_sim.hal): %/core_sim.hal: ../configs/common/core_sim.hal
 $(call CONFILES,core_sim9.hal): %/core_sim9.hal: ../configs/common/core_sim9.hal
 	$(Q)-cp $< $@
 
-endif # userspace
+#endif # userspace
 
 ifneq ($(KERNELRELEASE),)
 # KERNELRELEASE is non-empty, therefore we are building modules using
@@ -1146,11 +1045,11 @@ INCLUDE_PREFIX = $(BASEPWD)
 
 # When the Submakefile is included in the kbuild Makefile, the
 # module's obj-m and foo-objs definitions may remain in the Submakefile
-include $(BASEPWD)/machinetalk/Submakefile
-include $(BASEPWD)/machinetalk/msgcomponents/Submakefile
-include $(BASEPWD)/rtapi/Submakefile
-include $(BASEPWD)/rtapi/shmdrv/Submakefile
-include $(BASEPWD)/rtapi/rtapi_math/Submakefile
+#include $(BASEPWD)/machinetalk/Submakefile
+#include $(BASEPWD)/machinetalk/msgcomponents/Submakefile
+#include $(BASEPWD)/rtapi/Submakefile
+#include $(BASEPWD)/rtapi/shmdrv/Submakefile
+#include $(BASEPWD)/rtapi/rtapi_math/Submakefile
 endif # KERNELRELEASE non-empty
 
 # $(BASEPWD) is used here, instead of relative paths, because that's
@@ -1168,13 +1067,10 @@ EXTRA_CFLAGS = $(RTFLAGS) \
 	-I$(INCLUDE_PREFIX)/libnml/nml \
 	-I$(INCLUDE_PREFIX)/libnml/buffer \
 	-I$(INCLUDE_PREFIX)/libnml/posemath \
-	-I$(INCLUDE_PREFIX)/rtapi \
 	-I$(INCLUDE_PREFIX)/emc/nml_intf \
 	-I$(INCLUDE_PREFIX)/emc/kinematics \
 	-I$(INCLUDE_PREFIX)/emc/motion \
 	-I$(INCLUDE_PREFIX)/emc/tp \
-	-I$(INCLUDE_PREFIX)/machinetalk/nanopb \
-	-I$(INCLUDE_PREFIX)/machinetalk/build \
 	-DSEQUENTIAL_SUPPORT -DHAL_SUPPORT -DDYNAMIC_PLCSIZE -DRT_SUPPORT \
 	-DOLD_TIMERS_MONOS_SUPPORT -DMODBUS_IO_MASTER \
 	$(call cc-option,-mieee-fp) \
@@ -1483,9 +1379,7 @@ endif
 # dont create tags from these directories
 NOTAGSIN := \
 	depends \
-	objects \
-	machinetalk/build \
-	machinetalk/nanopb
+	objects
 
 CTAGOPTS := $(addprefix --exclude=,$(NOTAGSIN))
 ETAGOPTS := $(CTAGOPTS)
