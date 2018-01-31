@@ -74,7 +74,7 @@ do_changelog() {
 
     rm -f changelog
     cat > changelog <<EOF
-machinekit (${MKVERSION}) ${DISTRO_UC}; urgency=low
+machinekit-cnc (${MKVERSION}) ${DISTRO_UC}; urgency=low
 
   * Cross-Builder rebuild for Debian ${DISTRO_UC}, commit $(git rev-parse --short HEAD)
 
@@ -96,7 +96,7 @@ MK_VERSION="$(git show HEAD:VERSION | cut -d ' ' -f 1).$(git rev-list --count ma
 
 OWD=$PWD
 cd ../
-git archive HEAD | bzip2 -z > ../machinekit_${MK_VERSION}.orig.tar.bz2
+git archive HEAD | bzip2 -z > ../machinekit-cnc_${MK_VERSION}.orig.tar.bz2
 echo "Source tarball created"
 cd $OWD
 }
@@ -142,8 +142,8 @@ fi
 echo "debian/control:  copied base template" >&2
 cp rules.in rules; chmod +x rules
 echo "debian/rules:  copied base template" >&2
-cp machinekit.install.in machinekit.install
-echo "debian/machinekit.install.in:  copied base template" >&2
+cp machinekit-cnc.install.in machinekit-cnc.install
+echo "debian/machinekit-cnc.install.in:  copied base template" >&2
 
 # read command line options
 while getopts prxcsd?h ARG; do
