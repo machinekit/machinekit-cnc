@@ -820,7 +820,7 @@ install-kernel-indep: install-dirs
 	$(FILE) Makefile.modinc $(DESTDIR)$(datadir)/linuxcnc
 	$(FILE) Makefile.inc $(DESTDIR)$(datadir)/linuxcnc
 	$(EXE) $(TCL) $(DESTDIR)$(tcldir)
-	$(FILE) ../tcl/hal.so $(DESTDIR)$(tcldir)
+#	$(FILE) ../tcl/hal.so $(DESTDIR)$(tcldir)
 	$(FILE) ../tcl/linuxcnc.so $(DESTDIR)$(tcldir)
 	$(FILE) ../tcl/pkgIndex.tcl $(DESTDIR)$(tcldir)
 	$(EXE) $(TCL_BIN) $(DESTDIR)$(tcldir)/bin
@@ -848,16 +848,16 @@ install-kernel-indep: install-dirs
 #		$(DESTDIR)$(sysconfdir)/security/limits.d/machinekit.conf
 #	$(FILE) rtapi/shmdrv/shmdrv.rules \
 #		$(DESTDIR)$(sysconfdir)/udev/rules.d/50-shmdrv.rules
-ifeq ($(BUILD_EMCWEB),yes)
-	$(FILE) ../www/css/images/* $(DESTDIR)$(datadir)/linuxcnc/doc-root/css/images
-	$(FILE) ../www/css/*css $(DESTDIR)$(datadir)/linuxcnc/doc-root/css
-	$(FILE) ../www/js/*js $(DESTDIR)$(datadir)/linuxcnc/doc-root/js
-	$(FILE) ../www/res/* $(DESTDIR)$(datadir)/linuxcnc/doc-root/res
-	$(FILE) ../www/*html $(DESTDIR)$(datadir)/linuxcnc/doc-root/
-endif
+#ifeq ($(BUILD_EMCWEB),yes)
+#	$(FILE) ../www/css/images/* $(DESTDIR)$(datadir)/linuxcnc/doc-root/css/images
+#	$(FILE) ../www/css/*css $(DESTDIR)$(datadir)/linuxcnc/doc-root/css
+#	$(FILE) ../www/js/*js $(DESTDIR)$(datadir)/linuxcnc/doc-root/js
+#	$(FILE) ../www/res/* $(DESTDIR)$(datadir)/linuxcnc/doc-root/res
+#	$(FILE) ../www/*html $(DESTDIR)$(datadir)/linuxcnc/doc-root/
+#endif
 	$(FILE) ../etc/linuxcnc/machinekit.ini $(DESTDIR)$(sysconfdir)/linuxcnc
 	$(EXE) ../bin/profile_axis $(DESTDIR)$(bindir)
-	$(EXE) ../bin/mank $(DESTDIR)$(bindir)
+#	$(EXE) ../bin/mank $(DESTDIR)$(bindir)
 
 ifeq ($(BUILD_PYTHON),yes)
 install-kernel-indep: install-python
@@ -873,7 +873,7 @@ install-python: install-dirs
 	$(DIR) $(DESTDIR)$(SITEPY)/fdm
 	$(DIR) $(DESTDIR)$(SITEPY)/fdm/config
 	$(DIR) $(DESTDIR)$(datadir)/fdm/thermistor_tables
-	$(DIR) $(DESTDIR)$(SITEPY)/drivers
+#	$(DIR) $(DESTDIR)$(SITEPY)/drivers
 	$(FILE) ../lib/python/*.py ../lib/python/*.so $(DESTDIR)$(SITEPY)
 	$(FILE) ../lib/python/rs274/*.py $(DESTDIR)$(SITEPY)/rs274
 	$(FILE) ../lib/python/touchy/*.py $(DESTDIR)$(SITEPY)/touchy
@@ -884,10 +884,10 @@ install-python: install-dirs
 #	$(FILE) ../lib/python/stepconf/*.py $(DESTDIR)$(SITEPY)/stepconf
 	$(FILE) ../lib/python/machinekit/*.py $(DESTDIR)$(SITEPY)/machinekit/
 #	$(FILE) ../lib/python/machinekit/nosetests/*.py $(DESTDIR)$(SITEPY)/machinekit/nosetests
-	$(FILE) ../lib/python/machinekit/*.so $(DESTDIR)$(SITEPY)/machinekit/
+#	$(FILE) ../lib/python/machinekit/*.so $(DESTDIR)$(SITEPY)/machinekit/
 	$(FILE) ../lib/python/fdm/*.py $(DESTDIR)$(SITEPY)/fdm
 	$(FILE) ../lib/python/fdm/config/*.py $(DESTDIR)$(SITEPY)/fdm/config
-	$(FILE) ../lib/python/drivers/*.py $(DESTDIR)$(SITEPY)/drivers
+#	$(FILE) ../lib/python/drivers/*.py $(DESTDIR)$(SITEPY)/drivers
 #	$(EXE) ../bin/stepconf $(DESTDIR)$(bindir)
 #	$(EXE) ../bin/pncconf $(DESTDIR)$(bindir)
 #	$(EXE) ../bin/hal_input $(DESTDIR)$(bindir)
@@ -904,12 +904,12 @@ install-python: install-dirs
 	$(EXE) ../bin/debuglevel $(DESTDIR)$(bindir)
 	$(EXE) ../bin/linuxcnctop $(DESTDIR)$(bindir)
 	$(EXE) ../bin/mdi $(DESTDIR)$(bindir)
-#	$(EXE) ../bin/hal_manualtoolchange $(DESTDIR)$(bindir)
+	$(EXE) ../bin/hal_manualtoolchange $(DESTDIR)$(bindir)
 	$(EXE) ../bin/image-to-gcode $(DESTDIR)$(bindir)
 	$(EXE) ../bin/touchy $(DESTDIR)$(bindir)
 	$(EXE) ../bin/gscreen $(DESTDIR)$(bindir)
 	$(EXE) ../bin/gmoccapy $(DESTDIR)$(bindir)
-	$(EXE) $(patsubst %.py,../bin/%,$(VISMACH_PY)) $(DESTDIR)$(bindir)
+#	$(EXE) $(patsubst %.py,../bin/%,$(VISMACH_PY)) $(DESTDIR)$(bindir)
 	$(FILE) ../share/linuxcnc/machinekit-wizard.gif $(DESTDIR)$(prefix)/share/linuxcnc
 	$(FILE) emc/usr_intf/axis/etc/axis_light_background $(DESTDIR)$(docdir)
 	$(FILE) emc/usr_intf/axis/README $(DESTDIR)$(docdir)/README.axis
@@ -919,15 +919,15 @@ install-python: install-dirs
 	$(TREE) ../share/gscreen/skins/* $(DESTDIR)$(datadir)/gscreen/skins
 	$(FILE) ../share/gmoccapy/images/*.png ../share/gmoccapy/images/*.gif ../share/gmoccapy/images/*.svg $(DESTDIR)$(datadir)/gmoccapy/images
 	$(FILE) ../share/fdm/thermistor_tables/*.txt $(DESTDIR)$(datadir)/fdm/thermistor_tables
-	$(EXE) ../bin/configserver $(DESTDIR)$(bindir)
-	$(EXE) ../bin/videoserver $(DESTDIR)$(bindir)
-	$(EXE) ../bin/mkwrapper $(DESTDIR)$(bindir)
-	$(EXE) ../bin/mklauncher $(DESTDIR)$(bindir)
-	$(EXE) ../bin/gremlin $(DESTDIR)$(bindir)
+#	$(EXE) ../bin/configserver $(DESTDIR)$(bindir)
+#	$(EXE) ../bin/videoserver $(DESTDIR)$(bindir)
+#	$(EXE) ../bin/mkwrapper $(DESTDIR)$(bindir)
+#	$(EXE) ../bin/mklauncher $(DESTDIR)$(bindir)
+#	$(EXE) ../bin/gremlin $(DESTDIR)$(bindir)
 	$(EXE) ../bin/lintini $(DESTDIR)$(bindir)
 	$(EXE) ../bin/teach-in $(DESTDIR)$(bindir)
 	$(EXE) ../bin/tracking-test $(DESTDIR)$(bindir)
-	$(EXE) ../bin/yapps $(DESTDIR)$(bindir)
+#	$(EXE) ../bin/yapps $(DESTDIR)$(bindir)
 	$(EXE) ../scripts/gcode-to-ngc $(DESTDIR)$(bindir)
 	$(EXE) ../scripts/g1-to-g23 $(DESTDIR)$(bindir)
 #	$(EXE) ../scripts/hal-graph $(DESTDIR)$(bindir)
