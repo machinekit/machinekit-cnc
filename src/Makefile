@@ -739,7 +739,7 @@ install-test:
 		fi \
 	fi
 
-install: install-test install-kernel-dep install-kernel-indep
+install: install-test install-kernel-indep
 	$(ECHO) "Installed in $(DESTDIR) with prefix $(prefix)"
 
 install-dirs:
@@ -795,23 +795,23 @@ install-kernel-indep: install-dirs
 	$(EXE) ../scripts/linuxcnc $(DESTDIR)$(bindir)
 	$(EXE) ../scripts/machinekit $(DESTDIR)$(bindir)
 	$(EXE) ../scripts/linuxcnc_info $(DESTDIR)$(bindir)
-	$(EXE) ../scripts/linuxcnc_var $(DESTDIR)$(bindir)
-	$(EXE) ../scripts/latency-test $(DESTDIR)$(bindir)
-ifeq ($(HAVE_WORKING_BLT),yes)
-	$(EXE) ../scripts/latency-plot $(DESTDIR)$(bindir)
-	$(EXE) ../scripts/latency-histogram $(DESTDIR)$(bindir)
-endif
-	$(EXE) ../scripts/pyvcp_demo $(DESTDIR)$(bindir)
-	$(EXE) ../scripts/gladevcp_demo $(DESTDIR)$(bindir)
+#	$(EXE) ../scripts/linuxcnc_var $(DESTDIR)$(bindir)
+#	$(EXE) ../scripts/latency-test $(DESTDIR)$(bindir)
+#ifeq ($(HAVE_WORKING_BLT),yes)
+#	$(EXE) ../scripts/latency-plot $(DESTDIR)$(bindir)
+#	$(EXE) ../scripts/latency-histogram $(DESTDIR)$(bindir)
+#endif
+#	$(EXE) ../scripts/pyvcp_demo $(DESTDIR)$(bindir)
+#	$(EXE) ../scripts/gladevcp_demo $(DESTDIR)$(bindir)
 	$(EXE) ../scripts/linuxcncmkdesktop $(DESTDIR)$(bindir)
 	$(FILE) $(filter ../lib/%.a ../lib/%.so.0,$(TARGETS)) $(DESTDIR)$(libdir)
 	cp --no-dereference $(filter ../lib/%.so, $(TARGETS)) $(DESTDIR)$(libdir)
-	$(FILE) ../rtlib/ulapi-*.so $(DESTDIR)$(EMC2_RTLIB_BASE_DIR)
+#	$(FILE) ../rtlib/ulapi-*.so $(DESTDIR)$(EMC2_RTLIB_BASE_DIR)
 	-ldconfig $(DESTDIR)$(libdir)
 	$(FILE) $(HEADERS) $(DESTDIR)$(includedir)/linuxcnc/
-ifeq ($(USERMODE_PCI),yes)
-	$(FILE) $(USERPCI_HEADERS) $(DESTDIR)$(includedir)/linuxcnc/userpci
-endif
+#ifeq ($(USERMODE_PCI),yes)
+#	$(FILE) $(USERPCI_HEADERS) $(DESTDIR)$(includedir)/linuxcnc/userpci
+#endif
 	$(FILE) $(DOCS_HELP) $(DESTDIR)$(docdir)
 	$(TREE) $(NC_FILES) $(DESTDIR)$(ncfilesdir)
 	$(EXE) ../nc_files/M101 $(DESTDIR)$(ncfilesdir)
@@ -866,10 +866,10 @@ install-python: install-dirs
 	$(DIR) $(DESTDIR)$(SITEPY)/touchy
 	$(DIR) $(DESTDIR)$(SITEPY)/gscreen
 	$(DIR) $(DESTDIR)$(SITEPY)/gmoccapy
-	$(DIR) $(DESTDIR)$(SITEPY)/gladevcp
-	$(DIR) $(DESTDIR)$(SITEPY)/stepconf
+#	$(DIR) $(DESTDIR)$(SITEPY)/gladevcp
+#	$(DIR) $(DESTDIR)$(SITEPY)/stepconf
 	$(DIR) $(DESTDIR)$(SITEPY)/machinekit
-	$(DIR) $(DESTDIR)$(SITEPY)/machinekit/nosetests
+#	$(DIR) $(DESTDIR)$(SITEPY)/machinekit/nosetests
 	$(DIR) $(DESTDIR)$(SITEPY)/fdm
 	$(DIR) $(DESTDIR)$(SITEPY)/fdm/config
 	$(DIR) $(DESTDIR)$(datadir)/fdm/thermistor_tables
@@ -879,11 +879,11 @@ install-python: install-dirs
 	$(FILE) ../lib/python/touchy/*.py $(DESTDIR)$(SITEPY)/touchy
 	$(FILE) ../lib/python/gscreen/*.py $(DESTDIR)$(SITEPY)/gscreen
 	$(FILE) ../lib/python/gmoccapy/*.py $(DESTDIR)$(SITEPY)/gmoccapy
-	$(FILE) ../lib/python/gladevcp/*.py $(DESTDIR)$(SITEPY)/gladevcp
-	$(FILE) ../lib/python/gladevcp/*.glade $(DESTDIR)$(SITEPY)/gladevcp
-	$(FILE) ../lib/python/stepconf/*.py $(DESTDIR)$(SITEPY)/stepconf
+#	$(FILE) ../lib/python/gladevcp/*.py $(DESTDIR)$(SITEPY)/gladevcp
+#	$(FILE) ../lib/python/gladevcp/*.glade $(DESTDIR)$(SITEPY)/gladevcp
+#	$(FILE) ../lib/python/stepconf/*.py $(DESTDIR)$(SITEPY)/stepconf
 	$(FILE) ../lib/python/machinekit/*.py $(DESTDIR)$(SITEPY)/machinekit/
-	$(FILE) ../lib/python/machinekit/nosetests/*.py $(DESTDIR)$(SITEPY)/machinekit/nosetests
+#	$(FILE) ../lib/python/machinekit/nosetests/*.py $(DESTDIR)$(SITEPY)/machinekit/nosetests
 	$(FILE) ../lib/python/machinekit/*.so $(DESTDIR)$(SITEPY)/machinekit/
 	$(FILE) ../lib/python/fdm/*.py $(DESTDIR)$(SITEPY)/fdm
 	$(FILE) ../lib/python/fdm/config/*.py $(DESTDIR)$(SITEPY)/fdm/config
@@ -930,7 +930,7 @@ install-python: install-dirs
 	$(EXE) ../bin/yapps $(DESTDIR)$(bindir)
 	$(EXE) ../scripts/gcode-to-ngc $(DESTDIR)$(bindir)
 	$(EXE) ../scripts/g1-to-g23 $(DESTDIR)$(bindir)
-	$(EXE) ../scripts/hal-graph $(DESTDIR)$(bindir)
+#	$(EXE) ../scripts/hal-graph $(DESTDIR)$(bindir)
 endif
 
 #install-kernel-dep: install-dirs
