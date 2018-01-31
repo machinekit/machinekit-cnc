@@ -82,8 +82,7 @@ build-stamp: debian/control
 	    $(THREADS_RT_PREEMPT) \
 	    $(THREADS_XENOMAI) \
 	    --sysconfdir=/etc \
-	    --mandir=/usr/share/man \
-	    --enable-emcweb
+	    --mandir=/usr/share/man
 	cd src && $(MAKE) $(COMPILE_ENV) $(MAKEFLAGS) V=$(DH_VERBOSE)
 	touch build-stamp
 
@@ -104,8 +103,7 @@ ifneq ($(wildcard src/configure src/Makefile.inc),)
 	    $(THREADS_RT_PREEMPT) \
 	    $(THREADS_XENOMAI) \
 	    --sysconfdir=/etc \
-	    --mandir=/usr/share/man \
-	    --enable-emcweb
+	    --mandir=/usr/share/man 
 	cd src && $(MAKE) clean -s
 #	# Manually remove things left by './configure'
 	rm -f \
@@ -171,33 +169,33 @@ ifneq (,$(wildcard debian/machinekit-*-kernel-*.install))
 	cp src/rtapi/shmdrv/shmdrv.rules \
 	    debian/tmp/etc/udev/rules.d/50-shmdrv.rules
 endif
-	mkdir -p debian/tmp/etc/security/limits.d
-	cp src/rtapi/shmdrv/limits.d-machinekit.conf \
-	    debian/tmp/etc/security/limits.d/machinekit.conf
+#	mkdir -p debian/tmp/etc/security/limits.d
+#	cp src/rtapi/shmdrv/limits.d-machinekit.conf \
+#	    debian/tmp/etc/security/limits.d/machinekit.conf
 
-	cp debian/machinekit-posix.install.in debian/machinekit-posix.install
-	cp debian/machinekit-rt-preempt.install.in debian/machinekit-rt-preempt.install
-	cp debian/machinekit-xenomai.install.in debian/machinekit-xenomai.install
+	cp debian/machinekit-cnc-posix.install.in debian/machinekit-cnc-posix.install
+	cp debian/machinekit-cnc-rt-preempt.install.in debian/machinekit-cnc-rt-preempt.install
+	cp debian/machinekit-cnc-xenomai.install.in debian/machinekit-cnc-xenomai.install
 
-	if (grep ^USERMODE_PCI=yes src/Makefile.inc -q); then \
-	    echo "usr/include/linuxcnc/userpci/*.h" >> debian/machinekit-posix.install; \
-	    echo "usr/include/linuxcnc/userpci/*.h" >> debian/machinekit-rt-preempt.install; \
-	    echo "usr/include/linuxcnc/userpci/*.h" >> debian/machinekit-xenomai.install; \
-	fi
+#	if (grep ^USERMODE_PCI=yes src/Makefile.inc -q); then \
+#	    echo "usr/include/linuxcnc/userpci/*.h" >> debian/machinekit-posix.install; \
+#	    echo "usr/include/linuxcnc/userpci/*.h" >> debian/machinekit-rt-preempt.install; \
+#	    echo "usr/include/linuxcnc/userpci/*.h" >> debian/machinekit-xenomai.install; \
+#	fi
 
-	## only want this for armhf builds ##
-	if [ -f debian/platform_pc ] ; then \
-	    rm -f debian/platform_pc; \
-	else \
-	    mkdir -p debian/tmp/usr/lib/linuxcnc/prubin; \
-	    cp rtlib/prubin/* debian/tmp/usr/lib/linuxcnc/prubin; \
-	    cat debian/posix-postinst.add >> debian/machinekit-posix.postinst; \
-	    cat debian/rt-preempt-postinst.add >> debian/machinekit-rt-preempt.postinst; \
-	    cat debian/xenomai-postinst.add >> debian/machinekit-xenomai.postinst; \
-	    echo "usr/lib/linuxcnc/prubin/*" >> debian/machinekit-posix.install; \
-	    echo "usr/lib/linuxcnc/prubin/*" >> debian/machinekit-rt-preempt.install; \
-	    echo "usr/lib/linuxcnc/prubin/*" >> debian/machinekit-xenomai.install; \
-	fi
+#	## only want this for armhf builds ##
+#	if [ -f debian/platform_pc ] ; then \
+#	    rm -f debian/platform_pc; \
+#	else \
+#	    mkdir -p debian/tmp/usr/lib/linuxcnc/prubin; \
+#	    cp rtlib/prubin/* debian/tmp/usr/lib/linuxcnc/prubin; \
+#	    cat debian/posix-postinst.add >> debian/machinekit-posix.postinst; \
+#	    cat debian/rt-preempt-postinst.add >> debian/machinekit-rt-preempt.postinst; \
+#	    cat debian/xenomai-postinst.add >> debian/machinekit-xenomai.postinst; \
+#	    echo "usr/lib/linuxcnc/prubin/*" >> debian/machinekit-posix.install; \
+#	    echo "usr/lib/linuxcnc/prubin/*" >> debian/machinekit-rt-preempt.install; \
+#	    echo "usr/lib/linuxcnc/prubin/*" >> debian/machinekit-xenomai.install; \
+#	fi
 
 
 	dh_install --sourcedir=debian/tmp --fail-missing -Xusr/bin/pasm

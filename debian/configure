@@ -130,15 +130,7 @@ BUILD_DEPS=  # List of Build-Depends
 HAVE_FLAVOR=false
 
 # copy base templates into place
-## need python-gst0.10 for Jessie, none for Stretch, no python-gtksourceview2 for Buster
-if [ "$DISTRO_CODENAME" == "stretch" ]; then
-    cp control.stretch.in control
-elif [ "$DISTRO_CODENAME" == "buster" ]; then
-    cp control.buster.in control   	
-else
-    cp control.in control
-fi
-
+cp control.in control
 echo "debian/control:  copied base template" >&2
 cp rules.in rules; chmod +x rules
 echo "debian/rules:  copied base template" >&2

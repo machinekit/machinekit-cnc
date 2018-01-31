@@ -1,12 +1,10 @@
 
-Package: machinekit-xenomai
+Package: machinekit-cnc-xenomai
 Architecture: any
-Depends: machinekit (= ${binary:Version}), ${shlibs:Depends}, yapps2-runtime,
-	xenomai-runtime
-Provides:  machinekit-rt-threads
-Recommends: hostmot2-firmware-all [!armhf]
-Breaks: machinekit-dev
-Enhances: machinekit
+Depends: machinekit-hal-xenomai (= ${binary:Version}), ${shlibs:Depends}, xenomai-runtime
+Provides:  machinekit-cnc-xenomai
+Breaks: machinekit
+Enhances: machinekit-hal-xenomai
 Description: PC based motion controller for real-time Linux
  Machinekit is the next-generation Enhanced Machine Controller which
  provides motion control for CNC machine tools and robotic

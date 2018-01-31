@@ -1,10 +1,10 @@
 
-Package: machinekit-posix
+Package: machinekit-cnc-posix
 Architecture: any
-Depends: machinekit (= ${binary:Version}), ${shlibs:Depends}, yapps2-runtime
-Provides:  machinekit-rt-threads
-Breaks: machinekit-dev
-Enhances: machinekit
+Depends: machinekit-hal-posix (= ${binary:Version}), ${shlibs:Depends}, yapps2-runtime
+Provides:  machinekit-cnc-posix
+Breaks: machinekit
+Enhances: machinekit-hal-posix
 Description: PC based motion controller for real-time Linux
  Machinekit is the next-generation Enhanced Machine Controller which
  provides motion control for CNC machine tools and robotic
