@@ -405,19 +405,14 @@ config.h: config.h.in config.status
 
 INFILES = \
 	../scripts/linuxcnc \
-	../scripts/realtime \
-	../scripts/haltcl \
 	Makefile.inc \
 	Makefile.modinc \
 	../tcl/linuxcnc.tcl \
-	../scripts/halrun \
-	../scripts/rip-environment \
 	../scripts/linuxcncmkdesktop \
 	../lib/python/nf.py \
 	../share/desktop-directories/cnc.directory \
 	../share/menus/CNC.menu \
-	../share/applications/linuxcnc.desktop \
-	../scripts/linuxcnc_var \
+	../share/applications/linuxcnc.desktop
 
 $(INFILES): %: %.in config.status
 	@./config.status --file=$@
