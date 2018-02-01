@@ -1,6 +1,4 @@
-#etc/linuxcnc/*
 etc/X11/app-defaults/*
-#etc/modprobe.d/linuxcnc.conf
 etc/xdg/menus/applications-merged/cnc.menu
 usr/lib/*.so.*
 usr/lib/tcltk/linuxcnc
@@ -24,12 +22,7 @@ usr/share/fdm
 usr/share/applications/*
 usr/share/desktop-directories/cnc.directory
 usr/lib/linuxcnc/xenomai/*
-#usr/lib/linuxcnc/ulapi-xenomai.so
-#usr/libexec/linuxcnc/rtapi_app_xenomai
 usr/include/linuxcnc/*.hh
 usr/include/linuxcnc/*.h
 usr/lib/*.a
 usr/lib/*.so
-#usr/bin/comp
-#usr/share/linuxcnc/Makefile.modinc
-#usr/share/linuxcnc/Makefile.inc

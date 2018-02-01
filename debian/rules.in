@@ -158,7 +158,7 @@ install: build
 	rm -f debian/tmp/usr/share/applications/linuxcnc-integratormanual*.desktop
 	rm -f debian/tmp/usr/share/applications/linuxcnc-gettingstarted*.desktop
 	rm -f debian/tmp/usr/share/applications/linuxcnc-developer*.desktop
-
+	rm -f debian/tmp/etc/modprobe.d/*
 	rm -rf debian/tmp/usr/share/doc/linuxcnc/html
 	rm -f debian/tmp/usr/share/linuxcnc/examples/sample-configs/*/*position*.txt
 	# update emcweb.hal
