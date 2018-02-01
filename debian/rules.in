@@ -162,8 +162,7 @@ install: build
 	rm -f debian/tmp/usr/share/linuxcnc/examples/sample-configs/*/*position*.txt
 # avoid clashes with machinekit-hal
 	rm -f debian/tmp/etc/modprobe.d/*
-	rm -f debian/tmp/lib/libposemath*
-	rm -f debian/tmp/lib/liblinuxcncini*
+	rm -f debian/tmp/usr/share/linuxcnc/Makefile.*
 	# update emcweb.hal
 	sed 's/#NC_FILES_DIR/NC_FILES_DIR/' -i debian/tmp/usr/share/linuxcnc/examples/sample-configs/sim/emcweb.ini
 
