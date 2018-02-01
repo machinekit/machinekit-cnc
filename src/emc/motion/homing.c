@@ -12,7 +12,7 @@
 ********************************************************************/
 
 #include "rtapi.h"
-#include "../../../include/hal.h"
+#include "hal.h"
 #include "motion.h"
 #include "mot_priv.h"
 #include "rtapi_math.h"

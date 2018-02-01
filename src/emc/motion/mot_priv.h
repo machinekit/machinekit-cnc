@@ -32,8 +32,8 @@
 */
 
 /* joint data */
-#include "../../../include/hal.h"
-#include "../../../include/hal_priv.h"
+#include "hal.h"
+#include "hal_priv.h"
 #include "../motion/motion.h"
 
 typedef struct {
