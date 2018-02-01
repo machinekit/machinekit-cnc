@@ -158,9 +158,12 @@ install: build
 	rm -f debian/tmp/usr/share/applications/linuxcnc-integratormanual*.desktop
 	rm -f debian/tmp/usr/share/applications/linuxcnc-gettingstarted*.desktop
 	rm -f debian/tmp/usr/share/applications/linuxcnc-developer*.desktop
-	rm -f debian/tmp/etc/modprobe.d/*
 	rm -rf debian/tmp/usr/share/doc/linuxcnc/html
 	rm -f debian/tmp/usr/share/linuxcnc/examples/sample-configs/*/*position*.txt
+# avoid clashes with machinekit-hal
+	rm -f debian/tmp/etc/modprobe.d/*
+	rm -f debian/tmp/lib/libposemath*
+	rm -f debian/tmp/lib/liblinuxcncini*
 	# update emcweb.hal
 	sed 's/#NC_FILES_DIR/NC_FILES_DIR/' -i debian/tmp/usr/share/linuxcnc/examples/sample-configs/sim/emcweb.ini
 
@@ -225,6 +228,10 @@ binary-arch: build install
 	rm -f debian/machinekit/usr/bin/comp
 	rm -f debian/machinekit/usr/share/linuxcnc/Makefile.modinc
 	rm -f debian/machinekit/usr/share/linuxcnc/Makefile.inc
+# avoid clashes with machinekit-hal
+	rm -f debian/tmp/etc/modprobe.d/*
+	rm -f debian/tmp/lib/libposemath*
+	rm -f debian/tmp/lib/liblinuxcncini*
 
 #	cat debian/machinekit/DEBIAN/shlibs debian/shlibs.pre > \
 #	    debian/shlibs.local

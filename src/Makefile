@@ -203,7 +203,8 @@ SUBDIRS := \
 	libnml/os_intf \
 	libnml/nml \
 	libnml/buffer \
-	libnml/posemath libnml \
+	libnml/posemath \
+	libnml \
 	\
 	emc/usr_intf/axis \
 	emc/usr_intf/touchy \
