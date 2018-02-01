@@ -19,7 +19,7 @@ USERSRCS += $(INIFILESRCS) $(LIBINISRCS)
 # 	@rm -f $@
  # 	$(Q)$(CXX) $(LDFLAGS) -Wl,-soname,$(notdir $@) -shared -o $@ $^
   #   
-../libexec/inivar: $(call TOOBJS, $(INIFILESRCS)) ../lib/liblinuxcncini.so.0
+../libexec/inivar: $(call TOOBJS, $(INIFILESRCS)) ../fakelib/liblinuxcncini.so.0
 	$(ECHO) Linking $(notdir $@)
 	@mkdir -p $(dir $@)
 	$(Q)$(CXX) $(LDFLAGS) -o $@ $^ 

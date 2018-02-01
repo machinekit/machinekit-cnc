@@ -22,8 +22,8 @@ USERSRCS += $(LIBNMLSRCS)
 
 TARGETS += ../lib/libnml.so ../lib/libnml.so.0
 
-../lib/libnml.so.0: $(call TOOBJS,$(LIBNMLSRCS)) ../lib/librtapi_math.so.0
+../lib/libnml.so.0: $(call TOOBJS,$(LIBNMLSRCS)) ../fakelib/librtapi_math.so.0
 	$(ECHO) Creating shared library $(notdir $@)
-	@mkdir -p ../lib
+	@mkdir -p ../fakelib
 	@rm -f $@
 	$(Q)$(CXX) $(LDFLAGS) -Wl,-soname,$(notdir $@) -shared -o $@ $^
