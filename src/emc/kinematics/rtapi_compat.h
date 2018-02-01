@@ -1,1 +1,1 @@
-/usr/src/machinekit-cnc/include/rtapi_compat.h
+/usr/src/machinekit-cnc/fakeinclude/rtapi_compat.h

@@ -1,1 +1,1 @@
-/usr/src/machinekit-cnc/include/rtapi_bitops.h
+/usr/src/machinekit-cnc/fakeinclude/rtapi_bitops.h

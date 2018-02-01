@@ -22,7 +22,7 @@ $(DELTAMODULE): $(call TOOBJS, $(DELTAMODULESRCS))
 PYTARGETS += $(DELTAMODULE)
 
 ../bin/genserkins: $(call TOOBJS, $(GENSERKINSSRCS)) \
-	../fakelib/liblinuxcnchal.so.so \
+	../fakelib/liblinuxcnchal.so \
 	../fakelib/libposemath.so \
 	../fakelib/librtapi_math.so.0
 	$(ECHO) Linking $(notdir $@)
@@ -30,7 +30,7 @@ PYTARGETS += $(DELTAMODULE)
 TARGETS += ../bin/genserkins
 
 ../bin/drawbotkins: $(call TOOBJS, $(GENSERKINSSRCS)) \
-	../fakelib/liblinuxcnchal.so.so \
+	../fakelib/liblinuxcnchal.so \
 	../fakelib/libposemath.so \
 	../fakelib/librtapi_math.so.0
 	$(ECHO) Linking $(notdir $@)

@@ -1,1 +1,1 @@
-/usr/src/machinekit-cnc/include/rtapi_atomics.h
+/usr/src/machinekit-cnc/fakeinclude/rtapi_atomics.h

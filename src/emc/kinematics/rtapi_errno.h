@@ -1,1 +1,1 @@
-/usr/src/machinekit-cnc/include/rtapi_errno.h
+/usr/src/machinekit-cnc/fakeinclude/rtapi_errno.h

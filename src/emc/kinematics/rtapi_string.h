@@ -1,1 +1,1 @@
-/usr/src/machinekit-cnc/include/rtapi_string.h
+/usr/src/machinekit-cnc/fakeinclude/rtapi_string.h
