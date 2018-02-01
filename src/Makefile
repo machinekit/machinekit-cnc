@@ -312,7 +312,6 @@ INCLUDE := $(patsubst %,-I%, $(INCLUDES))
 ifeq ($(BUILD_PYTHON),yes)
 INCLUDE += $(PYTHON_CPPFLAGS)
 endif
-###INCLUDE += $(EMC2_HOME)/include
 
 # trap build errors by making it possible to compare configure SHA vs build SHA
 # see configure.ac GIT_CONFIG_SHA for the configure-time string
@@ -571,13 +570,6 @@ TARGETS += ../bin/gremlin_view
 	$(Q)(echo "gremlin_view.standalone_gremlin_view()")>>$@
 	$(Q)chmod +x $@
 
-# halshow as standalone app:
-#TARGETS += ../bin/halshow
-#../bin/halshow: Makefile
-#	$(Q)rm -f $@
-#	$(Q)(echo "#!$(TCLSH)")>|$@
-#	$(Q)(echo "source $(EMC2_TCL_LIB_DIR)/bin/halshow.tcl")>>$@
-#	$(Q)chmod +x $@
 
 # And make userspace depend on $(TARGETS)
 userspace: $(TARGETS)
@@ -782,11 +774,6 @@ endif
 
 install-kernel-indep: install-dirs
 	$(FILE) objects/*.msg $(DESTDIR)$(tcldir)/msgs
-#	$(EXE) ../scripts/realtime $(DESTDIR)$(bindir)
-#	$(EXE) ../scripts/halrun $(DESTDIR)$(bindir)
-#	$(EXE) ../scripts/haltcl $(DESTDIR)$(bindir)
-#	$(EXE) ../scripts/simulate_probe $(DESTDIR)$(bindir)
-#	$(EXE) ../scripts/sim_pin $(DESTDIR)$(bindir)
 	$(FILE) ../*.png ../*.gif $(DESTDIR)$(datadir)/linuxcnc
 
 	# install all the sample configs, including subdirs (tar is required on debian systems, and common on others)
@@ -796,23 +783,11 @@ install-kernel-indep: install-dirs
 	$(EXE) ../scripts/linuxcnc $(DESTDIR)$(bindir)
 	$(EXE) ../scripts/machinekit $(DESTDIR)$(bindir)
 	$(EXE) ../scripts/linuxcnc_info $(DESTDIR)$(bindir)
-#	$(EXE) ../scripts/linuxcnc_var $(DESTDIR)$(bindir)
-#	$(EXE) ../scripts/latency-test $(DESTDIR)$(bindir)
-#ifeq ($(HAVE_WORKING_BLT),yes)
-#	$(EXE) ../scripts/latency-plot $(DESTDIR)$(bindir)
-#	$(EXE) ../scripts/latency-histogram $(DESTDIR)$(bindir)
-#endif
-#	$(EXE) ../scripts/pyvcp_demo $(DESTDIR)$(bindir)
-#	$(EXE) ../scripts/gladevcp_demo $(DESTDIR)$(bindir)
 	$(EXE) ../scripts/linuxcncmkdesktop $(DESTDIR)$(bindir)
 	$(FILE) $(filter ../lib/%.a ../lib/%.so.0,$(TARGETS)) $(DESTDIR)$(libdir)
 	cp --no-dereference $(filter ../lib/%.so, $(TARGETS)) $(DESTDIR)$(libdir)
-#	$(FILE) ../rtlib/ulapi-*.so $(DESTDIR)$(EMC2_RTLIB_BASE_DIR)
 	-ldconfig $(DESTDIR)$(libdir)
 	$(FILE) $(HEADERS) $(DESTDIR)$(includedir)/linuxcnc/
-#ifeq ($(USERMODE_PCI),yes)
-#	$(FILE) $(USERPCI_HEADERS) $(DESTDIR)$(includedir)/linuxcnc/userpci
-#endif
 	$(FILE) $(DOCS_HELP) $(DESTDIR)$(docdir)
 	$(TREE) $(NC_FILES) $(DESTDIR)$(ncfilesdir)
 	$(EXE) ../nc_files/M101 $(DESTDIR)$(ncfilesdir)
@@ -821,7 +796,6 @@ install-kernel-indep: install-dirs
 	$(FILE) Makefile.modinc $(DESTDIR)$(datadir)/linuxcnc
 	$(FILE) Makefile.inc $(DESTDIR)$(datadir)/linuxcnc
 	$(EXE) $(TCL) $(DESTDIR)$(tcldir)
-#	$(FILE) ../tcl/hal.so $(DESTDIR)$(tcldir)
 	$(FILE) ../tcl/linuxcnc.so $(DESTDIR)$(tcldir)
 	$(FILE) ../tcl/pkgIndex.tcl $(DESTDIR)$(tcldir)
 	$(EXE) $(TCL_BIN) $(DESTDIR)$(tcldir)/bin
@@ -840,25 +814,7 @@ install-kernel-indep: install-dirs
 	$(FILE) ../src/emc/usr_intf/pncconf/pncconf-help/*.txt $(DESTDIR)$(prefix)/share/linuxcnc/pncconf/pncconf-help
 	$(FILE) ../src/emc/usr_intf/pncconf/pncconf-help/*.png $(DESTDIR)$(prefix)/share/linuxcnc/pncconf/pncconf-help
 
-#	$(FILE) ../lib/python/gladevcp/hal_python.xml $(DESTDIR)$(datadir)/glade3/catalogs/
-#	$(FILE) ../lib/python/gladevcp/widget*.png  $(DESTDIR)$(datadir)/glade3/pixmaps/
-
-#	$(FILE) ../share/gtksourceview-2.0/language-specs/*.lang  $(DESTDIR)$(datadir)/gtksourceview-2.0/language-specs/
-#	$(FILE) rtapi/rsyslogd-linuxcnc.conf $(DESTDIR)$(sysconfdir)/rsyslog.d/linuxcnc.conf
-#	$(FILE) rtapi/shmdrv/limits.d-machinekit.conf \
-#		$(DESTDIR)$(sysconfdir)/security/limits.d/machinekit.conf
-#	$(FILE) rtapi/shmdrv/shmdrv.rules \
-#		$(DESTDIR)$(sysconfdir)/udev/rules.d/50-shmdrv.rules
-#ifeq ($(BUILD_EMCWEB),yes)
-#	$(FILE) ../www/css/images/* $(DESTDIR)$(datadir)/linuxcnc/doc-root/css/images
-#	$(FILE) ../www/css/*css $(DESTDIR)$(datadir)/linuxcnc/doc-root/css
-#	$(FILE) ../www/js/*js $(DESTDIR)$(datadir)/linuxcnc/doc-root/js
-#	$(FILE) ../www/res/* $(DESTDIR)$(datadir)/linuxcnc/doc-root/res
-#	$(FILE) ../www/*html $(DESTDIR)$(datadir)/linuxcnc/doc-root/
-#endif
-#	$(FILE) ../etc/linuxcnc/machinekit.ini $(DESTDIR)$(sysconfdir)/linuxcnc
 	$(EXE) ../bin/profile_axis $(DESTDIR)$(bindir)
-#	$(EXE) ../bin/mank $(DESTDIR)$(bindir)
 
 ifeq ($(BUILD_PYTHON),yes)
 install-kernel-indep: install-python
@@ -867,39 +823,18 @@ install-python: install-dirs
 	$(DIR) $(DESTDIR)$(SITEPY)/touchy
 	$(DIR) $(DESTDIR)$(SITEPY)/gscreen
 	$(DIR) $(DESTDIR)$(SITEPY)/gmoccapy
-#	$(DIR) $(DESTDIR)$(SITEPY)/gladevcp
-#	$(DIR) $(DESTDIR)$(SITEPY)/stepconf
 	$(DIR) $(DESTDIR)$(SITEPY)/machinekit
-#	$(DIR) $(DESTDIR)$(SITEPY)/machinekit/nosetests
 	$(DIR) $(DESTDIR)$(SITEPY)/fdm
 	$(DIR) $(DESTDIR)$(SITEPY)/fdm/config
 	$(DIR) $(DESTDIR)$(datadir)/fdm/thermistor_tables
-#	$(DIR) $(DESTDIR)$(SITEPY)/drivers
 	$(FILE) ../lib/python/*.py ../lib/python/*.so $(DESTDIR)$(SITEPY)
 	$(FILE) ../lib/python/rs274/*.py $(DESTDIR)$(SITEPY)/rs274
 	$(FILE) ../lib/python/touchy/*.py $(DESTDIR)$(SITEPY)/touchy
 	$(FILE) ../lib/python/gscreen/*.py $(DESTDIR)$(SITEPY)/gscreen
 	$(FILE) ../lib/python/gmoccapy/*.py $(DESTDIR)$(SITEPY)/gmoccapy
-#	$(FILE) ../lib/python/gladevcp/*.py $(DESTDIR)$(SITEPY)/gladevcp
-#	$(FILE) ../lib/python/gladevcp/*.glade $(DESTDIR)$(SITEPY)/gladevcp
-#	$(FILE) ../lib/python/stepconf/*.py $(DESTDIR)$(SITEPY)/stepconf
 	$(FILE) ../lib/python/machinekit/*.py $(DESTDIR)$(SITEPY)/machinekit/
-#	$(FILE) ../lib/python/machinekit/nosetests/*.py $(DESTDIR)$(SITEPY)/machinekit/nosetests
-#	$(FILE) ../lib/python/machinekit/*.so $(DESTDIR)$(SITEPY)/machinekit/
 	$(FILE) ../lib/python/fdm/*.py $(DESTDIR)$(SITEPY)/fdm
 	$(FILE) ../lib/python/fdm/config/*.py $(DESTDIR)$(SITEPY)/fdm/config
-#	$(FILE) ../lib/python/drivers/*.py $(DESTDIR)$(SITEPY)/drivers
-#	$(EXE) ../bin/stepconf $(DESTDIR)$(bindir)
-#	$(EXE) ../bin/pncconf $(DESTDIR)$(bindir)
-#	$(EXE) ../bin/hal_input $(DESTDIR)$(bindir)
-#	$(EXE) ../bin/hal_gpio_mcp23017 $(DESTDIR)$(bindir)
-#	$(EXE) ../bin/hal_pwm_pca9685 $(DESTDIR)$(bindir)
-#	$(EXE) ../bin/hal_storage $(DESTDIR)$(bindir)
-#	$(EXE) ../bin/hal_temp_ads7828 $(DESTDIR)$(bindir)
-#	$(EXE) ../bin/hal_temp_bbb $(DESTDIR)$(bindir)
-#	$(EXE) ../bin/hal_temp_atlas $(DESTDIR)$(bindir)
-#	$(EXE) ../bin/pyvcp $(DESTDIR)$(bindir)
-#	$(EXE) ../bin/gladevcp $(DESTDIR)$(bindir)
 	$(EXE) ../bin/axis $(DESTDIR)$(bindir)
 	$(EXE) ../bin/axis-remote $(DESTDIR)$(bindir)
 	$(EXE) ../bin/debuglevel $(DESTDIR)$(bindir)
@@ -910,7 +845,6 @@ install-python: install-dirs
 	$(EXE) ../bin/touchy $(DESTDIR)$(bindir)
 	$(EXE) ../bin/gscreen $(DESTDIR)$(bindir)
 	$(EXE) ../bin/gmoccapy $(DESTDIR)$(bindir)
-#	$(EXE) $(patsubst %.py,../bin/%,$(VISMACH_PY)) $(DESTDIR)$(bindir)
 	$(FILE) ../share/linuxcnc/machinekit-wizard.gif $(DESTDIR)$(prefix)/share/linuxcnc
 	$(FILE) emc/usr_intf/axis/etc/axis_light_background $(DESTDIR)$(docdir)
 	$(FILE) emc/usr_intf/axis/README $(DESTDIR)$(docdir)/README.axis
@@ -920,33 +854,14 @@ install-python: install-dirs
 	$(TREE) ../share/gscreen/skins/* $(DESTDIR)$(datadir)/gscreen/skins
 	$(FILE) ../share/gmoccapy/images/*.png ../share/gmoccapy/images/*.gif ../share/gmoccapy/images/*.svg $(DESTDIR)$(datadir)/gmoccapy/images
 	$(FILE) ../share/fdm/thermistor_tables/*.txt $(DESTDIR)$(datadir)/fdm/thermistor_tables
-#	$(EXE) ../bin/configserver $(DESTDIR)$(bindir)
-#	$(EXE) ../bin/videoserver $(DESTDIR)$(bindir)
-#	$(EXE) ../bin/mkwrapper $(DESTDIR)$(bindir)
-#	$(EXE) ../bin/mklauncher $(DESTDIR)$(bindir)
 	$(EXE) ../bin/gremlin $(DESTDIR)$(bindir)
 	$(EXE) ../bin/lintini $(DESTDIR)$(bindir)
 	$(EXE) ../bin/teach-in $(DESTDIR)$(bindir)
 	$(EXE) ../bin/tracking-test $(DESTDIR)$(bindir)
-#	$(EXE) ../bin/yapps $(DESTDIR)$(bindir)
 	$(EXE) ../scripts/gcode-to-ngc $(DESTDIR)$(bindir)
 	$(EXE) ../scripts/g1-to-g23 $(DESTDIR)$(bindir)
-#	$(EXE) ../scripts/hal-graph $(DESTDIR)$(bindir)
 endif
 
-#install-kernel-dep: install-dirs
-#	$(SETUID) ../libexec/rtapi_app_* $(DESTDIR)$(EMC2_LIBEXEC_DIR)
-#ifeq ($(HAVE_KERNEL_THREADS),yes)
-#	$(SETUID) ../libexec/linuxcnc_module_helper $(DESTDIR)$(EMC2_LIBEXEC_DIR)
-#endif
-#ifeq ($(BUILD_DRIVERS),yes)
-#	$(SETUID) ../libexec/pci_write $(DESTDIR)$(EMC2_LIBEXEC_DIR)
-#	$(SETUID) ../libexec/pci_read $(DESTDIR)$(EMC2_LIBEXEC_DIR)
-#endif
-#	$(EXE) ../libexec/inivar $(DESTDIR)$(EMC2_LIBEXEC_DIR)
-#	$(EXE) ../libexec/rtapi_msgd $(DESTDIR)$(EMC2_LIBEXEC_DIR)
-#	$(EXE) ../libexec/flavor $(DESTDIR)$(EMC2_LIBEXEC_DIR)
-#	$(FILE) ../etc/linuxcnc/rtapi.ini $(DESTDIR)$(sysconfdir)/linuxcnc
 
 	# RTAPI modules:  install userland flavor .so modules into
 	# e.g. /usr/lib/linuxcnc/modules and kthread flavor .ko
@@ -967,14 +882,6 @@ endif
 		done; \
 	    fi; \
 	done
-#ifeq ($(USE_SHMDRV),yes)
-#	for srcdir in ../rtlib/shmdrv/*; do \
-#	    kver=`basename $$srcdir`; \
-#	    echo Installing shmdrv.ko module for kernel version $$kver; \
-#	    $(DIR) $(DESTDIR)/lib/modules/$$kver/linuxcnc; \
-#	    $(FILE) $$srcdir/* $(DESTDIR)/lib/modules/$$kver/linuxcnc; \
-#	done;
-#endif
 endif # ! RUN_IN_PLACE
 
 CONF=../configs
@@ -1038,14 +945,6 @@ ifneq ($(KERNELRELEASE),)
 #
 INCLUDE_PREFIX = $(BASEPWD)
 
-
-# When the Submakefile is included in the kbuild Makefile, the
-# module's obj-m and foo-objs definitions may remain in the Submakefile
-#include $(BASEPWD)/machinetalk/Submakefile
-#include $(BASEPWD)/machinetalk/msgcomponents/Submakefile
-#include $(BASEPWD)/rtapi/Submakefile
-#include $(BASEPWD)/rtapi/shmdrv/Submakefile
-#include $(BASEPWD)/rtapi/rtapi_math/Submakefile
 endif # KERNELRELEASE non-empty
 
 # $(BASEPWD) is used here, instead of relative paths, because that's
