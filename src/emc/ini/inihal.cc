@@ -21,7 +21,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "rcs_print.hh"
 #include "emc.hh"
 #include <stdio.h>
-#include "../../../include/hal.h"
+#include "hal.h"
 #include "rtapi.h"
 #include "inihal.hh"
 
