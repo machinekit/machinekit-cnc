@@ -77,7 +77,7 @@ to another.
 #ifndef MOTION_H
 #define MOTION_H
 
-#include "../../../include/hal.h"
+#include "hal.h"
 #include "posemath.h"		/* PmCartesian, PmPose, pmCartMag() */
 #include "emcpos.h"		/* EmcPose */
 #include "cubic.h"		/* CUBIC_STRUCT, CUBIC_COEFF */
