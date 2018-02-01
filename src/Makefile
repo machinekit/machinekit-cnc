@@ -571,12 +571,12 @@ TARGETS += ../bin/gremlin_view
 	$(Q)chmod +x $@
 
 # halshow as standalone app:
-TARGETS += ../bin/halshow
-../bin/halshow: Makefile
-	$(Q)rm -f $@
-	$(Q)(echo "#!$(TCLSH)")>|$@
-	$(Q)(echo "source $(EMC2_TCL_LIB_DIR)/bin/halshow.tcl")>>$@
-	$(Q)chmod +x $@
+#TARGETS += ../bin/halshow
+#../bin/halshow: Makefile
+#	$(Q)rm -f $@
+#	$(Q)(echo "#!$(TCLSH)")>|$@
+#	$(Q)(echo "source $(EMC2_TCL_LIB_DIR)/bin/halshow.tcl")>>$@
+#	$(Q)chmod +x $@
 
 # And make userspace depend on $(TARGETS)
 userspace: $(TARGETS)
@@ -855,7 +855,7 @@ install-kernel-indep: install-dirs
 #	$(FILE) ../www/res/* $(DESTDIR)$(datadir)/linuxcnc/doc-root/res
 #	$(FILE) ../www/*html $(DESTDIR)$(datadir)/linuxcnc/doc-root/
 #endif
-	$(FILE) ../etc/linuxcnc/machinekit.ini $(DESTDIR)$(sysconfdir)/linuxcnc
+#	$(FILE) ../etc/linuxcnc/machinekit.ini $(DESTDIR)$(sysconfdir)/linuxcnc
 	$(EXE) ../bin/profile_axis $(DESTDIR)$(bindir)
 #	$(EXE) ../bin/mank $(DESTDIR)$(bindir)
 
@@ -923,7 +923,7 @@ install-python: install-dirs
 #	$(EXE) ../bin/videoserver $(DESTDIR)$(bindir)
 #	$(EXE) ../bin/mkwrapper $(DESTDIR)$(bindir)
 #	$(EXE) ../bin/mklauncher $(DESTDIR)$(bindir)
-#	$(EXE) ../bin/gremlin $(DESTDIR)$(bindir)
+	$(EXE) ../bin/gremlin $(DESTDIR)$(bindir)
 	$(EXE) ../bin/lintini $(DESTDIR)$(bindir)
 	$(EXE) ../bin/teach-in $(DESTDIR)$(bindir)
 	$(EXE) ../bin/tracking-test $(DESTDIR)$(bindir)

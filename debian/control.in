@@ -1,7 +1,7 @@
 Source: machinekit-cnc
 Section: misc
 Priority: extra
-Maintainer: John Morris <john@dovetail-automata.com>
+Maintainer: ArcEye <arceyeATmgwareDOTcoDOTuk>
 Build-Depends: debhelper (>= 6),
     autoconf (>= 2.63), automake, libboost-python-dev, libgl1-mesa-dev,
     libglu1-mesa-dev, libgtk2.0-dev, libmodbus-dev (>= 3.0), libudev-dev,
@@ -19,12 +19,3 @@ Build-Depends: debhelper (>= 6),
     python-simplejson, libtk-img, libboost-thread-dev,
     python-pyftpdlib, tcl8.6-dev, tk8.6-dev @BUILD_DEPS@
 Standards-Version: 2.1.0
-
-Package: machinekit-cnc
-Breaks: machinekit
-Architecture: any
-Depends: ${shlibs:Depends}, machinekit-hal
-Description: PC based motion controller for real-time Linux
- Machinekit is the next-generation Enhanced Machine Controller which
- provides motion control for CNC machine tools and robotic
- applications (milling, cutting, routing, etc.).
