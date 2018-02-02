@@ -3104,7 +3104,7 @@ fi
 # files that get created by ./configure                                      #
 ##############################################################################
 AC_CONFIG_FILES([../scripts/gen-rtapi.ini.sh])
-AC_CONFIG_FILES([../scripts/check-build-vs-configure-sha], [chmod +x ../scripts/check-build-vs-configure-sha])
+#AC_CONFIG_FILES([../scripts/check-build-vs-configure-sha], [chmod +x ../scripts/check-build-vs-configure-sha])
 AC_CONFIG_FILES([../scripts/linuxcnc], [chmod +x ../scripts/linuxcnc])
 AC_CONFIG_FILES([../scripts/linuxcncmkdesktop], [chmod +x ../scripts/linuxcncmkdesktop])
 AC_CONFIG_FILES(../lib/python/nf.py)
