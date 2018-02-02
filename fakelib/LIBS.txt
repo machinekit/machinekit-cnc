@@ -1,0 +1,12 @@
+liblinuxcnchal.so.0
+liblinuxcncini.so.0
+libposemath.so.0
+libmtalk.so.0
+librtapi_math.so.0
+libmachinetalk-pb2++.so.0
+liblinuxcnchal.so
+libmtalk.so
+librtapi_math.so
+liblinuxcncini.so
+libposemath.so
+libmachinetalk-pb2++.so

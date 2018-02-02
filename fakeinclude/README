@@ -1,0 +1,4 @@
+This dir is just used for builds and does not form part of the package.
+
+It requires to be populated with the files found in INCLUDES.txt from
+a build of machinekit-hal
