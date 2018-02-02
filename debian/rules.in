@@ -197,7 +197,7 @@ binary-arch: build install
 	dh_makeshlibs
 	dh_installdeb
 
-#	# delete files that should be in machinekit-<flavor> package
+#	# delete files that should be in machinekit-hal-<flavor> package
 	rm -f debian/machinekit/usr/bin/comp
 	rm -f debian/machinekit/usr/share/linuxcnc/Makefile.modinc
 	rm -f debian/machinekit/usr/share/linuxcnc/Makefile.inc
