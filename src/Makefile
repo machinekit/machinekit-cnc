@@ -45,7 +45,8 @@ EDIT_BRANCH ?= $(shell git rev-parse --abbrev-ref HEAD)
 # If BUILD_VERBOSE equals 0 then the above command will be hidden.
 # If BUILD_VERBOSE equals 1 then the above command is displayed.
 
-ifeq ("$(origin V)", "command line")
+ifeq ("$(origin V)", "com
+mand line")
   BUILD_VERBOSE = $(V)
 endif
 ifndef BUILD_VERBOSE
@@ -195,7 +196,6 @@ INSTALL_DIRS :=
 # Submakefiles from each of these directories will be included if they exist
 SUBDIRS := \
 	\
-	../man \
 	libnml/linklist \
 	libnml/cms \
 	libnml/rcs \
@@ -639,8 +639,8 @@ depclean:
 	-rm -rf depends
 
 docclean:
-	-rm -f ../man/man9/*.9icomp
-	-rm -f ../man/doc/man9/*.asciidoc
+#	-rm -f ../man/man9/*.9icomp
+#	-rm -f ../man/doc/man9/*.asciidoc
 
 clean: depclean modclean docclean
 	find . -name '*.o' |xargs rm -f
@@ -743,9 +743,6 @@ install-dirs:
 		$(DESTDIR)$(EMC2_LIBEXEC_DIR) \
 		$(DESTDIR)/etc/X11/app-defaults $(DESTDIR)$(tcldir)/bin \
 		$(DESTDIR)$(tcldir)/scripts \
-		$(DESTDIR)$(mandir)/man1 \
-		$(DESTDIR)$(mandir)/man3 \
-		$(DESTDIR)$(mandir)/man9 \
 		$(DESTDIR)$(tcldir)/msgs \
 		$(DESTDIR)$(localedir)/de/LC_MESSAGES \
 		$(DESTDIR)$(datadir)/axis/images \
