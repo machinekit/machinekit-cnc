@@ -11,7 +11,8 @@ USERSRCS += $(POSEMATHSRCS)
 #	@rm -f $@
 #	@$(CXX) $(LDFLAGS) -Wl,-soname,$(notdir $@) -shared -o $@ $^
 
-../include/%.h: ./libnml/posemath/%.h
-	cp $^ $@
-../include/%.hh: ./libnml/posemath/%.hh
-	cp $^ $@
+# don't want these headers - already in machinekit-hal
+#../include/%.h: ./libnml/posemath/%.h
+#	cp $^ $@
+#../include/%.hh: ./libnml/posemath/%.hh
+#	cp $^ $@
