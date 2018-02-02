@@ -501,10 +501,6 @@ HEADERS := \
     libnml/os_intf/shm.hh \
     libnml/os_intf/_timer.h \
     libnml/os_intf/timer.hh \
-    libnml/posemath/posemath.h \
-    libnml/posemath/gotypes.h \
-    libnml/posemath/gomath.h \
-    libnml/posemath/sincos.h \
     libnml/rcs/rcs.hh \
     libnml/rcs/rcs_exit.hh \
     libnml/rcs/rcs_print.hh \
