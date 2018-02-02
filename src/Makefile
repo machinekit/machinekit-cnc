@@ -45,8 +45,7 @@ EDIT_BRANCH ?= $(shell git rev-parse --abbrev-ref HEAD)
 # If BUILD_VERBOSE equals 0 then the above command will be hidden.
 # If BUILD_VERBOSE equals 1 then the above command is displayed.
 
-ifeq ("$(origin V)", "com
-mand line")
+ifeq ("$(origin V)", "command line")
   BUILD_VERBOSE = $(V)
 endif
 ifndef BUILD_VERBOSE
@@ -199,7 +198,6 @@ SUBDIRS := \
 	libnml/linklist \
 	libnml/cms \
 	libnml/rcs \
-	libnml/inifile \
 	libnml/os_intf \
 	libnml/nml \
 	libnml/buffer \
@@ -487,8 +485,6 @@ HEADERS := \
     libnml/cms/cmsdiag.hh \
     libnml/cms/tcp_opts.hh \
     libnml/cms/tcp_srv.hh \
-    libnml/inifile/inifile.h \
-    libnml/inifile/inifile.hh \
     libnml/linklist/linklist.hh \
     libnml/nml/cmd_msg.hh \
     libnml/nml/nml.hh \
@@ -954,7 +950,6 @@ EXTRA_CFLAGS = $(RTFLAGS) \
 	-I$(INCLUDE_PREFIX)/libnml/linklist \
 	-I$(INCLUDE_PREFIX)/libnml/cms \
 	-I$(INCLUDE_PREFIX)/libnml/rcs \
-	-I$(INCLUDE_PREFIX)/libnml/inifile \
 	-I$(INCLUDE_PREFIX)/libnml/os_intf \
 	-I$(INCLUDE_PREFIX)/libnml/nml \
 	-I$(INCLUDE_PREFIX)/libnml/buffer \
