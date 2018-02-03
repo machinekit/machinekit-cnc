@@ -202,8 +202,8 @@ binary-arch: build install
 	rm -f debian/machinekit/usr/share/linuxcnc/Makefile.modinc
 	rm -f debian/machinekit/usr/share/linuxcnc/Makefile.inc
 
-	#enable buster builds to work with problematic shlib deps in current packages
-	dh_shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info -l debian/machinekit/usr/lib
+	#disable dh_shlibs, it is completely confused by linkage to libs not in packages
+	##dh_shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info -l debian/machinekit/usr/lib
 	dh_gencontrol
 	
 	dh_md5sums
