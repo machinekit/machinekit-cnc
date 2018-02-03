@@ -9,7 +9,7 @@ OLDPWD=$PWD
 cd $1/fakelib ;
 exec < ./LIBS.txt
     while read LINE ; do
-    cp -d -f $2/lib/$LINE $1/fakelib/;
+    cp -d -f -v $2/lib/$LINE $1/fakelib/;
     done
 
 cd $OLDPWD

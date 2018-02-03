@@ -9,7 +9,7 @@ OLDPWD=$PWD
 cd $1/fakeinclude ;
 exec < ./INCLUDES.txt
     while read LINE ; do
-    cp -d -f $2/include/$LINE $1/include/;
+    cp -d -f -v $2/include/$LINE $1/fakeinclude/;
     done
 
 cd $OLDPWD
