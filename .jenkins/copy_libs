@@ -1,0 +1,15 @@
+# !/bin/bash
+
+## this file is used by Jenkins to copy libs required to build from machinekit-hal
+
+# $1 is root of machinekit-cnc/ $2 is root of machinekit-hal/
+
+OLDPWD=$PWD
+
+cd $1/fakelib ;
+exec < ./LIBS.txt
+    while read LINE ; do
+    cp -d -f $2/lib/$LINE $1/fakelib/;
+    done
+
+cd $OLDPWD
