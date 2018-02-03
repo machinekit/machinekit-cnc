@@ -1,1 +1,1 @@
-/usr/src/machinekit-cnc/fakeinclude/rtapi.h
+../../../fakeinclude/rtapi.h

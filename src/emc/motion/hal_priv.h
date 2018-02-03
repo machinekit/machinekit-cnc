@@ -1,1 +1,1 @@
-/usr/src/machinekit-cnc/fakeinclude/hal_priv.h
+../../../fakeinclude/hal_priv.h

@@ -1,1 +1,1 @@
-/usr/src/machinekit-cnc/fakeinclude/inifile.hh
+../../../fakeinclude/inifile.hh

@@ -1,1 +1,1 @@
-/usr/src/machinekit-cnc/fakeinclude/vtable.h
+../../../fakeinclude/vtable.h

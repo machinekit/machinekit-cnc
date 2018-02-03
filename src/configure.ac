@@ -2765,26 +2765,26 @@ AH_BOTTOM(#endif
 # Add per-flavor sections to the rtapi.ini generator                         #
 ##############################################################################
 
-AC_MSG_NOTICE([Building rtapi.ini generator script])
-cp ../scripts/gen-rtapi.ini.sh.in.tmpl ../scripts/gen-rtapi.ini.sh.in
-
-cat >> ../scripts/gen-rtapi.ini.sh.in <<EOFOUTER
-cat <<EOF
-m4_foreach([_cfg_flavor],[_cfg_all_flavors],[dnl
+#AC_MSG_NOTICE([Building rtapi.ini generator script])
+#cp ../scripts/gen-rtapi.ini.sh.in.tmpl ../scripts/gen-rtapi.ini.sh.in
+#
+#cat >> ../scripts/gen-rtapi.ini.sh.in <<EOFOUTER
+#cat <<EOF
+#m4_foreach([_cfg_flavor],[_cfg_all_flavors],[dnl
 
 
 #################################################
 # _cfg_flavor flavor section
 #
 @<:@flavor_[]_cfg_flavor@:>@
-# These values do not normally need to be changed.
-rtapi_app=@EMC2_LIBEXEC_DIR@/rtapi_app_[]_cfg_flavor
-RTS=@_cfg_flavor_upcase(_cfg_flavor)_THREADS_RTS@
-RTDIR=@_cfg_flavor_upcase(_cfg_flavor)_THREADS_RTDIR@
-MODULES=@_cfg_flavor_upcase(_cfg_flavor)_THREADS_EXTRA_KMODS@
-])
-EOF
-EOFOUTER
+## These values do not normally need to be changed.
+#rtapi_app=@EMC2_LIBEXEC_DIR@/rtapi_app_[]_cfg_flavor
+#RTS=@_cfg_flavor_upcase(_cfg_flavor)_THREADS_RTS@
+#RTDIR=@_cfg_flavor_upcase(_cfg_flavor)_THREADS_RTDIR@
+#MODULES=@_cfg_flavor_upcase(_cfg_flavor)_THREADS_EXTRA_KMODS@
+#])
+#EOF
+#EOFOUTER
 
 ##############################################################################
 # Section 6 - Check for tcl/tk support                                       #
@@ -3103,7 +3103,7 @@ fi
 ##############################################################################
 # files that get created by ./configure                                      #
 ##############################################################################
-AC_CONFIG_FILES([../scripts/gen-rtapi.ini.sh])
+#AC_CONFIG_FILES([../scripts/gen-rtapi.ini.sh])
 #AC_CONFIG_FILES([../scripts/check-build-vs-configure-sha], [chmod +x ../scripts/check-build-vs-configure-sha])
 AC_CONFIG_FILES([../scripts/linuxcnc], [chmod +x ../scripts/linuxcnc])
 AC_CONFIG_FILES([../scripts/linuxcncmkdesktop], [chmod +x ../scripts/linuxcncmkdesktop])

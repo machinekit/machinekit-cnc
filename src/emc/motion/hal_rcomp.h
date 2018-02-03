@@ -1,1 +1,1 @@
-/usr/src/machinekit-cnc/fakeinclude/hal_rcomp.h
+../../../fakeinclude/hal_rcomp.h

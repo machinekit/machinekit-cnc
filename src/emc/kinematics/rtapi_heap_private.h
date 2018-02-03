@@ -1,1 +1,1 @@
-/usr/src/machinekit-cnc/fakeinclude/rtapi_heap_private.h
+../../../fakeinclude/rtapi_heap_private.h

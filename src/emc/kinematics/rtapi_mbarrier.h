@@ -1,1 +1,1 @@
-/usr/src/machinekit-cnc/fakeinclude/rtapi_mbarrier.h
+../../../fakeinclude/rtapi_mbarrier.h

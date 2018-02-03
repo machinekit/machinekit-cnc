@@ -1,1 +1,1 @@
-/usr/src/machinekit-cnc/fakeinclude/hal_object_selectors.h
+../../../fakeinclude/hal_object_selectors.h

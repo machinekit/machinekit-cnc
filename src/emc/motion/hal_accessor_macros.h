@@ -1,1 +1,1 @@
-/usr/src/machinekit-cnc/fakeinclude/hal_accessor_macros.h
+../../../fakeinclude/hal_accessor_macros.h

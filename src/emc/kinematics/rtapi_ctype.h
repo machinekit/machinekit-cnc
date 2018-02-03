@@ -1,1 +1,1 @@
-/usr/src/machinekit-cnc/fakeinclude/rtapi_ctype.h
+../../../fakeinclude/rtapi_ctype.h

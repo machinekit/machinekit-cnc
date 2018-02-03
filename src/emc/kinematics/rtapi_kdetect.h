@@ -1,1 +1,1 @@
-/usr/src/machinekit-cnc/fakeinclude/rtapi_kdetect.h
+../../../fakeinclude/rtapi_kdetect.h
