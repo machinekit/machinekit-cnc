@@ -1,7 +1,7 @@
 
 Package: machinekit-cnc-posix
 Architecture: any
-Depends: machinekit-hal-posix (= ${binary:Version}), ${shlibs:Depends}, yapps2-runtime
+Depends: machinekit-hal-posix, ${shlibs:Depends}, yapps2-runtime
 Provides:  machinekit-cnc-posix
 Breaks: machinekit
 Enhances: machinekit-hal-posix

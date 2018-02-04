@@ -1,7 +1,7 @@
 
 Package: machinekit-cnc-rt-preempt
 Architecture: any
-Depends: machinekit-hal-rt-preempt (= ${binary:Version}), ${shlibs:Depends},
+Depends: machinekit-hal-rt-preempt, ${shlibs:Depends},
 # These Debian-style RT_PREEMPT package names are restricted by
 # architecture; ARM arch SOCs are all incompatible, so this can't be
 # easily done for ARM.
