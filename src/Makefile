@@ -773,6 +773,11 @@ install-kernel-indep: install-dirs
 	$(EXE) ../scripts/machinekit $(DESTDIR)$(bindir)
 	$(EXE) ../scripts/linuxcnc_info $(DESTDIR)$(bindir)
 	$(EXE) ../scripts/linuxcncmkdesktop $(DESTDIR)$(bindir)
+	$(EXE) ../scripts/latency-test $(DESTDIR)$(bindir)
+ifeq ($(HAVE_WORKING_BLT),yes)
+	$(EXE) ../scripts/latency-plot $(DESTDIR)$(bindir)
+	$(EXE) ../scripts/latency-histogram $(DESTDIR)$(bindir)
+endif
 	$(FILE) $(filter ../lib/%.a ../lib/%.so.0,$(TARGETS)) $(DESTDIR)$(libdir)
 	cp --no-dereference $(filter ../lib/%.so, $(TARGETS)) $(DESTDIR)$(libdir)
 	-ldconfig $(DESTDIR)$(libdir)
