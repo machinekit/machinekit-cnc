@@ -3,6 +3,13 @@ __machinekit-cnc__ is a split out repo which just contains the CNC elements of m
 It is not intended to be built as a RIP, because it has header and library dependencies upon the
 HAL side of machinekit, which are found in machinekit-hal.
 
+However this is now possible, should the need arise.
+First you must build __machinekit-hal__, so that the required libs and headers are available.
+Then build the __machinekit-cnc__ RIP with
+$ __./autogen.sh && ./configure --with-machinekit-hal='path/to/your/machinekit-hal/build' && make -j$(nproc)__
+
+You will need to make sure that both RIPs are in the pathspec for the current terminal session to use them
+
 __machinekit-cnc__ is built in a CI builder with access to the required headers/libs and is available
 as a package from the machinekit repo.
 
