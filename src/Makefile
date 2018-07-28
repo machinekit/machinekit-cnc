@@ -824,6 +824,7 @@ install-python: install-dirs
 	$(DIR) $(DESTDIR)$(SITEPY)/touchy
 	$(DIR) $(DESTDIR)$(SITEPY)/gscreen
 	$(DIR) $(DESTDIR)$(SITEPY)/gmoccapy
+	$(DIR) $(DESTDIR)$(SITEPY)/stepconf
 	$(DIR) $(DESTDIR)$(SITEPY)/machinekit
 	$(DIR) $(DESTDIR)$(SITEPY)/fdm
 	$(DIR) $(DESTDIR)$(SITEPY)/fdm/config
@@ -833,6 +834,7 @@ install-python: install-dirs
 	$(FILE) ../lib/python/touchy/*.py $(DESTDIR)$(SITEPY)/touchy
 	$(FILE) ../lib/python/gscreen/*.py $(DESTDIR)$(SITEPY)/gscreen
 	$(FILE) ../lib/python/gmoccapy/*.py $(DESTDIR)$(SITEPY)/gmoccapy
+	$(FILE) ../lib/python/stepconf/*.py $(DESTDIR)$(SITEPY)/stepconf
 	$(FILE) ../lib/python/fdm/*.py $(DESTDIR)$(SITEPY)/fdm
 	$(FILE) ../lib/python/fdm/config/*.py $(DESTDIR)$(SITEPY)/fdm/config
 	$(EXE) ../bin/axis $(DESTDIR)$(bindir)
@@ -845,6 +847,8 @@ install-python: install-dirs
 	$(EXE) ../bin/touchy $(DESTDIR)$(bindir)
 	$(EXE) ../bin/gscreen $(DESTDIR)$(bindir)
 	$(EXE) ../bin/gmoccapy $(DESTDIR)$(bindir)
+	$(EXE) ../bin/stepconf $(DESTDIR)$(bindir)
+	$(EXE) ../bin/pncconf $(DESTDIR)$(bindir)	
 	$(FILE) ../share/linuxcnc/machinekit-wizard.gif $(DESTDIR)$(prefix)/share/linuxcnc
 	$(FILE) emc/usr_intf/axis/etc/axis_light_background $(DESTDIR)$(docdir)
 	$(FILE) emc/usr_intf/axis/README $(DESTDIR)$(docdir)/README.axis
