@@ -115,13 +115,6 @@ endif
 # default target:  put before everything else
 default:
 
-# allow RIP build of machinekit-cnc by copying req libs and headers from existing machinekit-hal build
-#
-#ifeq ($(USE_MKHAL),yes)
-#    $(shell ../.jenkins/copy_libs $EMC2_HOME $MKHAL)
-#    $(shell ../.jenkins/copy_includes $EMC2_HOME $MKHAL)
-#endif
-
 ifeq ($(BUILD_ALL_FLAVORS),yes)
 # Top-level modules target
 #
@@ -273,7 +266,7 @@ ASSERT_EMPTY = $(if $(1), $(error "Should be empty but is not: $(1)"))
 $(call ASSERT_EMPTY,$(filter-out %.c %.cc %.js %.proto, $(USERSRCS)))
 $(call ASSERT_EMPTY,$(filter-out %.c %.proto, $(RTSRCS)))
 
-ifeq ($(USE_PYTHON),yes)
+ifeq ($(BUILD_PYTHON),yes)
 $(call TOOBJS,$(PYSRCS)) : EXTRAFLAGS += -fPIC $(call cc-option,-fno-strict-aliasing)
 USERSRCS += $(PYSRCS)
 endif
