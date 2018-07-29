@@ -10,3 +10,9 @@ librtapi_math.so
 liblinuxcncini.so
 libposemath.so
 libmachinetalk-pb2++.so
+libmachinetalk-npb.so
+libmachinetalk-npb.so.0
+liblinuxcncshm.so
+liblinuxcncshm.so.0
+liblinuxcnculapi.so.0
+liblinuxcnculapi.so

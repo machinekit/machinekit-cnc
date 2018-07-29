@@ -1,7 +1,7 @@
 
 Package: machinekit-cnc-xenomai
 Architecture: any
-Depends: machinekit-hal-xenomai, ${shlibs:Depends}, xenomai-runtime
+Depends: machinekit-hal-xenomai, python-gnome2, ${shlibs:Depends}, xenomai-runtime
 Provides:  machinekit-cnc-xenomai
 Breaks: machinekit
 Enhances: machinekit-hal-xenomai

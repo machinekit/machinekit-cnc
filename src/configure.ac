@@ -2261,6 +2261,7 @@ AC_DEFINE_UNQUOTED([EMC2_BIN_DIR], "$EMC2_BIN_DIR", [Directory for binaries])
 AC_DEFINE_UNQUOTED([EMC2_RTLIB_DIR], "$EMC2_RTLIB_DIR", [Directory for ulapi shared objects])
 AC_DEFINE_UNQUOTED([EMC2_PO_DIR], "$EMC2_PO_DIR", [Directory for po/mo translation files])
 AC_DEFINE_UNQUOTED([EMC2_NCFILES_DIR], "$EMC2_NCFILES_DIR", [Directory for nc files])
+
 AC_DEFINE_UNQUOTED([EMC2_IMAGE_DIR], "$EMC2_IMAGE_DIR", [Directory for images])
 AC_DEFINE_UNQUOTED([GIT_VERSION], "$GIT_VERSION", [Git version tag])
 AC_DEFINE_UNQUOTED([GIT_CONFIG_SHA], "$GIT_CONFIG_SHA", [SHA valid when configure was run])
@@ -2283,6 +2284,28 @@ AC_SUBST([EMC2_LATENCYPLOT_SCRIPT])
 AC_SUBST([EMC2_SUFFIX])
 AC_SUBST([EMC2_ICON])
 
+############################################################################
+# Subsection 3.2a - check for machinekit-hal location if RUN_IN_PLACE      #
+############################################################################
+
+if test "xyes" = "x$RUN_IN_PLACE"; then
+    AC_ARG_WITH(machinekit-hal,
+	[  --with-machinekit-hal=<path>                    Specify where the machinekit-hal build resides],
+	[
+    	    MKHAL=$withval
+	],[
+    	    MKHAL=""
+	])
+    AC_PATH_PROG(MKHAL,$MKHAL,"none")
+    if test $MKHAL = "none"
+	then
+	AC_MSG_ERROR([RIP build, but machinekit-hal path  not found])
+    else
+	USE_MKHAL=yes
+	AC_SUBST([MKHAL])
+	AC_SUBST([USE_MKHAL])
+    fi
+fi
 
 ##############################################################################
 # Subsection 3.3 - check for GTK                                             #
