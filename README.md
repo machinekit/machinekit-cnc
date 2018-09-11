@@ -23,3 +23,4 @@ The main reasons for stripping out the CNC stack, are
 - to simplify its maintenance 
 - make it easier to change elements within the CNC side of machinekit.  
 Future development with NML replacement, different interpreters etc. should be easier in a 'bare bones' repo.
+
