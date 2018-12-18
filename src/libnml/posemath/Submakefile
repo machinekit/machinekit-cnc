@@ -11,17 +11,8 @@ USERSRCS += $(POSEMATHSRCS)
 #	@rm -f $@
 #	@$(CXX) $(LDFLAGS) -Wl,-soname,$(notdir $@) -shared -o $@ $^
 
-<<<<<<< HEAD
 # don't want these headers - already in machinekit-hal
 #../include/%.h: ./libnml/posemath/%.h
 #	cp $^ $@
 #../include/%.hh: ./libnml/posemath/%.hh
 #	cp $^ $@
-=======
-../include/%.h: ./libnml/posemath/%.h
-	$(ECHO) Copying header file $@
-	$(Q)cp $^ $@
-../include/%.hh: ./libnml/posemath/%.hh
-	$(ECHO) Copying header file $@
-	$(Q)cp $^ $@
->>>>>>> 992c3b14b... Clean up build output
