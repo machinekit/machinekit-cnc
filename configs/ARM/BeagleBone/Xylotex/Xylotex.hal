@@ -15,13 +15,14 @@
 # go directly to the BBB
 # At powerup the LVC541 enable signals are pulled high, disabling the
 # drivers until
-# the BBB and Machinekit pull the enable signal low.
+# the BBB and MachineKit pull the enable signal low.
 #
 ########################################
 
 
 # Launch the setup script to make sure hardware setup looks good
 loadusr -w ./setup.sh
+loadusr -w config-pin -f ./Xylotex.bbio
 
 # ###################################
 # Core EMC/HAL Loads
@@ -36,10 +37,10 @@ loadrt tp
 loadrt [EMCMOT]EMCMOT servo_period_nsec=[EMCMOT]SERVO_PERIOD num_joints=[TRAJ]AXES tp=tp kins=trivkins
 
 
-# load low-level drivers
-loadrt hal_bb_gpio output_pins=107,113,119,126,214 input_pins=109,110,114,118,241
-loadrt [PRUCONF](DRIVER) prucode=$(HAL_RTMOD_DIR)/[PRUCONF](PRUBIN) [PRUCONF](CONFIG) halname=hpg
-#(JP) Not suing PID loop so comment out
+# load low-level drivers (must not include pins used by PRU)
+loadrt hal_bb_gpio output_pins=807,813,819,826,914,913,911 input_pins=809,810,814,818
+
+loadrt [PRUCONF](DRIVER) prucode=$(HAL_RTMOD_DIR)/[PRUCONF](PRUBIN) [PRUCONF](CONFIG) halname=hpg pru_period=25000
 loadrt pid count=4
 loadrt limit1 count=2
 
@@ -114,8 +115,12 @@ setp pid.0.FF2 [AXIS_0]FF2
 setp pid.0.deadband [AXIS_0]DEADBAND
 setp pid.0.maxoutput [AXIS_0]MAX_OUTPUT
 
-#(JP) Add home switch input on DB25-11
-net home-x bb_gpio.p8.in-10 => axis.0.home-sw-in
+# Add X home switch input on DB25-11
+#net home-x bb_gpio.p8.in-10 => axis.0.home-sw-in
+net both-home-x <= bb_gpio.p8.in-10
+net both-home-x => axis.0.home-sw-in
+net both-home-x => axis.0.neg-lim-sw-in
+net both-home-x => axis.0.pos-lim-sw-in
 #setp bb_gpio.p8.in-10.invert 1
 
 # ################
@@ -166,9 +171,12 @@ setp pid.1.FF2 [AXIS_1]FF2
 setp pid.1.deadband [AXIS_1]DEADBAND
 setp pid.1.maxoutput [AXIS_1]MAX_OUTPUT
 
-
-#(JP) Add home switch input on DB25-12
-net home-y bb_gpio.p8.in-14 => axis.1.home-sw-in
+# Add Y home switch input on DB25-12
+#net home-y bb_gpio.p8.in-14 => axis.1.home-sw-in
+net both-home-y <= bb_gpio.p8.in-14
+net both-home-y => axis.1.home-sw-in
+net both-home-y => axis.1.neg-lim-sw-in
+net both-home-y => axis.1.pos-lim-sw-in
 #setp bb_gpio.p8.in-14.invert 1
 
 # ################
@@ -219,9 +227,12 @@ setp pid.2.FF2 [AXIS_2]FF2
 setp pid.2.deadband [AXIS_2]DEADBAND
 setp pid.2.maxoutput [AXIS_2]MAX_OUTPUT
 
-
-#(JP) Add home switch input on DB25-13
-net home-z bb_gpio.p8.in-18 => axis.2.home-sw-in
+# Add Z home switch input on DB25-13
+#net home-z bb_gpio.p8.in-18 => axis.2.home-sw-in
+net both-home-z <= bb_gpio.p8.in-18
+net both-home-z => axis.2.home-sw-in
+net both-home-z => axis.2.neg-lim-sw-in
+net both-home-z => axis.2.pos-lim-sw-in
 #setp bb_gpio.p8.in-18.invert 1
 
 # ################
@@ -295,12 +306,8 @@ net tool-change-loop iocontrol.0.tool-change => iocontrol.0.tool-changed
 
 # this pin is output on DB25-1
 # it is also used to enable the LVC541 driver/receiver on the interface board
-net machine-on bb_gpio.p8.out-07 bb_gpio.p8.out-26 => halui.machine.is-on
-setp bb_gpio.p8.out-07.invert 1
-
-# this currently goes to an LED on the interface board
-# it is simply a duplicate of the enable signal on DB25-1 right now
-setp bb_gpio.p8.out-26.invert 1
+#net machine-on bb_gpio.p8.out-07 bb_gpio.p8.out-26 => halui.machine.is-on
+#setp bb_gpio.p8.out-07.invert 1
 
 # this input signal must be active LOW to allow the system to energize.
 # this should be fed through an NC STOP type switch from DB25-1 to DB25-10
@@ -312,13 +319,19 @@ setp bb_gpio.p8.out-26.invert 1
 #net estop-loop iocontrol.0.user-enable-out iocontrol.0.emc-enable-in
 #setp iocontrol.0.emc-enable-in true
 
-#probe input
+#probe input on DB25-15
 #net probe motion.probe-input <= bb_gpio.p8.in-18
 #setp bb_gpio.p8.in-18.invert 1
 
+# this currently goes to an LED on the interface board
+# it is simply a duplicate of the enable signal on DB25-1 right now
+#setp bb_gpio.p8.out-26.invert 1
+
 # this input signal must be active LOW to allow the system to energize.
 # this should be fed through an NC STOP type switch from DB25-1 to DB25-10
-net estop-in bb_gpio.p8.in-09 => iocontrol.0.emc-enable-in
+#net estop-in <= halui.machine.is-on
+net estop-in => bb_gpio.p8.in-09 
+net estop-in => iocontrol.0.emc-enable-in
 setp bb_gpio.p8.in-09.invert 1
 
 # This output is on DB25-14 and is currently tied to spindle control (M3/M5)
