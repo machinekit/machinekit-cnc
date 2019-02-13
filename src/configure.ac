@@ -879,6 +879,26 @@ AC_ARG_ENABLE(examples,
       BUILD_EXAMPLES=no
     ])
 
+##############################################################################
+# Subsection 3.5 - check for programs needed to build documentation          #
+#                                                                            #
+# Check for programs we need to build and install docs.                      #
+# (Optional, if not present, just don't build the docs.)                     #
+##############################################################################
+
+AC_ARG_WITH(python,
+    [  --with-python=<path>                    Specify the Python interpreter],
+    [
+        PYTHON=$withval
+    ],[
+        PYTHON=python2
+    ])
+AC_PATH_PROG(PYTHON,$PYTHON,"none")
+if test $PYTHON = "none"
+then
+    AC_MSG_ERROR([python not found])
+fi
+
 # protobuf-to-Javascript generator from  https://github.com/dcodeIO/ProtoBuf.js/wiki
 AC_PATH_PROG(PROTO2JS,proto2js, none)
 AC_SUBST([PROTO2JS])
@@ -2475,26 +2495,6 @@ AC_ARG_WITH(insmod,
     [
             INSMOD="$EMC2_BIN_DIR/linuxcnc_module_helper insert"
     ])
-
-##############################################################################
-# Subsection 3.5 - check for programs needed to build documentation          #
-#                                                                            #
-# Check for programs we need to build and install docs.                      #
-# (Optional, if not present, just don't build the docs.)                     #
-##############################################################################
-
-AC_ARG_WITH(python,
-    [  --with-python=<path>                    Specify the Python interpreter],
-    [
-        PYTHON=$withval
-    ],[
-        PYTHON=python2
-    ])
-AC_PATH_PROG(PYTHON,$PYTHON,"none")
-if test $PYTHON = "none"
-then
-    AC_MSG_ERROR([python not found])
-fi
 
 AC_MSG_CHECKING(whether pydot capability required)
 AC_ARG_ENABLE(pydot,
