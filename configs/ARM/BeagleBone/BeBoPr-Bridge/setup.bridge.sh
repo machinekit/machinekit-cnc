@@ -108,15 +108,10 @@ done
 
 # Setup LED with no trigger, so we can drive it with the GPIO pin
 # Change this if you want the LED tied to something else (like heartbeat)
-FILE=/sys/devices/ocp.*/bebopr_leds.*/leds/bebopr\:status_led/trigger
-if [ -f $FILE ] ; then
-	sudo -A su -c "echo none > $FILE" || bebopr_err led: $FILE
-fi
+#FILE=/sys/devices/ocp.*/bebopr_leds.*/leds/bebopr\:status_led/trigger
+#if [ -f $FILE ] ; then
+#	sudo -A su -c "echo none > $FILE" || bebopr_err led: $FILE
+#fi
 
-# Export PWM GPIO pins which are not exported by the overlay
-export_gpio <<- EOF
-	23	low	# P8.13		gpio0.23	PWM0
-	22	low	# P8.19		gpio0.22	PWM1
-	50	low	# p9.14		gpio1.18	PWM2
-EOF
+
 
