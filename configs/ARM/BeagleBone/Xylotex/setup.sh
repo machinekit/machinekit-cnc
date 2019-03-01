@@ -31,22 +31,18 @@ dir_err () {
 	exit 1
 }
 
-SLOTS=/sys/devices/bone_capemgr.*/slots
+PRU=/sys/class/uio/uio0
+echo -n "Waiting for $PRU "
 
-# Make sure required device tree overlay(s) are loaded
-for DTBO in cape-universal cape-bone-iio ; do
+while [ ! -r $PRU ]
+do
+    echo -n "."
+    sleep 1
+done
+echo OK
 
-	if grep -q $DTBO $SLOTS ; then
-		echo $DTBO overlay found
-	else
-		echo Loading $DTBO overlay
-		sudo -A bash -c "echo $DTBO > $SLOTS" || dtbo_err
-		sleep 1
-	fi
-done;
-
-if [ ! -r /sys/devices/ocp.*/helper.*/AIN0 ] ; then
-	echo Analog input files not found in /sys/devices/ocp.*/helper.* >&2
+if [ ! -r $PRU ] ; then
+	echo PRU control files not found in $PRU >&2
 	exit 1;
 fi
 
