@@ -1,5 +1,5 @@
 # File generated with BB pin configurator
-# title: BeBoPr-Bridge
+# title: Xylotex
 # Export GPIO pins:
 # One pin needs to be exported to enable the low-level clocks for the GPIO
 # modules (there is probably a better way to do this)
@@ -17,34 +17,29 @@
 # enable bits properly.  These pins _can_ however be set here without
 # causing problems.  You may wish to do this for documentation or to make
 # sure the pin starts with a known value as soon as possible.
+
 overlay cape-universal
 overlay cape-bone-iio
 #overlay cape-univ-emmc
- P8_07 high #gpio2.02 Enable_n (ECO location)
- P8_08 high #gpio2.03 X_MIN
- P8_09 in #gpio2.05 X_MAX
- P8_10 in #gpio2.04 Y_MIN
- P8_11 out #gpio1.13 X_DIR Used in PRU
- P8_12 out #gpio1.12 X_STP Used in PRU
- P8_13 low #gpio0.23 J2.PWM0-Heater
- P8_14 in #gpio0.26 Y_Max
- P8_15 out #gpio1.15 Y_DIR Used in PRU
- P8_16 out #gpio1_14 Y_STP Used in PRU
- P8_17 in #gpio0.27 Z_MIN
- P8_18 in #gpio2.01 Z_MAX
- P8_19 low #gpio0.22 J3.PWM1-Heater
- P8_26 out #gpio1.29 STATUS_LED
- P9_14 low #gpio1.18 J4.PWM2-Heater
- P9_15 out #gpio1.16 Z_STP Used in PRU
- P9_17 out #gpio0.05 B_DIR Used in PRU
- P9_18 out #gpio0.04 B_STP Used in PRU
- P9_21 out #gpio0.03 A_DIR Used in PRU
- P9_22 out #gpio0.02 A_STP Used in PRU
- P9_23 out #gpio1_17 Z_DIR Used in PRU
- P9_24 out #gpio0.15 SPINDLE
- P9_26 out #gpio0.14 AXES_ENA
-# P9_32 high #VDD_ADC
-# P9_33 in #THRM0
-# P9_34 high #GNDA_ADC
-# P9_35 in #THRM1
-# P9_36 in #THRM2
+P8_07 out # gpio2.2 Enable System
+P8_09 in # gpio2.5 ESTOPin
+P8_10 in # gpio2.4 XLIM
+P8_11 out # gpio1.13 X_Dir Used by PRU
+P8_12 out # gpio1.12 X_Step Used by PRU
+P8_13 out # gpio0.23 PWM0/SPINDLE
+P8_14 in # gpio0.26 YLIM
+P8_15 out # gpio1.15 Y_Dir Used by PRU
+P8_16 out # gpio1.14 Y_Step Used by PRU
+P8_18 in # gpio2.1 ZLIM
+P8_19 out # gpio0.22 PWM1
+P8_26 out # ESTOP Out (ENA_LED)
+P9_11 out # gpio0.31 A_Step Used by PRU
+P9_13 out # gpio0.30 A_Dir Used by PRU
+P9_14 out # gpio1.18 PWM2
+P9_15 out # gpio1.16 Z_Step Used by PRU
+#P9_17 out # gpio0.5 SCS
+#P9_18 in # gpio0.4 SDI
+#P9_21 out # gpio0.3 SDO
+#P9_22 out # gpio0.2 SCK
+P9_23 out # gpio1.17 Z_Dir Used by PRU
+

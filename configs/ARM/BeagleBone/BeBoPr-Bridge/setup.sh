@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright 2014
+# Copyright 2013
 # Charles Steinkuehler <charles@steinkuehler.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -45,3 +45,4 @@ if [ ! -r $PRU ] ; then
 	echo PRU control files not found in $PRU >&2
 	exit 1;
 fi
+

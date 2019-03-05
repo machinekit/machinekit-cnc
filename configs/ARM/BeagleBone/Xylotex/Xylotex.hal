@@ -337,10 +337,10 @@ net Output1 bb_gpio.p8.out-13 => motion.spindle-on
 setp bb_gpio.p8.out-13.invert 1
 
 # This output is on DB25-16
-net Output2 bb_gpio.p8.out-19 => halui.mist.is-on
-setp bb_gpio.p8.out-19.invert 1
+#net Output2 bb_gpio.p8.out-19 => halui.mist.is-on
+#setp bb_gpio.p8.out-19.invert 1
 
 # This output is on DB25-17 (M8/M9)
-net Output3 bb_gpio.p9.out-14 => halui.flood.is-on
-setp bb_gpio.p9.out-14.invert 1
+#net Output3 bb_gpio.p9.out-14 => halui.flood.is-on
+#setp bb_gpio.p9.out-14.invert 1
 
