@@ -1,12 +1,11 @@
 
-Package: machinekit-cnc-rt-preempt
+Package: machinekit-cnc-xenomai
 Architecture: any
-Provides:  machinekit-cnc-rt-preempt
+Provides:  machinekit-cnc-xenomai
 Breaks: machinekit
-Enhances: machinekit-hal-rt-preempt
-Depends: machinekit-hal-rt-preempt, python-gnome2, ${shlibs:Depends},
-    linux-image-rt-686-pae [i386], linux-image-rt-amd64 [amd64],
-    python-tk, python-imaging, python-imaging-tk, python-gst-0.10,
+Enhances: machinekit-hal-xenomai
+Depends: machinekit-hal-xenomai, python-gnome2, ${shlibs:Depends}, xenomai-runtime,
+    python-tk, python-pil, python-pil.imagetk, python-gst-1.0,
     python-glade2, python-vte, python-xlib, python-gtkglext1,
     python-configobj, python-simplejson, python-pyftpdlib, python-pydot, xdot,
     tcl8.6, tk8.6, bwidget (>= 1.7), libtk-img (>= 1.13), tclreadline, libgl1,
@@ -16,4 +15,5 @@ Description: PC based motion controller for real-time Linux
  provides motion control for CNC machine tools and robotic
  applications (milling, cutting, routing, etc.).
  .
- This package provides components and drivers that run on an RT-Preempt system.
+ This package provides components and drivers that run on a Xenomai
+ realtime system, with userspace threads.

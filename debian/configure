@@ -34,14 +34,26 @@ rules_enable_threads() {
 }
 
 do_posix() {
-    cat control.posix.in >> control
+    ## Jessie uses python-imaging, python-imaging-tk, python-gst-0.10
+    ## Stretch and above use python-pil, python-pil.imagetk, python-gst-1.0
+    if [ "$DISTRO_CODENAME" == "jessie" ]; then
+	cat control.posix.in >> control
+    else
+        cat control.posix-stretch.in >> control
+    fi
     echo "debian/control:  added POSIX threads package" >&2
     rules_enable_threads posix
     HAVE_FLAVOR=true
 }
 
 do_rt-preempt() {
-    cat control.rt-preempt.in >> control
+    ## Jessie uses python-imaging, python-imaging-tk, python-gst-0.10
+    ## Stretch and above use python-pil, python-pil.imagetk, python-gst-1.0
+    if [ "$DISTRO_CODENAME" == "jessie" ]; then
+	cat control.rt-preempt.in >> control
+    else
+        cat control.rt-preempt-stretch.in >> control
+    fi
     echo "debian/control:  added RT_PREEMPT threads package" >&2
     
     rules_enable_threads rt-preempt
@@ -49,7 +61,13 @@ do_rt-preempt() {
 }
 
 do_xenomai() {
-    cat control.xenomai.in >> control
+    ## Jessie uses python-imaging, python-imaging-tk, python-gst-0.10
+    ## Stretch and above use python-pil, python-pil.imagetk, python-gst-1.0
+    if [ "$DISTRO_CODENAME" == "jessie" ]; then
+	cat control.xenomai.in >> control
+    else
+        cat control.xenomai-stretch.in >> control
+    fi
     echo "debian/control:  added xenomai threads package" >&2
 
     # Be sure the -dev files only appear once
@@ -60,6 +78,26 @@ do_xenomai() {
     rules_enable_threads xenomai
     HAVE_FLAVOR=true
 }
+
+do_tcl_tk_version() {
+    TCL_TK_VER="$1"
+    if test -z "$TCL_TK_VER"; then
+        # No -t option specified; to ensure a reproducible package,
+        # use the latest version from the distro
+    TCL_TK_VER=8.6
+    case "$DISTRO_ID" in
+        Debian)  test "${DISTRO_RELEASE/.*/}" -lt 8 && TCL_TK_VER=8.5 ;;
+        Raspbian)test "${DISTRO_RELEASE/.*/}" -lt 8 && TCL_TK_VER=8.5 ;;
+        Ubuntu)  test "${DISTRO_RELEASE/.*/}" -lt 14 && TCL_TK_VER=8.5 ;;
+        neon)  test "${DISTRO_RELEASE/.*/}" -lt 14 && TCL_TK_VER=8.5 ;;
+        *)  usage "Unknown distro '${DISTRO_ID}'" ;;
+    esac
+    fi
+    TCL_TK_BUILD_DEPS="tcl${TCL_TK_VER}-dev, tk${TCL_TK_VER}-dev"
+    TCL_TK_DEPS="tcl${TCL_TK_VER}, tk${TCL_TK_VER}"
+    echo "debian/control:  Set tcl/tk build deps to version $TCL_TK_VER" >&2
+}
+
 
 ## Set version for packages by altering changelog
 ## Write new version info then prepend existing one, for use in changes file
@@ -109,6 +147,7 @@ usage() {
 	echo "   -p		build POSIX threads"
 	echo "   -r		build RT_PREEMPT threads"
 	echo "   -x		build Xenomai threads"
+	echo "   -t <tclver>	set tcl/tk version"
 	echo "   -c		rewrite changelog to set package version from git commit"
 	echo "	 -s		create source tarball for non binary package builds"
     } >&2
@@ -129,6 +168,9 @@ test "$1" != --help || usage
 BUILD_DEPS=  # List of Build-Depends
 HAVE_FLAVOR=false
 
+# Determine tcl/tk version
+do_tcl_tk_version "$TCL_TK_VER"
+
 # copy base templates into place
 cp control.in control
 echo "debian/control:  copied base template" >&2
@@ -138,13 +180,14 @@ echo "debian/rules:  copied base template" >&2
 #echo "debian/machinekit-cnc.install.in:  copied base template" >&2
 
 # read command line options
-while getopts prxcsd?h ARG; do
+while getopts csprxd:t:?h ARG; do
     case $ARG in
 	p) do_posix ;;
 	r) do_rt-preempt ;;
 	x) do_xenomai ;;
 	c) do_changelog ;;  # set new changelog with package versions from git
 	s) do_source_tarball ;; # create tarball for non binary builds
+	t) TCL_TK_VER="$OPTARG" ;;
 	?|h) usage ;;
 	*) usage "Unknown arg: '-$ARG'" ;;
     esac
