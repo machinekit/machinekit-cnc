@@ -6,7 +6,7 @@ Breaks: machinekit
 Enhances: machinekit-hal-rt-preempt
 Depends: machinekit-hal-rt-preempt, python-gnome2, ${shlibs:Depends},
     linux-image-rt-686-pae [i386], linux-image-rt-amd64 [amd64],
-    python-tk, python-imaging, python-imaging-tk, python-gst-0.10,
+    python-tk, python-pil, python-pil.imagetk, python-gst-1.0,
     python-glade2, python-vte, python-xlib, python-gtkglext1,
     python-configobj, python-simplejson, python-pyftpdlib, python-pydot, xdot,
     tcl8.6, tk8.6, bwidget (>= 1.7), libtk-img (>= 1.13), tclreadline, libgl1,
