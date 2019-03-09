@@ -7,7 +7,7 @@ $(call TOOBJSDEPS, $(MODULE_HELPERSRCS)) : \
 	EXTRAFLAGS += -Wall -Werror $(THREADS_CFLAGS)
 
 ../libexec/linuxcnc_module_helper: $(call TOOBJS, $(MODULE_HELPERSRCS)) \
-		../fakelib/liblinuxcncini.so.0
+		../lib/liblinuxcncini.so.0
 	$(ECHO) Linking $(notdir $@)
 	@mkdir -p $(dir $@)
 	$(Q)$(CXX) $(LDFLAGS) -o $@ $^
