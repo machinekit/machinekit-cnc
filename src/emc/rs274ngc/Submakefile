@@ -39,10 +39,10 @@ $(call TOOBJSDEPS, $(LIBRS274SRCS)) : EXTRAFLAGS=-fPIC  $(BOOST_DEBUG_FLAGS)
 TARGETS += ../lib/librs274.so ../lib/librs274.so.0
 
 ../lib/librs274.so.0: $(patsubst %.cc,objects/%.o,$(LIBRS274SRCS)) \
-	../fakelib/liblinuxcncini.so \
+	../lib/liblinuxcncini.so \
 	../lib/libpyplugin.so \
-	../fakelib/liblinuxcnchal.so.0 \
-	../fakelib/librtapi_math.so.0
+	../lib/liblinuxcnchal.so.0 \
+	../lib/librtapi_math.so.0
 	$(ECHO) Linking $(notdir $@)
 	@mkdir -p ../lib
 	@rm -f $@
@@ -77,8 +77,8 @@ $(call TOOBJSDEPS, $(PREVIEWMODULESRCS)) : EXTRAFLAGS += -Ihal/haltalk $(CZMQ_CF
 PREVIEWMODULE := ../lib/python/preview.so
 $(PREVIEWMODULE): $(call TOOBJS, $(PREVIEWMODULESRCS)) \
 	../lib/librs274.so.0 \
-	../fakelib/libmachinetalk-pb2++.so.0 \
-	../fakelib/libmtalk.so
+	../lib/libmachinetalk-pb2++.so.0 \
+	../lib/libmtalk.so
 	$(ECHO) Linking python module $(notdir $@)
 	$(Q)$(CXX) $(LDFLAGS) -shared -o $@ $^ -lstdc++  $(CZMQ_LIBS) \
 	    $(PROTOBUF_LIBS)

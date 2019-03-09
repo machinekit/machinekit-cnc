@@ -48,27 +48,26 @@ endif
 
 ../tcl/linuxcnc.so: $(call TOOBJS, $(EMCSHSRCS)) \
 	../lib/liblinuxcnc.a \
-	../fakelib/liblinuxcncini.so.0 \
+	../lib/liblinuxcncini.so.0 \
 	../lib/libnml.so.0
 	$(ECHO) Linking $(notdir $@)
 	$(Q)$(CXX) -shared $(LDFLAGS) -o $@ $(TCL_CFLAGS) $^ $(TCL_LIBS) -lXinerama
 TARGETS += ../tcl/linuxcnc.so
 
 ../tcl/hal.so: $(call TOOBJS, $(HALSHSRCS)) \
-        ../fakelib/liblinuxcncini.so.0 \
-        ../fakelib/lib/liblinuxcnchal.so.0 \
-        ../fakelib/libmachinetalk-pb2++.so.0 \
-        ../fakelib/libmtalk.so.0 \
-        ../fakelib/librtapi_math.so.0
-        $(ECHO) Linking $(notdir $@)
-        $(Q)$(CC) $(LDFLAGS) -shared $^  -o $@
+	../lib/liblinuxcncini.so.0 \
+	../lib/libmachinetalk-pb2++.so.0 \
+	../lib/libmtalk.so.0 \
+	../lib/librtapi_math.so.0
+	$(ECHO) Linking $(notdir $@)
+	$(Q)$(CC) $(LDFLAGS) -shared $^  -o $@ -L../lib -llinuxcnchal
 TARGETS += ../tcl/hal.so
 
 ../bin/linuxcncrsh: $(call TOOBJS, $(EMCRSHSRCS)) \
 	../lib/liblinuxcnc.a \
 	../lib/libnml.so.0 \
-	../fakelib/liblinuxcncini.so.0 \
-	../fakelib/librtapi_math.so.0
+	../lib/liblinuxcncini.so.0 \
+	../lib/librtapi_math.so.0
 	$(ECHO) Linking $(notdir $@)
 	$(Q)$(CXX) $(LDFLAGS) -o $@ $^ -lpthread
 TARGETS += ../bin/linuxcncrsh
@@ -76,8 +75,8 @@ TARGETS += ../bin/linuxcncrsh
 ../bin/schedrmt: $(call TOOBJS, $(EMCSCHEDSRCS)) \
 	../lib/liblinuxcnc.a \
 	../lib/libnml.so.0 \
-	../fakelib/liblinuxcncini.so.0 \
-	../fakelib/librtapi_math.so.0
+	../lib/liblinuxcncini.so.0 \
+	../lib/librtapi_math.so.0
 	$(ECHO) Linking $(notdir $@)
 	$(Q)$(CXX) $(LDFLAGS) -o $@ $^ -lpthread
 TARGETS += ../bin/schedrmt
@@ -85,8 +84,8 @@ TARGETS += ../bin/schedrmt
 ../bin/linuxcnclcd: $(call TOOBJS, $(EMCLCDSRCS)) \
 	../lib/liblinuxcnc.a \
 	../lib/libnml.so.0 \
-	../fakelib/liblinuxcncini.so.0 \
-	../fakelib/librtapi_math.so.0
+	../lib/liblinuxcncini.so.0 \
+	../lib/librtapi_math.so.0
 	$(ECHO) Linking $(notdir $@)
 	$(Q)$(CXX) $(LDFLAGS) -o $@ $^
 TARGETS += ../bin/linuxcnclcd
@@ -94,10 +93,10 @@ TARGETS += ../bin/linuxcnclcd
 
 ../bin/halui: $(call TOOBJS, $(HALUISRCS)) \
 	../lib/liblinuxcnc.a \
-	../fakelib/liblinuxcncini.so.0 \
+	../lib/liblinuxcncini.so.0 \
 	../lib/libnml.so.0 \
-	../fakelib/liblinuxcnchal.so.0 \
-	../fakelib/librtapi_math.so.0
+	../lib/liblinuxcnchal.so.0 \
+	../lib/librtapi_math.so.0
 	$(ECHO) Linking $(notdir $@)
 	$(Q)$(CXX) $(LDFLAGS) -o $@ $^ 
 TARGETS += ../bin/halui
@@ -106,8 +105,8 @@ ifeq "$(HAVE_NCURSES)" "yes"
 ../bin/keystick: $(call TOOBJS, $(KEYSTICKSRCS)) \
 	../lib/liblinuxcnc.a \
 	../lib/libnml.so.0 \
-	../fakelib/liblinuxcncini.so.0 \
-	../fakelib/librtapi_math.so.0
+	../lib/liblinuxcncini.so.0 \
+	../lib/librtapi_math.so.0
 	$(ECHO) Linking $(notdir $@)
 	$(Q)$(CXX) $(LDFLAGS) -o $@ $^ $(KEYSTICKLIBS)
 TARGETS += ../bin/keystick
@@ -118,8 +117,8 @@ $(call TOOBJSDEPS,$(XEMCSRCS)): EXTRAFLAGS = $(CFLAGS_X)
 ../bin/xlinuxcnc: $(call TOOBJS, $(XEMCSRCS)) \
 	../lib/liblinuxcnc.a \
 	../lib/libnml.so.0 \
-	../fakelib/liblinuxcncini.so.0 \
-	../fakelib/librtapi_math.so.0
+	../lib/liblinuxcncini.so.0 \
+	../lib/librtapi_math.so.0
 	$(ECHO) Linking $(notdir $@)
 	$(Q)$(CXX) $(LDFLAGS) -o $@ $^ $(XLIBS)
 TARGETS += ../bin/xlinuxcnc
@@ -129,8 +128,8 @@ ifeq "$(BUILD_EMCWEB)" "yes"
 ../bin/emcweb: $(call TOOBJS, $(EMCWEBSRCS)) \
 	../lib/liblinuxcnc.a \
 	../lib/libnml.so.0 \
-	../fakelib/liblinuxcncini.so.0 \
-	../fakelib/librtapi_math.so.0
+	../lib/liblinuxcncini.so.0 \
+	../lib/librtapi_math.so.0
 	$(ECHO) Linking $(notdir $@)
 	$(Q)$(CXX) $(LDFLAGS) $(BOOST_LDFLAGS) -o $@ $(ULFLAGS) $^ \
 	    $(BOOST_THREAD_LIB) $(BOOST_SYSTEM_LIB) \

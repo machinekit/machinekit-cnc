@@ -19,10 +19,10 @@ LIBREADLINE=-lreadline
 	../lib/librs274.so.0 \
 	../lib/liblinuxcnc.a \
 	../lib/libnml.so.0 \
-	../fakelib/liblinuxcnchal.so.0 \
-	../fakelib/liblinuxcncini.so.0 \
+	../lib/liblinuxcnchal.so.0 \
+	../lib/liblinuxcncini.so.0 \
 	../lib/libpyplugin.so.0 \
-	../fakelib/librtapi_math.so.0
+	../lib/librtapi_math.so.0
 	$(ECHO) Linking $(notdir $@)
 	$(Q)$(CXX) $(LDFLAGS) $(PROFILE_LDFLAGS) \
 	-o $@ $^ $(ULFLAGS) -l$(BOOST_PYTHON_LIB) $(PYTHON_LIBS) $(LIBREADLINE)

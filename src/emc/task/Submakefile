@@ -6,8 +6,8 @@ USERSRCS += $(EMCSVRSRCS)
 ../bin/linuxcncsvr: $(call TOOBJS, $(EMCSVRSRCS)) \
 	../lib/liblinuxcnc.a \
 	../lib/libnml.so.0 \
-	../fakelib/liblinuxcncini.so.0 \
-	../fakelib/librtapi_math.so.0
+	../lib/liblinuxcncini.so.0 \
+	../lib/librtapi_math.so.0
 	$(ECHO) Linking $(notdir $@)
 	@$(CXX) $(LDFLAGS) -o $@ $^ 
 TARGETS += ../bin/linuxcncsvr
@@ -36,11 +36,11 @@ USERSRCS += $(MILLTASKSRCS)
 	../lib/librs274.so.0 \
 	../lib/liblinuxcnc.a \
 	../lib/libnml.so.0 \
-	../fakelib/liblinuxcncini.so.0 \
-	../fakelib/libposemath.so.0 \
-	../fakelib/liblinuxcnchal.so.0 \
+	../lib/liblinuxcncini.so.0 \
+	../lib/libposemath.so.0 \
+	../lib/liblinuxcnchal.so.0 \
 	../lib/libpyplugin.so.0 \
-	../fakelib/librtapi_math.so.0
+	../lib/librtapi_math.so.0
 	$(ECHO) Linking $(notdir $@)
 	$(Q)$(CXX) -o $@ $^ $(LDFLAGS) -l$(BOOST_PYTHON_LIB) $(PYTHON_LIBS)
 TARGETS += ../bin/milltask
