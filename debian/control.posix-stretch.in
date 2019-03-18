@@ -9,7 +9,8 @@ Depends: machinekit-hal-posix, ${shlibs:Depends}, python-gnome2,
     python-glade2, python-vte, python-xlib, python-gtkglext1, 
     python-configobj, python-simplejson, python-pyftpdlib, python-pydot, xdot, 
     tcl8.6, tk8.6, bwidget (>= 1.7), libtk-img (>= 1.13), tclreadline, libgl1, 
-    libglib2.0-0 (>= 2.12.0), libglu1-mesa | libglu1, libx11-6, libxaw7, libxt6
+    libglib2.0-0 (>= 2.12.0), libglu1-mesa | libglu1, libx11-6, libxaw7, libxt6,
+    libgtksourceview2.0-common, libgtksourceview2.0-0, python-gtksourceview2
 Description: PC based motion controller for real-time Linux
  Machinekit is the next-generation Enhanced Machine Controller which
  provides motion control for CNC machine tools and robotic
