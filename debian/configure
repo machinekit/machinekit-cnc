@@ -36,10 +36,15 @@ rules_enable_threads() {
 do_posix() {
     ## Jessie uses python-imaging, python-imaging-tk, python-gst-0.10
     ## Stretch and above use python-pil, python-pil.imagetk, python-gst-1.0
+    ## Buster does not have python-vte
     if [ "$DISTRO_CODENAME" == "jessie" ]; then
 	cat control.posix.in >> control
     else
-        cat control.posix-stretch.in >> control
+	if [ "$DISTRO_CODENAME" == "buster" ]; then
+    	    cat control.posix-buster.in >> control
+	else
+	    cat control.posix-stretch.in >> control
+	fi
     fi
     echo "debian/control:  added POSIX threads package" >&2
     rules_enable_threads posix
@@ -49,10 +54,15 @@ do_posix() {
 do_rt-preempt() {
     ## Jessie uses python-imaging, python-imaging-tk, python-gst-0.10
     ## Stretch and above use python-pil, python-pil.imagetk, python-gst-1.0
+    ## Buster does not have python-vte
     if [ "$DISTRO_CODENAME" == "jessie" ]; then
 	cat control.rt-preempt.in >> control
     else
-        cat control.rt-preempt-stretch.in >> control
+	if [ "$DISTRO_CODENAME" == "buster" ]; then
+    	    cat control.rt-preempt-buster.in >> control
+	else
+	    cat control.rt-preempt-stretch.in >> control
+	fi
     fi
     echo "debian/control:  added RT_PREEMPT threads package" >&2
     
@@ -63,10 +73,15 @@ do_rt-preempt() {
 do_xenomai() {
     ## Jessie uses python-imaging, python-imaging-tk, python-gst-0.10
     ## Stretch and above use python-pil, python-pil.imagetk, python-gst-1.0
+    ## Buster does not have python-vte
     if [ "$DISTRO_CODENAME" == "jessie" ]; then
 	cat control.xenomai.in >> control
     else
-        cat control.xenomai-stretch.in >> control
+	if [ "$DISTRO_CODENAME" == "buster" ]; then
+    	    cat control.xenomai-buster.in >> control
+	else
+	    cat control.xenomai-stretch.in >> control
+	fi
     fi
     echo "debian/control:  added xenomai threads package" >&2
 
