@@ -1128,6 +1128,15 @@ static PyObject *reset_interpreter(pyCommandChannel *s, PyObject *o) {
     return Py_None;
 }
 
+static PyObject *synch_interpreter(pyCommandChannel *s, PyObject *o) {
+    EMC_TASK_PLAN_SYNCH m;
+    m.serial_number = next_serial(s);
+    s->c->write(m);
+    emcWaitCommandReceived(s->serial, s->s);
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
 static PyObject *program_open(pyCommandChannel *s, PyObject *o) {
     EMC_TASK_PLAN_OPEN m;
     char *file;
@@ -1379,6 +1388,7 @@ static PyMethodDef Command_methods[] = {
     {"unhome", (PyCFunction)unhome, METH_VARARGS},
     {"jog", (PyCFunction)jog, METH_VARARGS},
     {"reset_interpreter", (PyCFunction)reset_interpreter, METH_NOARGS},
+    {"synch_interpreter", (PyCFunction)synch_interpreter, METH_NOARGS},
     {"program_open", (PyCFunction)program_open, METH_VARARGS},
     {"auto", (PyCFunction)emcauto, METH_VARARGS},
     {"set_home_parameters", (PyCFunction)set_home_parameters, METH_VARARGS},
