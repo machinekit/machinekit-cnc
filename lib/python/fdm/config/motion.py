@@ -7,6 +7,17 @@ def setup_motion(kinematics='trivkins', tp='tp', num_aio=50, num_dio=21):
     rt.loadrt(kinematics)
     rt.loadrt(tp)
 
+
+    # hostmot2 setup  get names and config from ini file
+    hostmot2 = bool(c.find('HOSTMOT2', 'DRIVER'))
+    if hostmot2:
+        rt.loadrt('hostmot2')
+        rt.newinst(c.find('HOSTMOT2', 'DRIVER'),
+            c.find('HOSTMOT2', 'DEVNAME'),
+            "-- ",
+            c.find('HOSTMOT2', 'CONFIG'))
+
+
     # motion controller, get name and thread periods from ini file
     rt.loadrt(c.find('EMCMOT', 'EMCMOT'),
               servo_period_nsec=c.find('EMCMOT', 'SERVO_PERIOD'),
