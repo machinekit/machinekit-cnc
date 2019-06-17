@@ -139,7 +139,7 @@ Interp::Interp()
 	bp::object retval;
 	python_plugin->run_string("from interpreter import this", retval, false);
     }
-    catch (bp::error_already_set) {
+    catch (bp::error_already_set &) {
 	std::string exception_msg;
 	if (PyErr_Occurred()) {
 	    exception_msg = handle_pyerror();
@@ -1217,7 +1217,7 @@ int Interp::init()
 	      }
 	  }
       }
-      catch (bp::error_already_set) {
+      catch (bp::error_already_set &) {
 	  std::string exception_msg;
 	  bool unexpected = false;
 	  // KeyError is ok - this means the namedparams module doesnt exist
