@@ -3087,6 +3087,9 @@ Install this version and specify --with-tcl and --with-tk if necessary])
     # Get the CFLAGS and LIBS for boost::python.
     AX_BOOST_BASE(1.34, , [AC_MSG_ERROR([Boost 1.34.0 or newer required])])
     AX_BOOST_PYTHON
+    if test "$BOOST_PYTHON_LIB" = ""; then
+	AC_MSG_ERROR([boost::python missing.  Install it or specify --disable-python to skip the parts of Machinekit that depend on Python])
+    fi
 
     AC_MSG_CHECKING(for site-package location)
     SITEPY=`$PYTHON -c 'import distutils.sysconfig; print distutils.sysconfig.get_python_lib(1)'`
