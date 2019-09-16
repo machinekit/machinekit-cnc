@@ -1,0 +1,13 @@
+Axis is a modern, GL-based interface coded in python
+
+Axis gui hm2-soc-stepper ini files:
+
+5i25-socfpga.ini                    basic demo (DE10_Nano, DE0_Nano_SoC)
+5i25-soc-cramps.ini                 9 axes
+5i25-soc-cramps_no-fw-load.ini      For DExx boot time configured fpga (5i25 device named)
+5i25-zynq.ini                       For Zynq boards
+ultr-soc-cramps_no-fw-load.ini      For Xilinx Ultra96 (ultr device named)
+
+Select one of these if you have no functional machine but want to edit some basic configuration stuff or play with one of the Machinekit displays.
+
+These configurations demonstrate Machinekit functionality using the axis gui as the interface.  (The functionality demonstrated may be available in other guis also)
