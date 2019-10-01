@@ -4,7 +4,7 @@ Architecture: any
 Provides:  machinekit-cnc-posix
 Breaks: machinekit
 Enhances: machinekit-hal-posix
-Depends: machinekit-hal-posix, ${shlibs:Depends}, python-gnome2, 
+Depends: machinekit-hal-posix, ${shlibs:Depends}, 
     python-tk, python-pil, python-pil.imagetk, python-gst-1.0,
     python-glade2, python-xlib, python-gtkglext1, 
     python-configobj, python-simplejson, python-pyftpdlib, python-pydot, xdot, 
