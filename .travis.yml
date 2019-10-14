@@ -29,7 +29,7 @@
 sudo: required
 
 notifications:
-  email: 
+  email:
     on_success: never
     on_failure: always
   webhooks:
@@ -48,7 +48,7 @@ services:
   - docker
 
 before_install:
-  - .travis/check_sftp.sh 
+  - .travis/check_sftp.sh
 
 env:
   global:
@@ -65,10 +65,12 @@ env:
     # Packages
     # - Stretch
     - TAG=amd64_9    CMD=deb
+    - TAG=arm64_9    CMD=deb
     - TAG=i386_9     CMD=deb
     - TAG=armhf_9    CMD=deb
     # - Jessie
     - TAG=amd64_8    CMD=deb
+    # - Jessie (no arm64)
     - TAG=i386_8     CMD=deb
     - TAG=armhf_8    CMD=deb
 

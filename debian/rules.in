@@ -109,7 +109,7 @@ ifneq ($(wildcard src/configure src/Makefile.inc),)
 	rm -f \
 	    lib/python/machinekit/config.py \
 	    lib/python/nf.py \
-	    scripts/check-build-vs-configure-sha \
+#	    scripts/check-build-vs-configure-sha \#
 	    scripts/gen-rtapi.ini.sh \
 	    scripts/gen-rtapi.ini.sh.in \
 	    scripts/halrun \

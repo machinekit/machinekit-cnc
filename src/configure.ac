@@ -568,6 +568,9 @@ AC_ARG_WITH(platform-socfpga,
 	    	TARGET_PLATFORM_SOCFPGA=true
 		platform_specified=true
 		platform_socfpga_reason="$cmdl_enab_msg"
+		if test $host_cpu = aarch64; then
+			ARCH_CFLAGS="-arch arm64"
+		fi
 		;;
 	    (*)
 	    	TARGET_PLATFORM_SOCFPGA=false
@@ -577,7 +580,7 @@ AC_ARG_WITH(platform-socfpga,
     ],
     [
         case $host_cpu in
-	    (arm*)
+	    (arm*|aarch64)
 	        TARGET_PLATFORM_SOCFPGA=unk
 		;;
 	    (*)
@@ -597,9 +600,11 @@ AC_ARG_WITH(platform-beaglebone,
 	    	TARGET_PLATFORM_BEAGLEBONE=true
 		platform_specified=true
 		platform_beaglebone_reason="$cmdl_enab_msg"
-		# see https://github.com/machinekit/machinekit/issues/629
-		ARCH_CFLAGS="-march=armv7-a -mtune=cortex-a8"
-		ARCH_CFLAGS="$ARCH_CFLAGS -mfloat-abi=hard -mfpu=neon -ffast-math"
+		if test $host_cpu = arm; then
+			# see https://github.com/machinekit/machinekit/issues/629
+			ARCH_CFLAGS="-march=armv7-a -mtune=cortex-a8"
+			ARCH_CFLAGS="$ARCH_CFLAGS -mfloat-abi=hard -mfpu=neon -ffast-math"
+		fi
 		;;
 	    (*)
 	    	TARGET_PLATFORM_BEAGLEBONE=false
