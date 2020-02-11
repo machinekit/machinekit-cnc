@@ -24,17 +24,21 @@ set(AXIS_PY_TARGETS
 foreach(_target ${AXIS_PY_TARGETS})
     add_custom_command(
         OUTPUT "${_target}.pyc"
-        COMMAND ${Python2_Interp} -m py_compile "${CMAKE_CURRENT_SOURCE_DIR}/${_target}.py"
+        COMMAND ${Python2_Interp} -m py_compile "${CMAKE_CURRENT_SOURCE_DIR}/scripts/${_target}.py"
         DEPENDS "${_target}.py"
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     )
     add_custom_target(${_target}
-        COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/${_target}.py" ${_target}
+        COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/scripts/${_target}.py" "${_target}"
         DEPENDS "{_target}.pyc"
         VERBATIM
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     )
 endforeach()
+
+# Fix target paths and file extentions
+list(TRANSFORM AXIS_PY_TARGETS PREPEND "scripts/")
+list(TRANSFORM AXIS_PY_TARGETS APPEND ".py")
 
 install(
     FILES ${AXIS_PY_TARGETS}

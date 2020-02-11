@@ -47,8 +47,9 @@ add_custom_target(${project}
 )
 
 install(
-    FILES ${project}
+    FILES "${project}.py"
     DESTINATION bin
+    RENAME ${project}
 )
 
 set(gmoccapy_GLADES

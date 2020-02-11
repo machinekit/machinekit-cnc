@@ -27,28 +27,29 @@ list(TRANSFORM TOUCHY_MODULES APPEND ".py")
 
 install(
     FILES ${TOUCHY_MODULES}
-    DESTINATION ${Python2_SITELIB}/touchy
+    DESTINATION ${Python2_SITELIB}/${project}
 )
 
 # Check syntax of touchy
 add_custom_command(
-    OUTPUT touchy.pyc
-    COMMAND ${Python2_Interp} -m py_compile touchy.py
-    DEPENDS touchy.py
+    OUTPUT ${project}.pyc
+    COMMAND ${Python2_Interp} -m py_compile ${project}.py
+    DEPENDS ${project}.py
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 # Stage touchy executable for installation
-add_custom_target(touchy
-    COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/touchy.py touchy
-    DEPENDS touchy.pyc
+add_custom_target(${project}
+    COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/${project}.py" ${project}
+    DEPENDS ${project}.pyc
     VERBATIM
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 install(
-    FILES touchy
+    FILES "${project}.py"
     DESTINATION bin
+    RENAME ${project}
 )
 
 install(

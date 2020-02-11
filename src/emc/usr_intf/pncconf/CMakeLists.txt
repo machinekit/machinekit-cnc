@@ -12,23 +12,24 @@ install(
 
 # Check syntax of pncconf 
 add_custom_command(
-    OUTPUT pncconf.pyc
-    COMMAND ${Python2_Interp} -m py_compile pncconf.py
-    DEPENDS pncconf.py
+    OUTPUT ${project}.pyc
+    COMMAND ${Python2_Interp} -m py_compile ${project}.py
+    DEPENDS ${project}.py
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 # Stage pncconf executable for installation
-add_custom_target(pncconf
-    COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/pncconf.py pncconf
-    DEPENDS pncconf.pyc
+add_custom_target(${project}
+    COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/${project}.py ${project}
+    DEPENDS ${project}.pyc
     VERBATIM
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 install(
-    FILES pncconf
+    FILES "${project}.py"
     DESTINATION bin
+    RENAME ${project}
 )
 
 # TODO - not sure how to handle I18N stuff yet

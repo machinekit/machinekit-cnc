@@ -2,32 +2,32 @@ cmake_minimum_required(VERSION 3.12)
 set (project stepconf)
 
 set(GLADES
-	main_page.glade
-	base.glade
-	start.glade
-	pport1.glade
-	pport2.glade
-	spindle.glade
-	options.glade
-	axisx.glade
-	axisy.glade
-	axisz.glade
-	axisa.glade
-	finished.glade
+	${CMAKE_CURRENT_SOURCE_DIR}/main_page.glade
+	${CMAKE_CURRENT_SOURCE_DIR}/base.glade
+	${CMAKE_CURRENT_SOURCE_DIR}/start.glade
+	${CMAKE_CURRENT_SOURCE_DIR}/pport1.glade
+	${CMAKE_CURRENT_SOURCE_DIR}/pport2.glade
+	${CMAKE_CURRENT_SOURCE_DIR}/spindle.glade
+	${CMAKE_CURRENT_SOURCE_DIR}/options.glade
+	${CMAKE_CURRENT_SOURCE_DIR}/axisx.glade
+	${CMAKE_CURRENT_SOURCE_DIR}/axisy.glade
+	${CMAKE_CURRENT_SOURCE_DIR}/axisz.glade
+	${CMAKE_CURRENT_SOURCE_DIR}/axisa.glade
+	${CMAKE_CURRENT_SOURCE_DIR}/finished.glade
 )
 
 install(
     FILES ${GLADES}
-    DESTINATION share/machinekit/stepconf
+    DESTINATION share/machinekit/${project}
 )
 
 file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/__init__.py "")
 
 set(STEPCONF_MODULES
-    pages
-    build_INI
-    build_HAL
-    __init__
+    ${CMAKE_CURRENT_SOURCE_DIR}/pages
+    ${CMAKE_CURRENT_SOURCE_DIR}/build_INI
+    ${CMAKE_CURRENT_SOURCE_DIR}/build_HAL
+    ${CMAKE_CURRENT_BINARY_DIR}/__init__
 )
 
 # Check syntax of modules
@@ -44,28 +44,29 @@ list(TRANSFORM STEPCONF_MODULES APPEND ".py")
 
 install(
     FILES ${STEPCONF_MODULES}
-    DESTINATION ${Python2_SITELIB}/stepconf
+    DESTINATION ${Python2_SITELIB}/${project}
 )
 
 # Check syntax of stepconf
 add_custom_command(
-    OUTPUT stepconf.pyc
-    COMMAND ${Python2_Interp} -m py_compile stepconf.py
-    DEPENDS stepconf.py
+    OUTPUT ${project}.pyc
+    COMMAND ${Python2_Interp} -m py_compile ${project}.py
+    DEPENDS ${project}.py
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 # Stage stepconf executable for installation
-add_custom_target(stepconf
-    COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/stepconf.py stepconf
-    DEPENDS stepconf.pyc
+add_custom_target(${project}
+    COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/${project}.py" ${project}
+    DEPENDS ${project}.pyc
     VERBATIM
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 install(
-    FILES stepconf
+    FILES "${project}.py"
     DESTINATION bin
+    RENAME ${project}
 )
 
 # TODO - not sure how to handle I18N stuff yet
