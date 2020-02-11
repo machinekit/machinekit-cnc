@@ -40,7 +40,7 @@ add_custom_command(
 
 # Stage touchy executable for installation
 add_custom_target(touchy
-    COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}touchy.py touchy
+    COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/touchy.py touchy
     DEPENDS touchy.pyc
     VERBATIM
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
