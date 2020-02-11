@@ -12,4 +12,4 @@ set(${project}_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/mongoose_wrapper.hh
 )
 
-add_library(${project} STATIC ${${project}_SOURCES} ${${project}_HEADERS} )
+#add_library(${project} STATIC ${${project}_SOURCES} ${${project}_HEADERS} )

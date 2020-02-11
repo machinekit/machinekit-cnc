@@ -50,7 +50,7 @@ set(DELTA_MODULE_SOURCES
 )
 
 add_library(lineardeltakins SHARED ${DELTA_MODULE_SOURCES} )
-target_link_libraries(lineardeltakins Boost::python)
+target_link_libraries(lineardeltakins Boost::python27)
 target_compile_options(lineardeltakins PUBLIC -x c++ -Wno-declaration-after-statement -fpermissive )
 
 ## -- GEN_SERKINS

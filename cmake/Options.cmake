@@ -12,7 +12,7 @@ option( WITH_DEV "Build unstable development code" OFF )
 option( WITH_DRIVERS "Build the hardware drivers" ON )
 
 # Option to build the emcweb interface
-option( WITH_EMCWEB "Build the emcweb interface" OFF )
+option( WITH_EMCWEB "Build the emcweb interface" ON )
 
 # Option to build included programming examples
 option( WITH_EXAMPLES "Build included programming examples" ON )

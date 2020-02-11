@@ -17,3 +17,7 @@ add_library(${project} SHARED
 )
 
 target_link_libraries(${project} rtapi_math)
+
+install(TARGETS ${project}
+    LIBRARY DESTINATION lib
+)

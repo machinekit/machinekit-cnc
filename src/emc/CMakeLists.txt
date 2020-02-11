@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.13)
 set (project mk)
 
 add_definitions(-DEMC2_DEFAULT_NMLFILE="${CMAKE_INSTALL_PREFIX}/configs/common/linuxcnc.nml")
@@ -27,4 +27,18 @@ add_library(${project} STATIC
     $<TARGET_OBJECTS:ini>
     $<TARGET_OBJECTS:nml_intf>
     $<TARGET_OBJECTS:rs274_objs>
+)
+
+add_library(${project}_SHARED SHARED
+    $<TARGET_OBJECTS:ini>
+    $<TARGET_OBJECTS:nml_intf>
+    $<TARGET_OBJECTS:rs274_objs>
+)
+
+install(TARGETS ${project}
+    ARCHIVE DESTINATION lib
+)
+
+install(TARGETS ${${project}_SHARED}
+    LIBRARY DESTINATION lib
 )

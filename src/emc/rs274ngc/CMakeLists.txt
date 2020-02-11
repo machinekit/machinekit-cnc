@@ -63,6 +63,20 @@ target_compile_options(${project}_objs PUBLIC -fPIC)
 
 add_library(${project} SHARED ${${project}_SOURCES} ${${project}_HEADERS} )
 
+# -- libgcode
+
+set(GCODE_MODULE_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/gcodemodule.cc
+)
+
+# GCODEMODULE := ../lib/python/gcode.so
+add_library(gcode SHARED ${GCODE_MODULE_SOURCES} ${${project}_HEADERS} )
+
+install(
+    TARGETS gcode
+    DESTINATION ${Python2_SITELIB}
+)
+
 # -- Preview
 
 set(preview_SOURCES
@@ -71,3 +85,7 @@ set(preview_SOURCES
 
 add_library(preview SHARED ${preview_SOURCES})
 target_link_libraries(preview ${project} mktalk-pb2++ mtalk czmq protobuf stdc++)
+
+install(TARGETS preview
+    LIBRARY DESTINATION lib
+)

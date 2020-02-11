@@ -7,5 +7,9 @@ set(${project}_SOURCES
 
 include_directories(../)
 
-add_library(${project} OBJECT ${${project}_SOURCES} ${${project}_HEADERS} )
+add_library(${project} SHARED ${${project}_SOURCES} ${${project}_HEADERS} )
 target_compile_options(${project} PUBLIC -fPIC)
+
+install(TARGETS ${project}
+    LIBRARY DESTINATION lib
+)

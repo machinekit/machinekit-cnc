@@ -83,7 +83,7 @@ to another.
 #include <kinematics/cubic.h>		/* CUBIC_STRUCT, CUBIC_COEFF */
 #include "emcmotcfg.h"		/* EMCMOT_MAX_JOINTS */
 #include <kinematics/kinematics.h>
-//#include "rtapi_limits.h"
+#include <limits.h>         /* INT_MIN */
 #include "motion_id.h"
 #include <tp/tp.h>
 #include <stdarg.h>
