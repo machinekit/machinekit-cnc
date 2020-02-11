@@ -31,18 +31,18 @@
     * add HAL pins for ULAPI compiled version
 */
 
-#include "rtapi_math.h"
-#include "gotypes.h"		/* go_result, go_integer */
-#include "gomath.h"		/* go_pose */
+#include <machinekit/rtapi_math.h>
+#include <posemath/gotypes.h>		/* go_result, go_integer */
+#include <posemath/gomath.h>		/* go_pose */
 #include "genserkins.h"		/* these decls */
 #include "kinematics.h"
 
 #ifdef RTAPI
-#include "rtapi.h"
-#include "rtapi_app.h"
+#include <machinekit/rtapi.h>
+#include <machinekit/rtapi_app.h>
 #endif
 
-#include "hal.h"
+#include <machinekit/hal.h>
 struct haldata {
     hal_float_t *a[GENSER_MAX_JOINTS];
     hal_float_t *alpha[GENSER_MAX_JOINTS];

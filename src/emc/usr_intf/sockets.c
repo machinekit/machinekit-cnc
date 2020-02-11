@@ -13,7 +13,7 @@
 * Last change:
 ********************************************************************/
 
-#include "config.h"
+#include <machinekit/config.h>
 #include <unistd.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -35,7 +35,7 @@
 #include <stdarg.h>
 #include <fcntl.h>
 
-#include "rcs_print.hh"
+#include <rcs/rcs_print.hh>
 #include "sockets.h"
 
 /**************************************************

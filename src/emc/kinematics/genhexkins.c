@@ -49,8 +49,8 @@
   out of the multiple possible solutions.
   -----------------------------------------------------------------------------*/
 
-#include "rtapi_math.h"
-#include "posemath.h"
+#include <machinekit/rtapi_math.h>
+#include <posemath/posemath.h>
 #include "genhexkins.h"
 #include "kinematics.h"             /* these decls, KINEMATICS_FORWARD_FLAGS */
 

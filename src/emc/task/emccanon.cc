@@ -30,19 +30,19 @@
   all appropriate values subsequently.
   */
 
-#include "config.h"
+#include <machinekit/config.h>
 #include <stdio.h>
 #include <stdarg.h>
-#include "rtapi_math.h"
+#include <machinekit/rtapi_math.h>
 #include <string.h>		// strncpy()
 #include <ctype.h>		// isspace()
-#include "emc.hh"		// EMC NML
-#include "emc_nml.hh"
-#include "canon.hh"
-#include "canon_position.hh"		// data type for a machine position
-#include "interpl.hh"		// interp_list
-#include "emcglb.h"		// TRAJ_MAX_VELOCITY
-#include "modal_state.hh"
+#include <nml_intf/emc.hh>		// EMC NML
+#include <nml_intf/emc_nml.hh>
+#include <nml_intf/canon.hh>
+#include <nml_intf/canon_position.hh>		// data type for a machine position
+#include <nml_intf/interpl.hh>		// interp_list
+#include <nml_intf/emcglb.h>		// TRAJ_MAX_VELOCITY
+#include <rs274ngc/modal_state.hh>
 
 //#define EMCCANON_DEBUG
 

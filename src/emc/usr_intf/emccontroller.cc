@@ -17,15 +17,15 @@
 ********************************************************************/
 
 
-#include "rcs.hh"
-#include "posemath.h"		// PM_POSE, TO_RAD
-#include "emc.hh"		// EMC NML
-#include "canon.hh"		// CANON_UNITS, CANON_UNITS_INCHES,MM,CM
-#include "emcglb.h"		// EMC_NMLFILE, TRAJ_MAX_VELOCITY, etc.
-#include "emccfg.h"		// DEFAULT_TRAJ_MAX_VELOCITY
-#include "inifile.hh"		// INIFILE
-#include "rcs_print.hh"
-#include "timer.hh"		// etime()
+#include <rcs/rcs.hh>
+#include <posemath/posemath.h>		// PM_POSE, TO_RAD
+#include <nml_intf/emc.hh>		// EMC NML
+#include <nml_intf/canon.hh>		// CANON_UNITS, CANON_UNITS_INCHES,MM,CM
+#include <nml_intf/emcglb.h>		// EMC_NMLFILE, TRAJ_MAX_VELOCITY, etc.
+#include <nml_intf/emccfg.h>		// DEFAULT_TRAJ_MAX_VELOCITY
+#include <machinekit/inifile.hh>		// INIFILE
+#include <rcs/rcs_print.hh>
+#include <os_intf/timer.hh>		// etime()
 #include "shcom.hh"		// NML Messaging functions
 #include <stdlib.h>
 #include <sys/types.h>

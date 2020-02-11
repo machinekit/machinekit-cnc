@@ -10,10 +10,10 @@
  *
  ********************************************************************/
 #include "kinematics.h" /* these decls */
-#include "posemath.h"
-#include "hal.h"
-#include "rtapi.h"
-#include "rtapi_math.h"
+#include <posemath/posemath.h>
+#include <machinekit/hal.h>
+#include <machinekit/rtapi.h>
+#include <machinekit/rtapi_math.h>
 
 #define VTVERSION VTKINEMATICS_VERSION1
 

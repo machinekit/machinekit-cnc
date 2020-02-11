@@ -26,5 +26,5 @@ set(${project}_HEADERS
 include_directories(../)
 include_directories(${KERNELHEADERS_INCLUDE_DIRS})
 
-add_library(${project} OBJECT ${${project}_SOURCES} ${${project}_HEADERS} )
-target_compile_options(${project} PUBLIC -fPIC)
+#add_library(${project} OBJECT ${${project}_SOURCES} ${${project}_HEADERS} )
+#target_compile_options(${project} PUBLIC)

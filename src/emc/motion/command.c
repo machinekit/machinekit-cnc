@@ -57,10 +57,12 @@
 *
 ********************************************************************/
 
+#ifndef _LINUX_TYPES_H
 #include <linux/types.h>
+#endif
 #include <float.h>
 #include <posemath/posemath.h>
-//#include <machinekit/rtapi.h>
+#include <machinekit/rtapi.h>
 #include <machinekit/hal.h>
 #include <machinekit/hal_priv.h>
 #include "motion.h"

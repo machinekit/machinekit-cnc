@@ -9,4 +9,8 @@ set(${project}_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/nullcanon.cc
 )
 
-add_library(${project} STATIC ${${project}_SOURCES} )
+
+include_directories(../)
+
+add_library(${project} OBJECT ${${project}_SOURCES} ${${project}_HEADERS} )
+target_compile_options(${project} PUBLIC -fPIC)

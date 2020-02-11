@@ -1,4 +1,4 @@
-#include "python_plugin.hh"
+#include <pythonplugin/python_plugin.hh>
 
 
 extern "C" void initemctask();

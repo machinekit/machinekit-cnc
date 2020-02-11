@@ -3,10 +3,12 @@
 * dummy layer for profiling the interpreter without any canon overhead
 ********************************************************************/
 
-#include "canon.hh"
-#include "rs274ngc.hh"
-#include "rs274ngc_interp.hh"
-#include "rtapi_math.h"
+#include <nml_intf/canon.hh>
+#include <nml_intf/emc.hh>		// EMC NML
+#include <nml_intf/emc_nml.hh>
+#include <rs274ngc/rs274ngc.hh>
+#include <rs274ngc/rs274ngc_interp.hh>
+#include <machinekit/rtapi_math.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>

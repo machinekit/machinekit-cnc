@@ -20,16 +20,16 @@
 #include <structseq.h>
 #include <pthread.h>
 #include <structmember.h>
-#include "config.h"
-#include "rcs.hh"
-#include "emc.hh"
-#include "emc_nml.hh"
-#include "kinematics.h"
-#include "config.h"
-#include "inifile.hh"
-#include "timer.hh"
-#include "nml_oi.hh"
-#include "rcs_print.hh"
+#include <machinekit/config.h>
+#include <rcs/rcs.hh>
+#include <nml_intf/emc.hh>
+#include <nml_intf/emc_nml.hh>
+#include <kinematics/kinematics.h>
+#include <machinekit/config.h>
+#include <machinekit/inifile.hh>
+#include <os_intf/timer.hh>
+#include <nml/nml_oi.hh>
+#include <rcs/rcs_print.hh>
 
 #include <cmath>
 

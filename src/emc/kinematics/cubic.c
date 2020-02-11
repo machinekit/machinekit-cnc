@@ -15,9 +15,9 @@
 *
 * Last change:
 ********************************************************************/
-#include "posemath.h"
+#include <posemath/posemath.h>
 #include "cubic.h"
-#include "rtapi_math.h"
+#include <machinekit/rtapi_math.h>
 
 #define SEGMENT_TIME_SET 0x01
 #define INTERPOLATION_RATE_SET 0x02

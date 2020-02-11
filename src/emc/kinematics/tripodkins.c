@@ -63,7 +63,7 @@
  */
 
 #include "kinematics.h"             /* these decls */
-#include "rtapi_math.h"
+#include <machinekit/rtapi_math.h>
 
 #define VTVERSION VTKINEMATICS_VERSION1
 
@@ -346,9 +346,9 @@ int main(int argc, char *argv[])
 
 #endif /* MAIN */
 
-#include "rtapi.h"		/* RTAPI realtime OS API */
-#include "rtapi_app.h"		/* RTAPI realtime module decls */
-#include "hal.h"
+#include <machinekit/rtapi.h>		/* RTAPI realtime OS API */
+#include <machinekit/rtapi_app.h>		/* RTAPI realtime module decls */
+#include <machinekit/hal.h>
 
 static vtkins_t vtk = {
     .kinematicsForward = kinematicsForward,

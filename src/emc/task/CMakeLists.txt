@@ -19,4 +19,8 @@ set(${project}_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/taskclass.hh
 )
 
-add_library(${project} STATIC ${${project}_SOURCES} ${${project}_HEADERS} )
+include_directories(../)
+
+#add_library(${project} ${${project}_SOURCES} ${${project}_HEADERS} )
+add_library(${project} OBJECT ${${project}_SOURCES} ${${project}_HEADERS} )
+target_compile_options(${project} PUBLIC -fPIC)

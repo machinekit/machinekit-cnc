@@ -17,8 +17,8 @@
 #ifndef SHCOM_HH
 #define SHCOM_HH
 
-#include "emc_nml.hh"
-#include "nml_oi.hh"            // NML_ERROR_LEN
+#include <nml_intf/emc_nml.hh>
+#include <nml/nml_oi.hh>            // NML_ERROR_LEN
 
 #define CLOSE(a,b,eps) ((a)-(b) < +(eps) && (a)-(b) > -(eps))
 #define LINEAR_CLOSENESS 0.0001
