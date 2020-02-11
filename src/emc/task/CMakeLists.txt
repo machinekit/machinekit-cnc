@@ -36,7 +36,7 @@ set(MILLTASK_SOURCES
 )
 
 add_executable(milltask ${MILLTASK_SOURCES} ${${project}_HEADERS} )
-target_link_libraries(milltask rs274 mk nml mkini posemath mkhal pyplugin rtapi_math Boost::python27 ${PYTHON_LIBRARIES})
+target_link_libraries(milltask rs274 mk nml posemath mkhal pyplugin Boost::python27 ${PYTHON_LIBRARIES})
 
 install(TARGETS milltask 
     RUNTIME DESTINATION bin

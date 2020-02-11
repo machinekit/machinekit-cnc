@@ -45,11 +45,6 @@ include_directories(../)
 include_directories(${TCL_INCLUDE_PATH})
 include_directories(${TK_INCLUDE_PATH})
 
-set(EMCSH_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/emcsh.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/shcom.cc
-)
-
 set(EMCRSH_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/emcrsh.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/shcom.cc
@@ -67,24 +62,21 @@ set(EMCLCD_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/sockets.c
 )
 
-set(EMCWEB_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/shcom.cc
-	${CMAKE_CURRENT_SOURCE_DIR}/emccontroller.cc
-	${CMAKE_CURRENT_SOURCE_DIR}/emcweb.cc
-	${CMAKE_CURRENT_SOURCE_DIR}/emcweb/mongoose.c
-	${CMAKE_CURRENT_SOURCE_DIR}/emcweb/mongoose_wrapper.cc
-)
-
 if(XINERAMA_FOUND)
+    set(EMCSH_SOURCES
+        ${CMAKE_CURRENT_SOURCE_DIR}/emcsh.cc
+        ${CMAKE_CURRENT_SOURCE_DIR}/shcom.cc
+    )
+
     add_library(tclmk SHARED ${EMCSH_SOURCES} ${${project}_HEADERS} )
     target_link_libraries(tclmk ${XINERAMA_LIBRARIES})
 endif()
 
 add_executable(mkcncrsh ${EMCRSH_SOURCES} ${${project}_HEADERS} )
-target_link_libraries(mkcncrsh nml mk mkini pthread)
+target_link_libraries(mkcncrsh nml mk mkini Threads::Threads)
 
 add_executable(schedrmt ${EMCSCHED_SOURCES} ${${project}_HEADERS} )
-target_link_libraries(schedrmt nml mk mkini pthread)
+target_link_libraries(schedrmt nml mk mkini Threads::Threads)
 
 add_executable(mkclcd ${EMCLCD_SOURCES} ${${project}_HEADERS} )
 target_link_libraries(mkclcd nml mk mkini)
@@ -108,11 +100,14 @@ if(HAVE_XAW)
 endif()
 
 if(WITH_EMCWEB)
-    #include_directories(${Boost_INCLUDE_DIRS})
-
-    # For libnml
-    #link_directories(${LIBRARY_OUTPUT_DIRECTORY})
+    set(EMCWEB_SOURCES
+        ${CMAKE_CURRENT_SOURCE_DIR}/shcom.cc
+        ${CMAKE_CURRENT_SOURCE_DIR}/emccontroller.cc
+        ${CMAKE_CURRENT_SOURCE_DIR}/emcweb.cc
+        ${CMAKE_CURRENT_SOURCE_DIR}/emcweb/mongoose.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/emcweb/mongoose_wrapper.cc
+    )
 
     add_executable(emcweb ${EMCWEB_SOURCES} ${${project}_HEADERS} )
-    target_link_libraries(emcweb nml mk mkini Boost::thread Boost::system pthread dl)
+    target_link_libraries(emcweb nml mk mkini Boost::thread dl)
 endif()

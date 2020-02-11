@@ -50,8 +50,13 @@ set(DELTA_MODULE_SOURCES
 )
 
 add_library(lineardeltakins SHARED ${DELTA_MODULE_SOURCES} )
-target_link_libraries(lineardeltakins Boost::python27)
+#target_link_libraries(lineardeltakins Boost::python27)
 target_compile_options(lineardeltakins PUBLIC -x c++ -Wno-declaration-after-statement -fpermissive )
+
+install(
+    TARGETS lineardeltakins
+    DESTINATION ${Python2_SITELIB}
+)
 
 ## -- GEN_SERKINS
 
@@ -62,6 +67,11 @@ set(GEN_SERKINS_SOURCES
 add_executable(genserkins ${GEN_SERKINS_SOURCES})
 target_link_libraries(genserkins mkhal posemath rtapi_math)
 
+install(
+    TARGETS genserkins 
+    RUNTIME DESTINATION bin
+)
+
 ## -- DRAW_BOTKINS
 
 set(DRAW_BOTKINS_SOURCES
@@ -69,3 +79,8 @@ set(DRAW_BOTKINS_SOURCES
 )
 add_executable(drawbotkins ${GEN_SERKINS_SOURCES})
 target_link_libraries(drawbotkins mkhal posemath rtapi_math)
+
+install(
+    TARGETS drawbotkins 
+    RUNTIME DESTINATION bin
+)

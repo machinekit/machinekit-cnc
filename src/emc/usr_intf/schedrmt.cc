@@ -14,7 +14,9 @@
 * Last change:
 ********************************************************************/
 
+#ifndef _REENTRANT
 #define _REENTRANT
+#endif
 
 #include <stdio.h>
 #include <string.h>
