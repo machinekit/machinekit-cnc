@@ -11,11 +11,12 @@
 * Last change:
 ********************************************************************/
 
-#include "posemath.h"
+#include <stdbool.h> // for 'true' and 'false'
+#include <posemath/posemath.h>
 #include "tc_types.h"
 #include "tc.h"
 #include "tp_types.h"
-#include "rtapi_math.h"
+#include <machinekit/rtapi_math.h>
 #include "spherical_arc.h"
 #include "blendmath.h"
 #include "tp_debug.h"

@@ -12,6 +12,9 @@
 * Last change: 
 ********************************************************************/
 
+#include "cms_srv.hh" // for CMS_SERVER
+#include <rcs/rcs_print.hh>
+
 extern "C" void cms_print_servers();
 
 void cms_print_servers()

@@ -18,13 +18,13 @@
 #include <string.h>		// strlen()
 #include <ctype.h>		// isspace()
 
-#include "emc.hh"
-#include "emcpos.h"             // EmcPose
-#include "rcs_print.hh"
-#include "posemath.h"		// PM_POSE, PM_RPY
+#include <nml_intf/emc.hh>
+#include <nml_intf/emcpos.h>             // EmcPose
+#include <rcs/rcs_print.hh>
+#include <posemath/posemath.h>		// PM_POSE, PM_RPY
 #include "emcIniFile.hh"
 #include "initraj.hh"		// these decls
-#include "emcglb.h"		/*! \todo TRAVERSE_RATE (FIXME) */
+#include <nml_intf/emcglb.h>		/*! \todo TRAVERSE_RATE (FIXME) */
 #include "inihal.hh"
 
 extern value_inihal_data old_inihal_data;

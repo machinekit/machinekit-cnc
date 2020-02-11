@@ -59,7 +59,9 @@ endif()
 set(HAVE_CZMQ 1)
 
 if(WITH_GTK)
-    find_package(GTK2)
+    find_package(GTK2 REQUIRED)
+    pkg_check_modules(glu HAVE_GLU)
+    pkg_check_modules(gl HAVE_GL)
     if(NOT GTK2_FOUND)
         message(FATAL_ERROR "libgtk2.0 not found: install libgtk2.0-dev")
     endif()
@@ -141,7 +143,7 @@ if(GT_STRETCH)
     endif()
 endif()
 
-check_include_files(readline/readline.h HAVE_READLINE)
+check_include_file(readline/readline.h HAVE_READLINE)
 if(NOT HAVE_READLINE)
     message(FATAL_ERROR "readline not found: install libreadline-dev")
 endif()
@@ -170,24 +172,18 @@ endif()
 find_program(PS ps)
 find_program(AWK awk)
 
-#[[
-# required packages
-
-# TODO libgl1-mesa-dev libglu1-mesa-dev tk-dev
-]]
-
-pkg_check_modules(CZMQ REQUIRED libczmq>=2.2.0)
-pkg_check_modules(AVAHI REQUIRED avahi-client)
-pkg_check_modules(JANSSON REQUIRED jansson>=2.5)
-pkg_check_modules(LWS REQUIRED libwebsockets)
 pkg_check_modules(SSL REQUIRED libssl)
-pkg_check_modules(URIPARSER REQUIRED liburiparser)
-pkg_check_modules(UUID REQUIRED uuid)
-find_package(Boost REQUIRED COMPONENTS python serialization thread)
-find_package(GTK2 REQUIRED)
+pkg_check_modules(URIPARSER liburiparser)
+if(NOT URIPARSER_FOUND)
+    message(FATAL_ERROR "liburiparser not found: install liburiparser-dev")
+endif()
 
+pkg_check_modules(TK_DEV tk)
+if(NOT TK_DEV_FOUND)
+    message(FATAL_ERROR "tk-dev not found: install tk-dev")
+endif()
 
-if(POSIX_THREADS)
+if(WITH_POSIX)
     set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
     set(THREADS_PREFER_PTHREAD_FLAG TRUE)
     find_package(Threads)
@@ -195,63 +191,65 @@ if(POSIX_THREADS)
       message(FATAL_ERROR "POSIX threads not found!")
     endif()
     set(HAVE_POSIX_THREADS 1)
-elseif(RT_PREEMPT_THREADS)
+elseif(WITH_RT_PREEMPT)
     include(FindThreads)
     if(NOT THREADS_FOUND)
-      message(FATAL_ERROR "POSIX threads not found!")
+      message(FATAL_ERROR "RT_PREEMPT threads not found!")
     endif()
     set(HAVE_PREEMPT_THREADS 1)
-elseif(XENOMAI_THREADS)
+elseif(WITH_XENOMAI)
     include(FindThreads)
     if(NOT THREADS_FOUND)
-      message(FATAL_ERROR "POSIX threads not found!")
+      message(FATAL_ERROR "XENOMAI threads not found!")
     endif()
     set(HAVE_XENOMAI_THREADS 1)
-elseif(XENOMAI_KERNEL_THREADS)
+elseif(WITH_XENOMAI_KERNEL)
     include(FindThreads)
     if(NOT THREADS_FOUND)
-      message(FATAL_ERROR "POSIX threads not found!")
+      message(FATAL_ERROR "XENOMAI_KERNEL threads not found!")
     endif()
     set(HAVE_XENOMAI_KERNEL_THREADS 1)
-elseif(RTAI_KERNEL_THREADS)
+elseif(WITH_RTAI_KERNEL)
     include(FindThreads)
     if(NOT THREADS_FOUND)
-      message(FATAL_ERROR "POSIX threads not found!")
+      message(FATAL_ERROR "RTAI_KERNEL threads not found!")
     endif()
     set(HAVE_RTAI_KERNEL_THREADS 1)
-else
-    message(" No thread support!") 
+else()
+    message(FATAL "No thread support selected!") 
 endif()
 
-#file(APPEND ${CONFIG_H} "/* Define to 1 if asm/msr.h is usable and defines rdtscll */\n")
-#file(APPEND ${CONFIG_H} "#define [MSR_H_USABLE]  \n\n ")
-
-CheckSymbolExists(rdtscll, "asm/msr.h", MSR_H_USABLE)
+# Define to 1 if asm/msr.h is usable and defines rdtscll
+check_symbol_exists(rdtscll "asm/msr.h" MSR_H_USABLE)
 
 if(MSR_H_USABLE)
     set(HAVE_MSR_H_USABLE)
 endif()
 
-#file(APPEND ${CONFIG_H} "/* Define to 1 if linux/hidraw.h is usable and defines HIDIOCGRAWINFO */\n")
-#file(APPEND ${CONFIG_H} "#define [HIDRAW_H_USABLE]  \n\n ")
-
-CheckSymbolExists(HIDIOCGRAWINFO, "linux/hidraw.h", HIDRAW_H_USABLE)
+# Define to 1 if linux/hidraw.h is usable and defines HIDIOCGRAWINFO
+check_symbol_exists(HIDIOCGRAWINFO "linux/hidraw.h" HIDRAW_H_USABLE)
 
 if(HIDRAW_H_USABLE)
     set(HAVE_HIDRAW_H_USABLE)
 endif()
 
-#file(APPEND ${CONFIG_H} "/* if lttng-ust support is available */\n")
-#file(APPEND ${CONFIG_H} "#define [HAVE_LTTNG_UST]  \n\n ")
-
 pkg_check_modules(LTTNG_UST lttng-ust)
-
-#file(APPEND ${CONFIG_H} "/* libbacktrace available */\n")
-#file(APPEND ${CONFIG_H} "#define HAVE_LIBBACKTRACE  \n\n ")
+if(NOT HAVE_LTTNG_UST)
+    message("lttng-ust not found: install liblttng-ust-dev")
+endif()
 
 pkg_check_modules(LIBBACKTRACE libbacktrace)
 
-# Setting the include directory for the application to find config.h
-include_directories( ${CMAKE_BINARY_DIR} )
-# Since we have created a config.h add a global define for it
-add_definitions( "-DHAVE_CONFIG_H" )
+# The installation location of machinekit-hal
+find_path(mkHalIncludes hal.h PATHS /usr/local/include/machinekit ${MACHINEKIT_INCLUDE_DIR})
+if(NOT mkHalIncludes)
+    message(FATAL_ERROR "Can't find machinekit-hal include directory, try setting MACHINEKIT_INCLUDE_DIR")
+endif()
+include_directories(${mkHalIncludes})
+
+# Needed for libnml
+find_library(rtapi_math MACHINEKIT_RTAPI_MATH_FOUND)
+
+include(FindGettext)
+
+include(FindKernelHeaders)

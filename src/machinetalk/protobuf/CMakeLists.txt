@@ -1,0 +1,44 @@
+cmake_minimum_required(VERSION 2.8)
+set (project protobuf)
+
+set(${project}_HEADERS
+    ${CMAKE_CURRENT_SOURCE_DIR}/canon.npb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/canon.pb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.txt
+    ${CMAKE_CURRENT_SOURCE_DIR}/config.npb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/config.pb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/emcclass.npb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/emcclass.pb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/firmware.npb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/firmware.pb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/jplan.npb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/jplan.pb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/log.npb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/log.pb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/message.npb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/message.pb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/motcmds.npb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/motcmds.pb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/nanopb.npb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/nanopb.pb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/object.npb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/object.pb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/preview.npb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/preview.pb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/ros.npb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/ros.pb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/rtapicommand.npb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/rtapicommand.pb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/rtapi_message.npb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/rtapi_message.pb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/status.npb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/status.pb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/task.npb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/task.pb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/test.npb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/test.pb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/types.npb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/types.pb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/value.npb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/value.pb.h
+)

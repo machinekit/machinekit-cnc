@@ -11,11 +11,11 @@
 * Copyright (c) 2004 All rights reserved.
 ********************************************************************/
 
-#include "rtapi.h"
-#include "hal.h"
+//#include <machinekit/rtapi.h>
+//#include <machinekit/hal.h>
 #include "motion.h"
 #include "mot_priv.h"
-#include "rtapi_math.h"
+#include <machinekit/rtapi_math.h>
 
 // Mark strings for translation, but defer translation to userspace
 #define _(s) (s)

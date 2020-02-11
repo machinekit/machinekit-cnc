@@ -4,7 +4,7 @@
 #ifndef MOTION_ID_H
 #define MOTION_ID_H
 
-#include "rtapi_limits.h"
+//#include <machinekit/rtapi_limits.h>
 // define a special value to denote an invalid motion ID
 // NB: do not ever generate a motion id of  MOTION_INVALID_ID
 // this should be really be tested for in command.c

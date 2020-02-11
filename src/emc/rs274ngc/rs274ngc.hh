@@ -22,9 +22,9 @@
 /**********************/
 
 #include <stdio.h>
-#include "canon.hh"
-#include "emc.hh"
-#include "debugflags.h"
+#include <nml_intf/canon.hh>
+#include <nml_intf/emc.hh>
+#include <nml_intf/debugflags.h>
 
 typedef struct setup_struct setup;
 #ifndef JAVA_DIAG_APPLET

@@ -30,21 +30,21 @@ extern "C" {
 #include <sys/socket.h>
 #include <sys/time.h>           /* struct timeval */
 #include <netdb.h>
-#include "rtapi_math.h"		/* fmod() */
+#include <machinekit/rtapi_math.h>		/* fmod() */
 
 #ifdef __cplusplus
 }
 #endif
-#include "rem_msg.hh"		/* REMOTE_CMS_READ_REQUEST_TYPE, etc. */
-#include "rcs_print.hh"		/* rcs_print_error() */
-#include "cmsdiag.hh"
+#include <buffer/rem_msg.hh>		/* REMOTE_CMS_READ_REQUEST_TYPE, etc. */
+#include <rcs/rcs_print.hh>		/* rcs_print_error() */
+#include <cms/cmsdiag.hh>
 #define DEFAULT_MAX_CONSECUTIVE_TIMEOUTS (-1)
-#include "timer.hh"		/* esleep() */
+#include <os_intf/timer.hh>		/* esleep() */
 #include "tcpmem.hh"
 #include "recvn.h"		/* recvn() */
 #include "sendn.h"		/* sendn() */
-#include "tcp_opts.hh"		/* SET_TCP_NODELAY */
-#include "linklist.hh"          /* LinkedList */
+#include <cms/tcp_opts.hh>		/* SET_TCP_NODELAY */
+#include <linklist/linklist.hh>          /* LinkedList */
 
 int tcpmem_sigpipe_count = 0;
 int last_sig = 0;

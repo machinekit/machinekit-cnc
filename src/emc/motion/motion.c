@@ -9,7 +9,7 @@
 * Copyright (c) 2004 All rights reserved.
 ********************************************************************/
 
-#include <stdarg.h>
+//#include <stdarg.h>
 #include "rtapi.h"		/* RTAPI realtime OS API */
 #include "rtapi_app.h"		/* RTAPI realtime module decls */
 #include "rtapi_string.h"       /* memset */

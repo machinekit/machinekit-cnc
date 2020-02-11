@@ -15,12 +15,12 @@
 #ifndef EMC_HH
 #define EMC_HH
 
-#include "config.h"
+#include <machinekit/config.h>
 #include "emcglb.h"		// EMC_AXIS_MAX
-#include "nml_type.hh"
+#include <nml/nml_type.hh>
 #include "motion_types.h"
 #include <stdint.h>
-#include "modal_state.hh"
+#include <rs274ngc/modal_state.hh>
 
 // Forward class declarations
 class EMC_AXIS_STAT;

@@ -18,9 +18,9 @@
 /* Forward Function Prototypes */
 #include "rcs_exit.hh"
 
-#include "linklist.hh"		// LinkedList
+#include <linklist/linklist.hh>		// LinkedList
 #include "rcs_print.hh"		// rcs_print_error()
-#include "timer.hh"		// esleep()
+#include <os_intf/timer.hh>		// esleep()
 
 #ifdef __cplusplus
 extern "C" {

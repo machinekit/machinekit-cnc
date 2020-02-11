@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.0.2)
 
 project(machinekit-cnc)
+
+include(CheckIncludeFiles)
+
 set(MK_VERSION_MAJOR 0)
 set(MK_VERSION_MINOR 3)
 
@@ -28,6 +31,7 @@ else()
 endif()
 
 include(Options)
+include(Dependencies)
 include(Macros)
 
 include_directories(${INCLUDE_DIR})
@@ -36,68 +40,11 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_subdirectory(src)
 add_subdirectory(scripts)
-
-## !!! WARNING These are the defines that were defined regardless of an option.
-## !!! Or the script couldn't match them. Match them accordingly, delete them or keep them
-file(APPEND ${CONFIG_H} "/* zeroMQ czmq library available */\n")
-file(APPEND ${CONFIG_H} "#define HAVE_CZMQ  \n\n ")
-
-file(APPEND ${CONFIG_H} "/* protobuf available */\n")
-file(APPEND ${CONFIG_H} "#define HAVE_PROTOBUF  \n\n ")
-
-file(APPEND ${CONFIG_H} "/* jansson JSON C bindings available */\n")
-file(APPEND ${CONFIG_H} "#define HAVE_JANSSON  \n\n ")
-
-file(APPEND ${CONFIG_H} "/* uriparser library available */\n")
-file(APPEND ${CONFIG_H} "#define HAVE_URIPARSER  \n\n ")
-
-file(APPEND ${CONFIG_H} "/* libwebsockets library available */\n")
-file(APPEND ${CONFIG_H} "#define HAVE_LWS  \n\n ")
-
-file(APPEND ${CONFIG_H} "/* libssl library available */\n")
-file(APPEND ${CONFIG_H} "#define HAVE_SSL  \n\n ")
-
-file(APPEND ${CONFIG_H} "/* uuid library available */\n")
-file(APPEND ${CONFIG_H} "#define HAVE_UUID  \n\n ")
-
-file(APPEND ${CONFIG_H} "/* avahi mDNS client library available */\n")
-file(APPEND ${CONFIG_H} "#define HAVE_AVAHI  \n\n ")
+#add_subdirectory(po)
 
 
-file(APPEND ${CONFIG_H} "/* Build POSIX threads */\n")
-file(APPEND ${CONFIG_H} "#define [HAVE_POSIX_THREADS]  \n\n ")
-
-file(APPEND ${CONFIG_H} "/* Build RT_PREEMPT threads */\n")
-file(APPEND ${CONFIG_H} "#define [HAVE_RT_PREEMPT_THREADS]  \n\n ")
-
-file(APPEND ${CONFIG_H} "/* Xenomai v.2 */\n")
-file(APPEND ${CONFIG_H} "#define [XENOMAI_V2]  \n\n ")
-
-file(APPEND ${CONFIG_H} "/* Build Xenomai userland threads */\n")
-file(APPEND ${CONFIG_H} "#define [HAVE_XENOMAI_THREADS]  \n\n ")
-
-file(APPEND ${CONFIG_H} "/* Build Xenomai kernel threads */\n")
-file(APPEND ${CONFIG_H} "#define [HAVE_XENOMAI_KERNEL_THREADS]  \n\n ")
-
-file(APPEND ${CONFIG_H} "/* Build RTAI threads */\n")
-file(APPEND ${CONFIG_H} "#define [HAVE_RTAI_KERNEL_THREADS]  \n\n ")
-
-file(APPEND ${CONFIG_H} "/* Define to 1 if asm/msr.h is usable and defines rdtscll */\n")
-file(APPEND ${CONFIG_H} "#define [MSR_H_USABLE]  \n\n ")
-
-file(APPEND ${CONFIG_H} "/* Define to 1 if linux/hidraw.h is usable and defines HIDIOCGRAWINFO */\n")
-file(APPEND ${CONFIG_H} "#define [HIDRAW_H_USABLE]  \n\n ")
-
-file(APPEND ${CONFIG_H} "/* if lttng-ust support is available */\n")
-file(APPEND ${CONFIG_H} "#define [HAVE_LTTNG_UST]  \n\n ")
-
-file(APPEND ${CONFIG_H} "/* Define to 1 if you have the 'readline' library -lreadline and required headers */\n")
-file(APPEND ${CONFIG_H} "#define [HAVE_READLINE]  \n\n ")
-
-file(APPEND ${CONFIG_H} "/* libbacktrace available */\n")
-file(APPEND ${CONFIG_H} "#define HAVE_LIBBACKTRACE  \n\n ")
-
+# Note, maybe this should source from <machinekit/config.h>?
 # Setting the include directory for the application to find config.h
-include_directories( ${CMAKE_BINARY_DIR} )
+#include_directories( ${CMAKE_BINARY_DIR} )
 # Since we have created a config.h add a global define for it
-add_definitions( "-DHAVE_CONFIG_H" )
+#add_definitions( "-DHAVE_CONFIG_H" )

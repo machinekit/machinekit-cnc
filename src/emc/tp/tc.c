@@ -14,15 +14,16 @@
 * Last change:
 ********************************************************************/
 
-#include "rtapi.h"		/* rtapi_print_msg */
-#include "rtapi_math.h"
-#include "posemath.h"
+#include <stdbool.h> // for 'true' and 'false'
+#include <machinekit/rtapi.h>		/* rtapi_print_msg */
+#include <machinekit/rtapi_math.h>
+#include <posemath/posemath.h>
 #include "blendmath.h"
-#include "emcpose.h"
+#include <nml_intf/emcpose.h>
 #include "tc.h"
 #include "tp_types.h"
 #include "spherical_arc.h"
-#include "motion_types.h"
+#include <nml_intf/motion_types.h>
 
 //Debug output
 #include "tp_debug.h"

@@ -21,9 +21,9 @@
 
 #include "rs274ngc.hh"
 #include "rs274ngc_interp.hh"
-#include "interp_return.hh"
-#include "canon.hh"
-#include "config.h"		// LINELEN
+#include <nml_intf/interp_return.hh>
+#include <nml_intf/canon.hh>
+#include <machinekit/config.h>		// LINELEN
 
 int _task = 0; // control preview behaviour when remapping
 

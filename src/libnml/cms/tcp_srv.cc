@@ -43,19 +43,19 @@ extern "C" {
 
 #include <arpa/inet.h>		/* inet_ntoa */
 #include "cms.hh"		/* class CMS */
-#include "nml.hh"		// class NML
+#include <nml/nml.hh>		// class NML
 #include "tcp_srv.hh"		/* class CMS_SERVER_REMOTE_TCP_PORT */
-#include "rcs_print.hh"		/* rcs_print_error() */
-#include "linklist.hh"		/* class LinkedList */
+#include <rcs/rcs_print.hh>		/* rcs_print_error() */
+#include <linklist/linklist.hh>		/* class LinkedList */
 #include "tcp_opts.hh"		/* SET_TCP_NODELAY */
-#include "timer.hh"		// esleep()
-#include "_timer.h"
+#include <os_intf/timer.hh>		// esleep()
+#include <os_intf/_timer.h>
 #include "cmsdiag.hh"		// class CMS_DIAGNOSTICS_INFO
 extern "C" {
-#include "recvn.h"		/* recvn() */
-#include "sendn.h"		/* sendn() */
+#include <buffer/recvn.h>		/* recvn() */
+#include <buffer/sendn.h>		/* sendn() */
 }
-#include "physmem.hh"           // PHYSMEM_HANDLE
+#include <buffer/physmem.hh>           // PHYSMEM_HANDLE
 
 int tcpsvr_threads_created = 0;
 int tcpsvr_threads_killed = 0;

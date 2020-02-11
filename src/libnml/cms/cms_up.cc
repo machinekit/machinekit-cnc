@@ -16,7 +16,7 @@
 
 #include "cms.hh"		/* class CMS */
 #include "cms_up.hh"		/* class CMS_UPDATER */
-#include "rcs_print.hh"		/* rcs_print_error() */
+#include <rcs/rcs_print.hh>		/* rcs_print_error() */
 
 #ifdef __cplusplus
 extern "C" {

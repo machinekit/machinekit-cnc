@@ -14,9 +14,9 @@
 
 #include "nml.hh"
 #include "nmlmsg.hh"
-#include "cms.hh"
-#include "physmem.hh"
-#include "linklist.hh"
+#include <cms/cms.hh>
+#include <buffer/physmem.hh>
+#include <linklist/linklist.hh>
 
 #include "stat_msg.hh"
 

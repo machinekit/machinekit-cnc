@@ -29,7 +29,7 @@ extern "C" {
 }
 #endif
 #include "rcs_print.hh"
-#include "linklist.hh"
+#include <linklist/linklist.hh>
 #ifndef _TIMER_H
 extern "C" double etime(void);
 #endif

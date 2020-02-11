@@ -18,13 +18,13 @@
 
 #include <string.h>		/* memcpy() */
 
-#include "rcs.hh"		// LinkedList
+#include <rcs/rcs.hh>		// LinkedList
 #include "interpl.hh"		// these decls
 #include "emc.hh"
 #include "emcglb.h"
-#include "linklist.hh"
-#include "nmlmsg.hh"            /* class NMLmsg */
-#include "rcs_print.hh"
+#include <linklist/linklist.hh>
+#include <nml/nmlmsg.hh>            /* class NMLmsg */
+#include <rcs/rcs_print.hh>
 
 NML_INTERP_LIST interp_list;	/* NML Union, for interpreter */
 

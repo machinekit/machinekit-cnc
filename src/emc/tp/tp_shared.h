@@ -1,9 +1,9 @@
 #ifndef _TP_SHARED_H
 #define _TP_SHARED_H
 
-#include "hal.h"
-#include "rtapi_math.h"
-#include "emcpose.h"
+#include <machinekit/hal.h>
+#include <machinekit/rtapi_math.h>
+#include <nml_intf/emcpose.h>
 
 typedef void (*emcmotDioWrite_t)(unsigned int index, hal_bit_t   value);
 typedef void (*emcmotAioWrite_t)(unsigned int index, hal_float_t value);

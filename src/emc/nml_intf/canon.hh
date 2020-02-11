@@ -18,7 +18,7 @@
 
 #include "emcpos.h"
 #include "emctool.h"
-#include "modal_state.hh"
+#include <rs274ngc/modal_state.hh>
 
 /*
   This is the header file that all applications that use the

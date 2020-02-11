@@ -1,7 +1,7 @@
-#include "rtapi.h"		/* RTAPI realtime OS API */
-#include "rtapi_app.h"		/* RTAPI realtime module decls */
-#include "hal.h"
-#include "vtable.h"
+#include <machinekit/rtapi.h>		/* RTAPI realtime OS API */
+#include <machinekit/rtapi_app.h>		/* RTAPI realtime module decls */
+#include <machinekit/hal.h>
+#include <machinekit/vtable.h>
 #include "tp.h"
 #include "tp_private.h"
 

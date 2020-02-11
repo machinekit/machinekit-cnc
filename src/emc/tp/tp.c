@@ -10,18 +10,18 @@
 *
 * Copyright (c) 2004 All rights reserved.
 ********************************************************************/
-#include "rtapi.h"              /* rtapi_print_msg */
-#include "posemath.h"           /* Geometry types & functions */
+#include <machinekit/rtapi.h>              /* rtapi_print_msg */
+#include <posemath/posemath.h>           /* Geometry types & functions */
 #include "tc.h"
 #include "tp.h"
 #include "tp_private.h"
 #include "tp_shared.h"
-#include "emcpose.h"
-#include "rtapi_math.h"
+#include <nml_intf/emcpose.h>
+#include <machinekit/rtapi_math.h>
 // #include "mot_priv.h"
 //#include "motion_debug.h"
-#include "motion_types.h"
-#include "motion_id.h"
+#include <nml_intf/motion_types.h>
+#include <motion/motion_id.h>
 #include "spherical_arc.h"
 #include "blendmath.h"
 

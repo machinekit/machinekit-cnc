@@ -14,7 +14,7 @@
 #ifndef EMCPOS_H
 #define EMCPOS_H
 
-#include "posemath.h"		/* PmCartesian */
+#include <posemath/posemath.h>		/* PmCartesian */
 
 typedef struct EmcPose {
     PmCartesian tran;

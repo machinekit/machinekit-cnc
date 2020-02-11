@@ -29,15 +29,15 @@ extern "C" {
 #endif
 #include "nml.hh"
 #include "nmlmsg.hh"
-#include "cms.hh"
+#include <cms/cms.hh>
 #include "nml_srv.hh"
-#include "rem_msg.hh"		/* struct REMOTE_READ_REQUEST, */
-#include "rcs_print.hh"		/* rcs_print_error() */
-#include "timer.hh"		// esleep()
-#include "rcs_exit.hh"		// rcs_exit
-#include "linklist.hh"
-#include "physmem.hh"
-#include "cmsdiag.hh"
+#include <buffer/rem_msg.hh>		/* struct REMOTE_READ_REQUEST, */
+#include <rcs/rcs_print.hh>		/* rcs_print_error() */
+#include <os_intf/timer.hh>		// esleep()
+#include <rcs/rcs_exit.hh>		// rcs_exit
+#include <linklist/linklist.hh>
+#include <buffer/physmem.hh>
+#include <cms/cmsdiag.hh>
 NML_SERVER::NML_SERVER(NML * _nml, int _set_to_master):CMS_SERVER()
 {
     NML_SERVER_LOCAL_PORT *new_local_port = NULL;

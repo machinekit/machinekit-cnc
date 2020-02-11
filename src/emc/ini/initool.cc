@@ -17,12 +17,12 @@
 #include <stdlib.h>		// atol()
 #include <string.h>		// strcpy()
 
-#include "emc.hh"
-#include "emcpos.h"             // EmcPose
-#include "rcs_print.hh"
+#include <nml_intf/emc.hh>
+#include <nml_intf/emcpos.h>             // EmcPose
+#include <rcs/rcs_print.hh>
 #include "inifile.hh"
 #include "initool.hh"		// these decls
-#include "emcglb.h"		// TOOL_TABLE_FILE
+#include <nml_intf/emcglb.h>		// TOOL_TABLE_FILE
 
 /*
   loadTool()

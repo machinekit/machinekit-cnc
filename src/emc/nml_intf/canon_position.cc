@@ -13,8 +13,8 @@
  ********************************************************************/
 
 #include "canon_position.hh"
-#include "rtapi_math.h"
-#include "posemath.h"
+#include <machinekit/rtapi_math.h>
+#include <posemath/posemath.h>
 
 static double noElement = 0.0;
 

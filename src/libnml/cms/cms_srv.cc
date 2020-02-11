@@ -21,7 +21,7 @@ extern "C" {
 #include <string.h>		/* strchr(), memcpy() */
 #include <stdlib.h>		/* malloc(), free(), exit() */
 #include <ctype.h>		// isgraph()
-#include "rtapi_math.h"		/* fmod() */
+#include <machinekit/rtapi_math.h>		/* fmod() */
 
 #include <sys/types.h>
 #include <unistd.h>		/* getpid() */
@@ -32,16 +32,16 @@ extern "C" {
 }
 #endif
 #include "cms.hh"		/* class CMS */
-#include "rem_msg.hh"		/* struct REMOTE_READ_REQUEST, */
+#include <buffer/rem_msg.hh>		/* struct REMOTE_READ_REQUEST, */
 				/* struct REMOTE_WRITE_REQUEST, */
 #include "cms_srv.hh"		/* class CMS_SERVER */
 #include "cms_cfg.hh"		/* cms_config() */
-#include "rcs_print.hh"		/* rcs_print_error() */
+#include <rcs/rcs_print.hh>		/* rcs_print_error() */
 #ifndef NO_DCE_RPC
 #define NO_DCE_RPC
 #endif
 #include "tcp_srv.hh"		/* CMS_SERVER_TCP_PORT */
-#include "timer.hh"		// etime()
+#include <os_intf/timer.hh>		// etime()
 #include "cmsdiag.hh"
 
 int cms_server_count = 0;

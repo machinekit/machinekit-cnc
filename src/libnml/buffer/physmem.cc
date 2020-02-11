@@ -26,7 +26,7 @@ extern "C" {
 }
 #endif
 #include "physmem.hh"		/* class PHYSMEM_HANDLE */
-#include "rcs_print.hh"
+#include <rcs/rcs_print.hh>
 PHYSMEM_HANDLE::PHYSMEM_HANDLE()
 {
     size = 0;

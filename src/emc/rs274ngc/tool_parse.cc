@@ -16,8 +16,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-#include "emcglb.h"
-#include "emctool.h"
+#include <nml_intf/emcglb.h>
+#include <nml_intf/emctool.h>
 #include "tool_parse.h"
 
 static bool scan_old_style(

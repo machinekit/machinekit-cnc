@@ -37,7 +37,7 @@ extern "C" {
 #endif
 #include "cms.hh"		/* class CMS */
 #include "cms_aup.hh"		/* class CMS_ASCII_UPDATER */
-#include "rcs_print.hh"		/* rcs_print_error() */
+#include <rcs/rcs_print.hh>		/* rcs_print_error() */
 #define DEFAULT_WARNING_COUNT_MAX 100
 /* Member functions for CMS_ASCII_UPDATER Class */
 

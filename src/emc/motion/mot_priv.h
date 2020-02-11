@@ -14,7 +14,7 @@
 #ifndef MOT_PRIV_H
 #define MOT_PRIV_H
 
-#include "tp.h"  // since we're referencing TP_STRUCT here
+#include <tp/tp.h>  // since we're referencing TP_STRUCT here
 
 /***********************************************************************
 *                       TYPEDEFS, ENUMS, ETC.                          *
@@ -32,8 +32,8 @@
 */
 
 /* joint data */
-#include "hal.h"
-#include "hal_priv.h"
+//#include <machinekit/hal.h>
+#include <machinekit/hal_priv.h>
 #include "../motion/motion.h"
 
 typedef struct {

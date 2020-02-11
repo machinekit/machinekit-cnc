@@ -13,16 +13,16 @@
 ********************************************************************/
 
 #include "cmsdiag.hh"
-#include "rcsversion.h"
+#include <rcs/rcsversion.h>
 #include <sys/types.h>
 #include <unistd.h>		/* getpid() */
-#include "timer.hh"		// etime()
+#include <os_intf/timer.hh>		// etime()
 #include <stdlib.h>		// memset()
 #include <string.h>		// strncpy()
 #include <time.h>		// time_t, time()
-#include "rtapi_math.h"		// floor()
-#include "linklist.hh"          // LinkedList
-#include "physmem.hh"           // PHYSMEM_HANDLE
+#include <machinekit/rtapi_math.h>		// floor()
+#include <linklist/linklist.hh>          // LinkedList
+#include <buffer/physmem.hh>           // PHYSMEM_HANDLE
 
 CMS_DIAGNOSTICS_INFO::CMS_DIAGNOSTICS_INFO()
 {

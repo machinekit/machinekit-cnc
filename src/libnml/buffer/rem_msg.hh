@@ -22,6 +22,7 @@
 #ifndef REM_MSG_HH
 #define REM_MSG_HH
 
+#include <cstddef> // for NULL
 
 class CMS_DIAGNOSTICS_INFO;
 struct CMS_HEADER;

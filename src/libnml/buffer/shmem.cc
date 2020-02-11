@@ -27,18 +27,18 @@ extern "C" {
 #include <errno.h>		// errno
 #include <string.h>		/* strchr(), memcpy(), memset() */
 #include <stdlib.h>		/* strtod */
-#include <physmem.hh>           /* PHYSMEM_HANDLE */
+#include "physmem.hh"           /* PHYSMEM_HANDLE */
 
 #ifdef __cplusplus
 }
 #endif
-#include "rcs_print.hh"		/* rcs_print_error() */
-#include "cms.hh"		/* class CMS */
+#include <rcs/rcs_print.hh>		/* rcs_print_error() */
+#include <cms/cms.hh>		/* class CMS */
 #include "shmem.hh"		/* class SHMEM */
-#include "shm.hh"		/* class RCS_SHAREDMEM */
+#include <os_intf/shm.hh>		/* class RCS_SHAREDMEM */
 //#include "sem.hh"             /* class RCS_SEMAPHORE */
 #include "memsem.hh"		/* mem_get_access(), mem_release_access() */
-#include "timer.hh"		/* etime(), esleep() */
+#include <os_intf/timer.hh>		/* etime(), esleep() */
 /* Common Definitions. */
 //#include "autokey.h"
 /* rw-rw-r-- permissions */
