@@ -150,14 +150,16 @@ static void z_shutdown(void)
 }
 
 char _parameter_file_name[LINELEN];
-extern "C" void initinterpreter();
-extern "C" void initemccanon();
+//extern "C" void initinterpreter();
+//extern "C" void initemccanon();
+// Forward declaration
+extern "C" void initpreview();
 extern "C" struct _inittab builtin_modules[];
 struct _inittab builtin_modules[] = {
-    { (char *) "interpreter", initinterpreter },
-    { (char *) "emccanon", initemccanon },
+    //{ (char *) "interpreter", initinterpreter },
+    //{ (char *) "emccanon", initemccanon },
     // any others...
-    { NULL, NULL }
+    { (char *) "preview", initpreview }
 };
 
 static PyObject *int_array(int *arr, int sz) {

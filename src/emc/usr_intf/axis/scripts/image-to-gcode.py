@@ -23,20 +23,25 @@ sys.path.insert(0, os.path.join(BASE, "lib", "python"))
 import gettext;
 gettext.install("linuxcnc", localedir=os.path.join(BASE, "share", "locale"), unicode=True)
 
-import Image
+try:
+    from PIL import Image
+except ImportError:
+    import Image
 
 try:
-    import numpy.numarray as numarray
+    from numpy import ndarray as numarray
+    from numpy import inf
     import numpy.core
     olderr = numpy.core.seterr(divide='ignore')
-    plus_inf = (numarray.array((1.,))/0.)[0]
+    plus_inf = inf
     numpy.core.seterr(**olderr)
 except ImportError:
     import numarray, numarray.ieeespecial
     plus_inf = numarray.ieeespecial.inf
 
-from rs274.author import Gcode
-import rs274.options
+#from rs274.author import Gcode
+#import rs274.options
+import gcode
 
 from math import *
 import operator

@@ -20,6 +20,8 @@ set(AXIS_PY_TARGETS
     tracking-test
 )
 
+# image-to-gcode needs python-pil, numpy
+
 # Check syntax of targets
 foreach(_target ${AXIS_PY_TARGETS})
     add_custom_command(

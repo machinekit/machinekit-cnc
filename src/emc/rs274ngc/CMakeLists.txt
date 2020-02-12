@@ -62,6 +62,12 @@ add_library(${project}_objs OBJECT ${${project}_SOURCES} ${${project}_HEADERS} )
 target_compile_options(${project}_objs PUBLIC -fPIC)
 
 add_library(${project} SHARED ${${project}_SOURCES} ${${project}_HEADERS} )
+target_link_libraries(${project} rtapi_math mkhal)
+
+install(
+    TARGETS ${project}
+    LIBRARY DESTINATION lib
+)
 
 # -- libgcode
 
@@ -71,6 +77,8 @@ set(GCODE_MODULE_SOURCES
 
 # GCODEMODULE := ../lib/python/gcode.so
 add_library(gcode SHARED ${GCODE_MODULE_SOURCES} ${${project}_HEADERS} )
+target_link_libraries(gcode ${project} pyplugin Boost::python27)
+set_target_properties(gcode PROPERTIES PREFIX "")
 
 install(
     TARGETS gcode
@@ -84,8 +92,9 @@ set(preview_SOURCES
 )
 
 add_library(preview SHARED ${preview_SOURCES})
-target_link_libraries(preview ${project} mktalk-pb2++ mtalk czmq protobuf stdc++)
+target_link_libraries(preview ${project} pyplugin mktalk-pb2++ mtalk Boost::python27 czmq protobuf stdc++)
+set_target_properties(preview PROPERTIES PREFIX "")
 
 install(TARGETS preview
-    LIBRARY DESTINATION lib
+    DESTINATION ${Python2_SITELIB}
 )

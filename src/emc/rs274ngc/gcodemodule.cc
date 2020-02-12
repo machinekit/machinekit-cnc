@@ -28,14 +28,16 @@
 int _task = 0; // control preview behaviour when remapping
 
 char _parameter_file_name[LINELEN];
-extern "C" void initinterpreter();
-extern "C" void initemccanon();
+//extern "C" void initinterpreter();
+//extern "C" void initemccanon();
+// Forward declaration
+extern "C" void initgcode();
 extern "C" struct _inittab builtin_modules[];
 struct _inittab builtin_modules[] = {
-    { (char *) "interpreter", initinterpreter },
-    { (char *) "emccanon", initemccanon },
+    //{ (char *) "interpreter", initinterpreter },
+    //{ (char *) "emccanon", initemccanon },
     // any others...
-    { NULL, NULL }
+    { (char *) "gcode", initgcode }
 };
 
 static PyObject *int_array(int *arr, int sz) {

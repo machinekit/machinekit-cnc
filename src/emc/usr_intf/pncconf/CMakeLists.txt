@@ -10,6 +10,8 @@ install(
     DESTINATION share/machinekit
 )
 
+# Note, needs python-gobject-2-dev, python-gtk2, python-glade2
+
 # Check syntax of pncconf 
 add_custom_command(
     OUTPUT ${project}.pyc
