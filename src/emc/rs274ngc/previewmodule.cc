@@ -159,7 +159,7 @@ struct _inittab builtin_modules[] = {
     //{ (char *) "interpreter", initinterpreter },
     //{ (char *) "emccanon", initemccanon },
     // any others...
-    { (char *) "preview", initpreview }
+    { NULL, NULL }
 };
 
 static PyObject *int_array(int *arr, int sz) {

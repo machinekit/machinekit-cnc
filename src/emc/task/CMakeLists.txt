@@ -41,3 +41,29 @@ target_link_libraries(milltask rs274 mk nml posemath mkhal pyplugin Boost::pytho
 install(TARGETS milltask 
     RUNTIME DESTINATION bin
 )
+
+# -- emctask Python module
+
+set(EMCTASK_MODULE_SOURCES
+	${CMAKE_CURRENT_SOURCE_DIR}/../motion/usrmotintf.cc
+	${CMAKE_CURRENT_SOURCE_DIR}/../motion/emcmotglb.c
+	${CMAKE_CURRENT_SOURCE_DIR}/../motion/emcmotutil.c
+	${CMAKE_CURRENT_SOURCE_DIR}/../motion/dbuf.c
+	${CMAKE_CURRENT_SOURCE_DIR}/../motion/stashf.c
+	${CMAKE_CURRENT_SOURCE_DIR}/taskclass.cc
+	${CMAKE_CURRENT_SOURCE_DIR}/taskintf.cc
+	${CMAKE_CURRENT_SOURCE_DIR}/emccanon.cc
+	${CMAKE_CURRENT_SOURCE_DIR}/emctask.cc
+	${CMAKE_CURRENT_SOURCE_DIR}/emctaskmain.cc
+	${CMAKE_CURRENT_SOURCE_DIR}/backtrace.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/taskmodule.cc
+)
+
+add_library(emctask SHARED ${EMCTASK_MODULE_SOURCES} ${${project}_HEADERS} )
+target_link_libraries(emctask nml mk_SHARED mkhal posemath pyplugin Boost::python27)
+set_target_properties(emctask PROPERTIES PREFIX "")
+
+install(
+    TARGETS emctask
+    DESTINATION ${Python2_SITELIB}
+)

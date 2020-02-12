@@ -13,7 +13,6 @@ set(PY_SOURCES
 set(${project}_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/tripodkins.c
     ${CMAKE_CURRENT_SOURCE_DIR}/rotatekins.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/lineardeltakins.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/XYZACkins.c
     ${CMAKE_CURRENT_SOURCE_DIR}/genhexkins.c
     ${CMAKE_CURRENT_SOURCE_DIR}/5axiskins.c
@@ -46,12 +45,13 @@ include_directories(../)
 ## -- DELTA_MODULE
 
 set(DELTA_MODULE_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/lineardeltakins.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lineardeltakins.cc
 )
 
 add_library(lineardeltakins SHARED ${DELTA_MODULE_SOURCES} )
-#target_link_libraries(lineardeltakins Boost::python27)
+target_link_libraries(lineardeltakins mkhal rtapi_math Boost::python27)
 target_compile_options(lineardeltakins PUBLIC -x c++ -Wno-declaration-after-statement -fpermissive )
+set_target_properties(lineardeltakins PROPERTIES PREFIX "")
 
 install(
     TARGETS lineardeltakins

@@ -69,7 +69,7 @@ install(
     LIBRARY DESTINATION lib
 )
 
-# -- libgcode
+# -- gcode Python module
 
 set(GCODE_MODULE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/gcodemodule.cc
@@ -82,6 +82,36 @@ set_target_properties(gcode PROPERTIES PREFIX "")
 
 install(
     TARGETS gcode
+    DESTINATION ${Python2_SITELIB}
+)
+
+# -- emccanon Python module
+
+set(EMCCANON_MODULE_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/canonmodule.cc
+)
+
+add_library(emccanon SHARED ${EMCCANON_MODULE_SOURCES} ${${project}_HEADERS} )
+target_link_libraries(emccanon ${project} pyplugin Boost::python27)
+set_target_properties(emccanon PROPERTIES PREFIX "")
+
+install(
+    TARGETS emccanon
+    DESTINATION ${Python2_SITELIB}
+)
+
+# -- interp Python module
+
+set(INTERP_MODULE_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/interpmodule.cc
+)
+
+add_library(interpreter SHARED ${INTERP_MODULE_SOURCES} ${${project}_HEADERS} )
+target_link_libraries(interpreter ${project} pyplugin Boost::python27)
+set_target_properties(interpreter PROPERTIES PREFIX "")
+
+install(
+    TARGETS interpreter
     DESTINATION ${Python2_SITELIB}
 )
 

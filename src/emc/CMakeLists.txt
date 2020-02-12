@@ -34,11 +34,12 @@ add_library(${project}_SHARED SHARED
     $<TARGET_OBJECTS:nml_intf>
     $<TARGET_OBJECTS:rs274_objs>
 )
+set_target_properties(${project}_SHARED PROPERTIES OUTPUT_NAME ${project})
 
 install(TARGETS ${project}
     ARCHIVE DESTINATION lib
 )
 
-install(TARGETS ${${project}_SHARED}
+install(TARGETS ${project}_SHARED
     LIBRARY DESTINATION lib
 )

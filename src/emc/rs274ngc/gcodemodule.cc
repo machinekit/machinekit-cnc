@@ -37,7 +37,7 @@ struct _inittab builtin_modules[] = {
     //{ (char *) "interpreter", initinterpreter },
     //{ (char *) "emccanon", initemccanon },
     // any others...
-    { (char *) "gcode", initgcode }
+    { NULL, NULL }
 };
 
 static PyObject *int_array(int *arr, int sz) {
