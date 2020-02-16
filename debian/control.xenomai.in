@@ -4,7 +4,7 @@ Architecture: any
 Provides:  machinekit-cnc-xenomai
 Breaks: machinekit
 Enhances: machinekit-hal-xenomai
-Depends: machinekit-hal-xenomai, python-gnome2, ${shlibs:Depends}, xenomai-runtime,
+Depends: machinekit-hal-xenomai, ${shlibs:Depends}, xenomai-runtime,
     python-tk, python-imaging, python-imaging-tk, python-gst-0.10,
     python-glade2, python-vte, python-xlib, python-gtkglext1,
     python-configobj, python-simplejson, python-pyftpdlib, python-pydot, xdot,

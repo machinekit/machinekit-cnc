@@ -4,7 +4,7 @@ Architecture: any
 Provides:  machinekit-cnc-rt-preempt
 Breaks: machinekit
 Enhances: machinekit-hal-rt-preempt
-Depends: machinekit-hal-rt-preempt, python-gnome2, ${shlibs:Depends},
+Depends: machinekit-hal-rt-preempt, ${shlibs:Depends},
     linux-image-rt-686-pae [i386], linux-image-rt-amd64 [amd64],
     python-tk, python-imaging, python-imaging-tk, python-gst-0.10,
     python-glade2, python-vte, python-xlib, python-gtkglext1,
