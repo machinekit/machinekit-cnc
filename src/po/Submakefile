@@ -65,7 +65,8 @@ pofiles: po/linuxcnc.pot
 	set -x; for i in po/*.po; do msgmerge -U $$i po/linuxcnc.pot; done
 
 po/linuxcnc.pot: emc/task/emctaskmain.cc $(LIBRS274SRCS) emc/rs274ngc/rs274ngc_return.hh
-po/linuxcnc.pot: emc/motion/control.c emc/motion/command.c emc/motion/motion.c emc/motion/homing.c
+
+po/linuxcnc.pot: emc/motion/control.c emc/motion/command.c emc/motion/motmod.c emc/motion/homing.c
 
 po/linuxcnc.pot: $(TCLSRCS)
 po/linuxcnc.pot: $(PYI18NSRCS)

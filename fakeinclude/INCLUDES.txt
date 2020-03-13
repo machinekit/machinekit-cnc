@@ -83,3 +83,4 @@ firmware.npb.h
 rtapi_ctype.h
 rtapi_errno.h
 inifile.hh
+rtapi_flavor.h
