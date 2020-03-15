@@ -66,24 +66,7 @@ ECHO=@true
 VECHO=true
 endif
 
-ifeq ($(threads),)
-# if $(threads) wasn't passed in on the command line, rerun make for
-# each flavor/(optional)kernel-source combo
-BUILD_ALL_FLAVORS = yes
-BUILD_THREAD_MODULES = no
-else
-# $(threads) was passed in; build modules for this flavor and (if
-# applicable) kernel-source
-BUILD_ALL_FLAVORS = no
-BUILD_THREAD_MODULES = yes
-endif # $(threads)
-
-# if KERNELRELEASE is non-empty, we're in kbuild
-ifeq ($(KERNELRELEASE),)
 BUILD_KBUILD = no
-else
-BUILD_KBUILD = yes
-endif
 
 # extract the version from the kernel source version.h
 ifneq ($(KERNELDIR),)
@@ -103,66 +86,15 @@ export PYTHONPATH
 else
 include $(BASEPWD)/Makefile.inc
 endif
-ifeq ($(BUILD_THREAD_FLAVORS),)
-$(error Makefile.inc must specify 'BUILD_THREAD_FLAVORS' and other variables)
-endif
-# prevent typos
-ifeq "$(filter $(threads),$(BUILD_THREAD_FLAVORS))" ""
-$(error "$(threads)" is not a valid RTOS flavor; please pick one of:\
-    $(BUILD_THREAD_FLAVORS))
-endif
 
 # default target:  put before everything else
 default:
 
-ifeq ($(BUILD_ALL_FLAVORS),yes)
-# Top-level modules target
-#
-# Re-run 'make modules', once for each configured userland threads
-# flavor, and once for each detected kernel for each configured kernel
-# threads flavor.  Set 'threads' and where applicable 'KERNELDIR'.
-#
-# Following tradition, this incarnation of the modules recipe is
-# placed far away from all others.
-FLAVORUP = $(shell echo $(1) | tr a-z- A-Z_)
-FLAVORVAR = $($(call FLAVORUP,$(1))_THREADS_$(2))
-modules:  userspace
-	@$(foreach f,$(BUILD_THREAD_FLAVORS),\
-	    echo "Making modules for flavor $(f)"; \
-	    $(if $(findstring kbuild,$(call FLAVORVAR,$(f),BUILD_SYS)),\
-		$(foreach kd,$(call FLAVORVAR,$(f),KERNEL_DIRS),\
-		    echo "    kernel source dir $(kd)"; \
-		    $(MAKE) modules threads=$(f) KERNELDIR=$(kd);\
-		    ),\
-	        $(MAKE) modules threads=$(f);\
-	    )\
-	)
+#############################################################################################
 
-#ifeq ($(HAVE_KERNEL_THREADS),yes)
-#    @test -f ../libexec/linuxcnc_module_helper -a \
-#	\( `stat -c %u ../libexec/linuxcnc_module_helper` -ne 0 -o \
-#	    ! -u ../libexec/linuxcnc_module_helper \) \
-#        && need_setuid=1; 
-#endif
-#
-#ifeq ($(RUN_IN_PLACE)+$(BUILD_DRIVERS),yes+yes)
-#	for f in $(filter-out %-kernel,$(BUILD_THREAD_FLAVORS)); do \
-#	    test -f ../libexec/rtapi_app_$$f -a \
-#		    \( 0`stat -c %u ../libexec/rtapi_app_$$f 2>/dev/null` \
-#			-ne 0 -o ! -u ../libexec/rtapi_app_$$f \) \
-#		&& need_setuid=1; \
-#	done; \
-#	test "$$need_setuid" = 1 && \
-#	    $(VECHO) -n "You now need to run 'sudo make setuid' " && \
-#	    $(VECHO) "in order to run in place." || true
-#endif
-
-endif # BUILD_ALL_FLAVORS
-
-
-OBJDIR := objects/$(RTDIR_EXT)
-DEPDIR := depends/$(RTDIR_EXT)
-RTLIBDIR := ../rtlib/$(RTDIR_EXT)
+OBJDIR := objects/modules
+DEPDIR := depends/modules
+RTLIBDIR := ../rtlib/modules
 
 DEP = $(1) $(CPPFLAGS) -MM -MG -MT "$(2)" $(4) -o $(3).tmp && \
 	mv -f "$(3)".tmp "$(3)"
@@ -175,9 +107,9 @@ cc-option = $(shell \
 	echo "$(2)"; \
     fi ;)
 
-ifeq ($(KERNELRELEASE),)
-# When KERNELRELEASE is not defined, this is the userspace build.
-# The "modules" target is the gateway to the kernel module build.
+#############################################################################################
+
+
 default: configs userspace modules
 
 # Print 'entering' all the time
@@ -227,10 +159,6 @@ SUBDIRS := \
 	\
 	po \
 
-ifeq ($(HAVE_KERNEL_THREADS),yes)
-SUBDIRS += module_helper
-endif
-
 
 # moved to src/rtapi/Submakefile
 # ULAPISRCS := rtapi/$(RTPREFIX)_ulapi.c
@@ -240,6 +168,7 @@ endif
 INCLUDES := .
 
 USERSRCS :=
+RTSRCS :=
 PROGRAMS :=
 
 # When used like $(call TOxxx, ...) these turn a list of source files
@@ -256,9 +185,71 @@ TODEPS = $(patsubst %.cc,depends/%$(2).d,$(patsubst %.c,depends/%$(2).d,$(1)))
 
 TOOBJSDEPS = $(call TOOBJS,$(1),$(2)) $(call TODEPS, $(1),$(2))
 
+# Same, but for RT objects in OBJDIR, compiled with -DRTAPI
+TORTOBJS = $(patsubst %.cc,$(OBJDIR)/%$(2).o,$(patsubst %.c,$(OBJDIR)/%$(2).o,$(1)))
+
+# This macro generates build rules for C components
+# Example call & resulting rules:
+# $$(eval $(call c_comp_build_rules,hal/components/encoder.o,hal/components/othersrc.o))
+# obj-m += encoder.o
+# encoder-objs := hal/components/encoder.o hal/components/othersrc.o
+# $(RTLIBDIR)/encoder.so: \
+#     hal/components/encoder.o hal/components/othersrc.o
+define c_comp_build_rules
+obj-m += $$(patsubst $$(dir $(1))%.o,%.o,$(1))
+$$(patsubst $$(dir $(1))%.o,%-objs,$(1)) += $(1) $(2)
+$$(patsubst $$(dir $(1))%.o,$(RTLIBDIR)/%.so,$(1)): \
+    $$(addprefix $(OBJDIR)/,$(1) $(2))
+
+endef
+# Debugging
+#$$(info $(call c_comp_build_rules,hal/components/encoderv2.o))
+
+###############################################################################
+# C unit test setup
+#
+# This macro generates rules for C unit tests; e.g.
+#
+# $(eval $(call setup_test, \
+#     dir/test_src, RTAPI, dir/ulapi_srcs.c, dir/rtapi_srcs.c), ../lib/lib.so, \
+#    -lfoo, wrap_funct)
+#
+# expands to:
+#
+# RTSRCS += dir/main_src.c
+# objects/dir/test_src_RTAPI: \
+#		objects/dir/ulapi_srcs.o \
+#		$(OBJDIR)/dir/rtapi_srcs.o $(OBJDIR)/dir/test_src.o \
+#		../lib/lib.so
+#	@mkdir -p objects/dir
+#	@echo Linking test objects/dir/test_src_RTAPI
+#	$(Q)gcc -o objects/dir/test_src_RTAPI -g -DRTAPI \
+#		$(OBJDIR)/dir/test_src.o \
+#		objects/dir/ulapi_srcs.o $(OBJDIR)/dir/rtapi_srcs.o \
+#		../lib/lib.so -lfoo -Wl,--wrap=wrap_funct
+# CMOCKA_TESTS +=  dir/test_src_RTAPI
+#
+# ...and does the equivalent for ULAPI as well.
+
+WL_WRAP = -Wl,--wrap=
+define setup_test
+$$(if $$(filter RTAPI,$(2)),RTSRCS,USERSRCS) += $(1).c
+objects/$(1)_$(strip $(2)): \
+		$$(call $$(if $$(filter RTAPI,$(2)),TORTOBJS,TOOBJS), $(1).c) \
+		$$(call TOOBJS, $(3)) $$(call TORTOBJS, $(4)) $(5)
+	@mkdir -p objects/$$(dir $(1))
+	@echo Linking test objects/$(1)_$(strip $(2))
+	$(Q)gcc -o $$@ -g $$^ -lcmocka $(6) $$(addprefix $$(WL_WRAP),$(7))
+CMOCKA_TESTS += $(1)_$(strip $(2))
+
+endef
+
+###############################################################################
+
 SUBMAKEFILES := $(patsubst %,%/Submakefile,$(SUBDIRS))
 #$(info SUBMAKEFILES=$(SUBMAKEFILES))
 -include $(wildcard $(SUBMAKEFILES))
+$(info All Submakefiles included)
 
 # This checks that all the things listed in USERSRCS are either C files
 # or C++ files
@@ -332,7 +323,8 @@ DEBUG := -g -Wall -funwind-tables
 PROFILE_CFLAGS :=
 PROFILE_LDFLAGS :=
 
-CFLAGS := $(INCLUDE) -I$(EMC2_HOME)/include $(OPT) $(DEBUG) $(PROFILE_CFLAGS) -DULAPI $(call cc-option,-std=gnu99 -fgnu89-inline)
+CFLAGS := $(INCLUDE) -I$(EMC2_HOME)/include $(OPT) $(DEBUG) $(DPKG_CFLAGS) $(PROFILE_CFLAGS) \
+	-DULAPI $(call cc-option,-std=gnu99 -fgnu89-inline)
 
 # enable runtime comparison of GIT_CONFIG_SHA (config.h) and GIT_BUILD_SHA
 CFLAGS += -DGIT_BUILD_SHA=\"'$(GIT_BUILD_SHA)'\"
@@ -347,13 +339,13 @@ endif
 
 BASE_CXXFLAGS:= $(INCLUDE) $(CXXFLAGS) \
 		$(CK_CFLAGS) \
-		$(DEBUG) $(OPT) \
+		$(DEBUG) $(DPKG_CFLAGS) $(OPT) \
 		$(PROFILE_CFLAGS) \
 		 -DGIT_BUILD_SHA=\"'$(GIT_BUILD_SHA)'\" \
 		$(ARCH_CFLAGS)
 
 CXXFLAGS :=   $(BASE_CXXFLAGS) -DULAPI
-RT_CXXFLAGS :=   $(BASE_CXXFLAGS) 
+RT_CXXFLAGS :=   $(BASE_CXXFLAGS)
 
 ifeq ($(RUN_IN_PLACE),yes)
 LDFLAGS += -L$(LIB_DIR) -Wl,-rpath,$(LIB_DIR)
@@ -381,7 +373,7 @@ $(sort $(CUSEROBJS_BUILD)) : objects/%_build.o: %.c
 		$< -o $@
 
 $(sort $(CXXUSEROBJS)) : objects/%.o: %.cc
-	$(ECHO) Compiling $<
+	$(ECHO) Compiling ++ $<
 	@mkdir -p $(dir $@)
 	@rm -f $@
 	$(Q)$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $(EXTRAFLAGS) \
@@ -511,10 +503,8 @@ HEADERS := \
     libnml/rcs/rcs.hh \
     libnml/rcs/rcs_exit.hh \
     libnml/rcs/rcs_print.hh \
-    libnml/rcs/rcsversion.h 
+    libnml/rcs/rcsversion.h \
 
-
-    
 ## the "headers" target installs all the header files in ../include
 .PHONY: headers
 HEADERS := $(patsubst %,../include/%,$(foreach h,$(HEADERS),$(notdir $h)))
@@ -582,56 +572,11 @@ userspace: python
 clean: pythonclean cscopeclean
 endif
 
-# This is the gateway into the crazy world of "kbuild", the linux 2.6 system
-# for building kernel modules.	Other kernel module build styles need to be
-# accomodated here.
-#
-# (don't build when 'BUILD_ALL_FLAVORS' or 'BUILD_THREADS_MODULES' are set;
-# these are intermediate make runs)
-ifeq ($(BUILD_SYS)+$(BUILD_THREAD_MODULES),kbuild+yes)
-modules:  $(OBJDIR)/.separate-kbuild-artifacts-hack.stamp
-	mkdir -p $(RTLIBDIR)
-	$(PYTHON) modsilent.py $(MAKE) \
-	    -C $(KERNELDIR) \
-	    SUBDIRS=$(BASEPWD)/$(OBJDIR) \
-	    CC="$(CC)" KBUILD_VERBOSE=$(BUILD_VERBOSE) modules
-	cp $(OBJDIR)/Module.symvers $(OBJDIR)/*$(MODULE_EXT) $(RTLIBDIR)
-endif  # BUILD_SYS == 'kbuild'
-
-# It looks almost impossible to coerce kbuild into putting build
-# artifacts outside the source tree.  The universal build needs to
-# keep these artifacts separate for each kthread flavor.  To solve
-# this, create a link tree in objects/rtapi-<flavor> with everything
-# needed to build kernel modules.
-#
-# Then in the above 'modules:' target, cd to the link tree and call
-# kbuild.
-MODULE_SOURCE_DIRS = emc libnml workaround
-MODULE_SOURCES = Makefile* config* modsilent.py
-$(OBJDIR)/.separate-kbuild-artifacts-hack.stamp:
-	mkdir -p $(OBJDIR)
-	# hard-link contents of $(MODULE_SOURCE_DIRS) to # $(OBJDIR)
-	# never follow symbolic links
-	cp -rlfd $(MODULE_SOURCE_DIRS) $(OBJDIR)
-	cp -lf $(MODULE_SOURCES) $(OBJDIR)
-ifeq ($(BUILD_SYS),kbuild)
-	# kbuild needs a full copy of this tree with
-	cp -rlf halcomp-srcs $(OBJDIR)
-endif
-	ln -sf $(BASEPWD)/../bin $(OBJDIR)/..
-	ln -sf $(BASEPWD)/../scripts $(OBJDIR)/..
-	touch $@
-
 # These rules clean things up.	'modclean' cleans files generated by 'modules'
 # (except that it doesn't remove the modules that were copied to rtlib)
 # 'clean' cleans everything but dependency files, and 'depclean' cleans them
 # too.
 modclean:
-	find -name '.*.cmd' -or -name '*.ko' -or -name '*.mod.c' -or -name '*.mod.o' | xargs rm -f
-	-rm -rf .tmp_versions
-	-rm -rf halcomp-srcs
-	find . -name .tmp_versions |xargs rm -rf
-	-rm -f $(RTLIBDIR)/*.ko
 	-rm -f $(RTLIBDIR)/*.so
 
 depclean:
@@ -645,13 +590,10 @@ clean: depclean modclean docclean
 	find . -name '*.o' |xargs rm -f
 	-rm -rf objects
 	-rm -f $(TARGETS)
-	for flav in $(BUILD_THREAD_FLAVORS); do \
-	    rm -rf ../lib/$$flav; \
-	done
 	-rm -rf ../rtlib ../libexec
 	rm -f ../etc/linuxcnc/rtapi.ini
 	-rm -f $(COPY_CONFIGS)
-	-rm -f $(RTLIBDIR)/*.$(MODULE_EXT)
+	-rm -f $(RTLIBDIR)/*.so
 	rm -rf ../share/linuxcnc/stepconf
 	-rm -rf ../libexec
 
@@ -677,7 +619,7 @@ clean: depclean modclean docclean
 #else
 setuid:
 	@echo "'make setuid' is not needed if hardware drivers are not used"
-endif
+
 
 # These rules allows a header file from this directory to be installed into
 # ../include.  A pair of rules like these will exist in the Submakefile
@@ -789,7 +731,8 @@ ifeq ($(HAVE_WORKING_BLT),yes)
 endif
 	$(FILE) $(filter ../lib/%.a ../lib/%.so.0,$(TARGETS)) $(DESTDIR)$(libdir)
 	cp --no-dereference $(filter ../lib/%.so, $(TARGETS)) $(DESTDIR)$(libdir)
-	-ldconfig $(DESTDIR)$(libdir)
+#	# don't run ldconfig under fakeroot (silence dpkg-build warning)
+	-test -n "$$FAKED_MODE" || ldconfig $(DESTDIR)$(libdir)
 	$(FILE) $(HEADERS) $(DESTDIR)$(includedir)/linuxcnc/
 	$(FILE) $(DOCS_HELP) $(DESTDIR)$(docdir)
 	$(TREE) $(NC_FILES) $(DESTDIR)$(ncfilesdir)
@@ -870,24 +813,13 @@ endif
 
 
 	# RTAPI modules:  install userland flavor .so modules into
-	# e.g. /usr/lib/linuxcnc/modules and kthread flavor .ko
-	# modules for each kver into e.g. /lib/modules/<kver>/linuxcnc
-	for flavor in $(BUILD_THREAD_FLAVORS); do \
-	    if test $${flavor%-kernel} = $${flavor}; then \
-		echo Installing modules for userland flavor $$flavor; \
-		$(DIR) $(DESTDIR)$(EMC2_RTLIB_BASE_DIR)/$$flavor; \
-		$(FILE) ../rtlib/$$flavor/* \
-		    $(DESTDIR)$(EMC2_RTLIB_BASE_DIR)/$$flavor; \
-	    else \
-		echo Installing modules for kthreads flavor $$flavor; \
-		for srcdir in ../rtlib/$$flavor/*; do \
-		    kver=`basename $$srcdir`; \
-		    echo Installing modules for flavor $$flavor, kver $$kver; \
-		    $(DIR) $(DESTDIR)/lib/modules/$$kver/linuxcnc; \
-		    $(FILE) $$srcdir/* $(DESTDIR)/lib/modules/$$kver/linuxcnc; \
-		done; \
-	    fi; \
-	done
+	# e.g. /usr/lib/linuxcnc/modules
+
+	echo Installing modules
+	$(DIR) $(DESTDIR)$(EMC2_RTLIB_BASE_DIR)/modules
+	$(FILE) ../rtlib/modules/* \
+		    $(DESTDIR)$(EMC2_RTLIB_BASE_DIR)/modules
+
 endif # ! RUN_IN_PLACE
 
 CONF=../configs
@@ -943,18 +875,7 @@ $(call CONFILES,core_sim.hal): %/core_sim.hal: ../configs/common/core_sim.hal
 $(call CONFILES,core_sim9.hal): %/core_sim9.hal: ../configs/common/core_sim9.hal
 	$(Q)-cp $< $@
 
-#endif # userspace
-
-ifneq ($(KERNELRELEASE),)
-# KERNELRELEASE is non-empty, therefore we are building modules using
-# the "kbuild" system.
-#
-INCLUDE_PREFIX = $(BASEPWD)
-
-endif # KERNELRELEASE non-empty
-
-# $(BASEPWD) is used here, instead of relative paths, because that's
-# what kbuild seems to require
+#################################################################################################################
 
 EXTRA_CFLAGS = $(RTFLAGS) \
         $(ARCH_CFLAGS) \
@@ -976,144 +897,19 @@ EXTRA_CFLAGS = $(RTFLAGS) \
 	$(call cc-option,-mieee-fp) \
 	$(KERNEL_MATH_CFLAGS)
 
-ifeq ($(BUILD_SYS),kbuild)
-EXTRA_CFLAGS += $(call cc-option,-Wframe-larger-than=2560) $(call cc-option,-Wno-declaration-after-statement)
-endif
 
 
+TOCOMPRTOBJS = $(foreach file,$($(patsubst %.o,%,$(1))-objs), $(OBJDIR)/$(file))
 
-# For each module, there's an addition to obj-m or obj-$(CONFIG_foo)
-# plus a definition of foo-objs, which contains the full path to the
-# object file(s) that the module contains.  Unfortunately, this setup pollutes
-# the source directory with object files and other temporaries, but I can't
-# find a way around it.
+#######################################################################################################
 
-# These lists would be best moved to their respective subdirectories'
-# Submakefiles to make this more modular and avoid maintaining
-# multiple lists of the same things.  This won't work as-is right now
-# because the Submakefiles are included in a conditional block that is
-# not evaluated during kernel module build.
-
-# Subdirectory:  rtapi
-
-# obj-$(CONFIG_RTAPI) += rtapi.o
-
-# # Sources for all thread systems
-# rtapi-objs := \
-# 	rtapi/instance.o \
-# 	rtapi/rtapi_support.o \
-# 	rtapi/rtapi_common.o \
-# 	rtapi/rtapi_task.o \
-# 	rtapi/rtapi_shmem.o \
-# 	rtapi/rtapi_ring.o \
-# 	rtapi/rtapi_time.o \
-# 	rtapi/rtapi_io.o \
-# 	rtapi/$(THREADS_SOURCE).o
-# # Kernel threads need rtapi_module.c
-# ifeq ($(BUILD_SYS),kbuild)
-# rtapi-objs += rtapi/rtapi_module.o
-# endif
-# # User threads need rtapi_pci.c
-# ifeq ($(BUILD_SYS),user-dso)
-# rtapi-objs += rtapi/rtapi_pci.o
-# rtapi-objs += rtapi/shmdrv/shmdrvapi.o
-# # and rtapi_app_main/exit stubs
-# rtapi-objs += rtapi/rtapi_main.o
-# # and autodetect/compat checks
-# rtapi-objs += rtapi/rtapi_compat.o
-# endif
-
-
-# Subdirectory: rtapi/examples (unneeded?)
-
-
-
-obj-m += trivkins.o
-trivkins-objs := emc/kinematics/trivkins.o
-
-obj-m += XYZACkins.o
-XYZACkins-objs := emc/kinematics/XYZACkins.o
-
-obj-m += 5axiskins.o
-5axiskins-objs := emc/kinematics/5axiskins.o
-
-obj-m += maxkins.o
-maxkins-objs := emc/kinematics/maxkins.o
-
-obj-m += gantrykins.o
-gantrykins-objs := emc/kinematics/gantrykins.o
-
-obj-m += rotatekins.o
-rotatekins-objs := emc/kinematics/rotatekins.o
-
-obj-m += tripodkins.o
-tripodkins-objs := emc/kinematics/tripodkins.o
-
-obj-m += lineardeltakins.o
-lineardeltakins-objs := emc/kinematics/lineardeltakins.o
-
-obj-m += genhexkins.o
-genhexkins-objs := emc/kinematics/genhexkins.o
-genhexkins-objs += libnml/posemath/_posemath.o
-genhexkins-objs += libnml/posemath/sincos.o $(MATHSTUB)
-
-obj-m += genserkins.o
-genserkins-objs := emc/kinematics/genserkins.o
-genserkins-objs += libnml/posemath/gomath.o
-genserkins-objs += libnml/posemath/sincos.o $(MATHSTUB)
-
-obj-m += drawbotkins.o
-drawbotkins-objs := emc/kinematics/drawbotkins.o
-drawbotkins-objs += libnml/posemath/gomath.o
-drawbotkins-objs += libnml/posemath/sincos.o $(MATHSTUB)
-
-obj-m += pumakins.o
-pumakins-objs := emc/kinematics/pumakins.o
-pumakins-objs += libnml/posemath/_posemath.o
-pumakins-objs += libnml/posemath/sincos.o $(MATHSTUB)
-
-obj-m += scarakins.o
-scarakins-objs := emc/kinematics/scarakins.o
-scarakins-objs += libnml/posemath/_posemath.o
-scarakins-objs += libnml/posemath/sincos.o $(MATHSTUB)
-
-obj-$(CONFIG_MOTMOD) += motmod.o
-motmod-objs := emc/kinematics/cubic.o
-motmod-objs += emc/motion/motion.o
-motmod-objs += emc/motion/command.o
-motmod-objs += emc/motion/control.o
-motmod-objs += emc/motion/homing.o
-motmod-objs += emc/motion/emcmotglb.o
-motmod-objs += emc/motion/emcmotutil.o
-motmod-objs += emc/motion/stashf.o
-motmod-objs += emc/motion/dbuf.o
-motmod-objs += libnml/posemath/_posemath.o
-motmod-objs += libnml/posemath/sincos.o $(MATHSTUB)
-
-obj-m += tp.o
-tp-objs := $(addprefix emc/tp/, \
-	tc.o 		\
-	tcq.o 		\
-	tp.o 		\
-	tpmain.o 	\
-	blendmath.o 	\
-	spherical_arc.o 	\
-	) 		\
-	emc/nml_intf/emcpose.o \
-	libnml/posemath/_posemath.o \
-	libnml/posemath/sincos.o $(MATHSTUB)
-
-
-TORTOBJS = $(foreach file,$($(patsubst %.o,%,$(1))-objs), $(OBJDIR)/$(file))
-
-
-# USER_DSO module building
-# (don't build when 'BUILD_ALL_FLAVORS' or 'BUILD_THREADS_MODULES' are set;
-# these are intermediate make runs)
-ifeq ($(BUILD_SYS)+$(BUILD_THREAD_MODULES),user-dso+yes)
+# Module building
 EXTRA_CFLAGS += -fPIC
 
-RTOBJS := $(sort $(foreach mod,$(obj-m),$(call TORTOBJS,$(mod))))
+# Non-module RT objects
+RTOBJS = $(call TORTOBJS,$(RTSRCS))
+# Module RT objects
+RTOBJS += $(sort $(foreach mod,$(obj-m),$(call TOCOMPRTOBJS,$(mod))))
 
 RTDEPS := $(sort $(patsubst $(OBJDIR)/%.o,$(DEPDIR)/%.d, $(RTOBJS)))
 
@@ -1190,7 +986,7 @@ RTDEPS := $(sort $(patsubst $(OBJDIR)/%.o,$(DEPDIR)/%.d, $(RTOBJS)))
 #
 modules: $(patsubst %.o,$(RTLIBDIR)/%.so,$(obj-m))
 $(RTLIBDIR)/%.so:
-	$(ECHO) Linking $@
+	$(ECHO) Linking realtime $(notdir $@)
 	@mkdir -p $(dir $@)
 	@# link all objects files into a single .so
 	$(Q)$(LD) -d -r -o $(OBJDIR)/$*.tmp $^
@@ -1203,7 +999,7 @@ $(RTLIBDIR)/%.so:
 
 $(sort $(RTDEPS)): $(DEPDIR)/%.d: %.c
 	@mkdir -p $(dir $@)
-	$(ECHO) Depending realtime $(threads) $<
+	$(ECHO) Depending realtime $<
 	$(Q)$(call DEP,$(CC),$@ \
 		$(patsubst depends/%.d,objects/%.o,$@),$@,$(OPT) \
 		$(DEBUG) $(CPPFLAGS) $(EXTRA_CFLAGS) $<)
@@ -1213,64 +1009,19 @@ $(sort $(RTOBJS)) : $(OBJDIR)/%.o : %.c $(DEPDIR)/%.d
 	$(ECHO) Compiling realtime $<
 	@rm -f $@
 	@mkdir -p $(dir $@)
-	$(Q)$(CC) -c $(OPT) $(DEBUG) $(EXTRA_CFLAGS) $< -o $@
+	$(Q)$(CC) -c $(OPT) $(DPKG_CFLAGS) $(DEBUG) $(CPPFLAGS) \
+	    $(EXTRA_CFLAGS) $< -o $@
 
 # Rules to make .o (object) files from .cc
 $(sort $(CXXRTOBJS)) : $(OBJDIR)/%.o : %.cc $(DEPDIR)/%.d
 	$(ECHO) Compiling realtime++ $<
 	@rm -f $@
 	@mkdir -p $(dir $@)
-	$(Q)$(CXX) -c $(OPT) $(DEBUG) $(RT_CXXFLAGS) $(EXTRA_CFLAGS) $< -o $@
+	$(Q)$(CXX) -c $(OPT) $(DEBUG) $(RT_CXXFLAGS) $(CPPFLAGS) \
+	    $(EXTRA_CFLAGS) $< -o $@
 
-endif # end BUILD_SYS=user-dso
+###############################################################################################
 
-# # ------ not used anymore -------------
-# ifeq ($(BUILD_SYS),normal)
-# modules: $(patsubst %,$(RTLIBDIR)/%,$(obj-m))
-# RTOBJS := $(sort $(foreach mod,$(obj-m),$(call TORTOBJS,$(mod))))
-# RTDEPS := $(sort $(patsubst objects/%.o,depends/%.d, $(RTOBJS)))
-
-# $(sort $(RTDEPS)): $(DEPDIR)/%.d: %.c
-# 	@mkdir -p $(dir $@)
-# 	$(ECHO) Depending $<
-# 	$(Q)$(call DEP,$(CC),$@ $(patsubst depends/%.d,objects/%.o,$@),$@,$(EXTRA_CFLAGS) $<)
-
-
-# # Rules to make .o (object) files
-# $(sort $(RTOBJS)) : $(OBJDIR)/%.o : %.c
-# 	$(ECHO) Compiling realtime $<
-# 	@mkdir -p $(dir $@)
-# 	$(Q)$(CC) -c -DRTAPI -nostdinc -isystem $(shell $(CC) -print-file-name=include) -I$(KERNELDIR)/include $(EXTRA_CFLAGS) $< -o $@
-
-# $(RTLIBDIR)/%.o:
-# 	$(ECHO) Linking $@
-# 	$(Q)ld -r -static -S  $(LDFLAGS) -o $@ $^ $(EXTRALINK)
-# endif # end 'normal'
-
-$(RTLIBDIR)/motmod$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(motmod-objs))
-$(RTLIBDIR)/trivkins$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(trivkins-objs))
-$(RTLIBDIR)/XYZACkins$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(XYZACkins-objs))
-$(RTLIBDIR)/5axiskins$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(5axiskins-objs))
-$(RTLIBDIR)/maxkins$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(maxkins-objs))
-$(RTLIBDIR)/gantrykins$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(gantrykins-objs))
-$(RTLIBDIR)/rotatekins$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(rotatekins-objs))
-$(RTLIBDIR)/tripodkins$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(tripodkins-objs))
-$(RTLIBDIR)/lineardeltakins$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(lineardeltakins-objs))
-$(RTLIBDIR)/genhexkins$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(genhexkins-objs))
-$(RTLIBDIR)/genserkins$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(genserkins-objs))
-$(RTLIBDIR)/drawbotkins$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(drawbotkins-objs))
-$(RTLIBDIR)/pumakins$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(pumakins-objs))
-$(RTLIBDIR)/scarakins$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(scarakins-objs))
-
-$(RTLIBDIR)/tp$(MODULE_EXT): $(addprefix $(OBJDIR)/,$(tp-objs))
-$(RTLIBDIR)/ufdemo$(MODULE_EXT):	$(addprefix $(OBJDIR)/,$(ufdemo-objs))
-
-ifeq ($(TRIVIAL_BUILD),no)
-READ_RTDEPS = $(wildcard $(RTDEPS))
-$(shell echo 1>&2 Reading $(words $(READ_RTDEPS))/$(words $(RTDEPS)) realtime dependency files)
--include $(READ_RTDEPS)
-$(shell echo 1>&2 Done reading realtime dependencies)
-endif
 
 # Phony so that it is always rebuilt when requested, not because it
 # shouldn't exist as a file
@@ -1338,8 +1089,13 @@ objects/var-%: Makefile $(wildcard $(SUBMAKEFILES)) Makefile.inc
 	@echo $($*) > $@.tmp
 	@sh move-if-change $@.tmp $@
 
+# Link shared libs
 ../lib/%.so: ../lib/%.so.0
-	ln -sf $(notdir $<) $@
+	$(ECHO) Symlinking $(notdir $<) to $(notdir $@)
+	$(Q)ln -sf $(notdir $<) $@
+# - Be sure the setuid message comes last
+ALL_SHLIBS=$(filter ../%.so.0,$(TARGETS)) $(filter ../%.so,$(TARGETS))
+modules: $(ALL_SHLIBS)
 
 cscope:
 	cscope -Rb
@@ -1350,3 +1106,14 @@ cscope/man/:
 NOSETESTS := $(wildcard ../nosetests/*.py)
 nosetest:
 	$(foreach var,$(NOSETESTS),nosetests -v $(var);)
+
+###############################################################################
+# C unit tests
+#
+# Run with `make cmocka_tests`
+
+cmocka_tests:  $(addprefix objects/, $(CMOCKA_TESTS))
+	@for test in $^; do \
+	    echo "\nRunning test $$test"; \
+	    $$test; \
+	done

@@ -57,13 +57,13 @@ case ${TAG} in
     *) echo "Warning:  unknown tag '${TAG}'" >&2 ;;
 esac
 
-# Distro-specific:
+# Distro specific warnings level
 case ${TAG} in
-    *_8)
-	PKG_CONFIGURE_ARGS="-prx"   # Enable Xenomai
+    *_8|*_9)
+	WERROR_FLAG="-Werror"
 	;;
     *)
-	PKG_CONFIGURE_ARGS="-pr"    # Build posix and preempt-rt threads
+	WERROR_FLAG=""  # Buster and above have many as yet unresolved warnings
 	;;
 esac
 
@@ -91,7 +91,7 @@ export TAG
 declare -a BUILD_CL DOCKER_EXTRA_OPTS
 case $CMD in
     "shell"|"") # Interactive shell (default)
-	DOCKER_EXTRA_OPTS=( --privileged --interactive --tty )
+	DOCKER_EXTRA_OPTS=( --privileged --interactive )
 	if test -z "$*"; then
 	    BUILD_CL=( bash -i )
 	else
@@ -112,11 +112,12 @@ case $CMD in
 	    -e TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST
 	    -e TRAVIS_REPO=$TRAVIS_REPO
 	    -e TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG
+            -e DPKG_CFLAGS="${DPKG_CFLAGS} ${WERROR_FLAG}"
 	)
 
 	BUILD_CL=( bash -xec "
             # configure source package
-            debian/configure ${PKG_CONFIGURE_ARGS};
+            debian/configure;
 
             # update Changelog and build source package
             $SCRIPT_DIR/build_source_package $BUILD_SOURCE
@@ -127,7 +128,7 @@ case $CMD in
 	)
 	;;
     "test") # RIP build and regression tests
-	if "$TEST_DEBUG" = true; then
+	if test "$TEST_DEBUG" = true; then
 	    DOCKER_EXTRA_OPTS=( -e MSGD_OPTS=-s -e DEBUG=5 )
 	fi
 	TEST_ARGS="${TEST_ARGS:-tests}"
@@ -136,7 +137,7 @@ case $CMD in
 	    (
 		cd src;
 		./autogen.sh;
-		./configure --host=\$HOST_MULTIARCH --with-posix;
+		./configure --host=\$HOST_MULTIARCH;
 	    )
 
             # Build
@@ -148,7 +149,6 @@ case $CMD in
 	    echo -e 'ANNOUNCE_IPV4=0\nANNOUNCE_IPV6=0' >> \
 		etc/linuxcnc/machinekit.ini;
 	    tail -2 etc/linuxcnc/machinekit.ini;
-	    flavor;
 
             # Run regression tests
 	    ${RUN_TESTS} ${TEST_ARGS}"
@@ -158,7 +158,9 @@ case $CMD in
 esac
 
 ###########################################################
-# Update container image with custom /etc/passwd
+# Update new container image and add custom /etc/passwd
+
+test -n "$DOCKER_NO_PULL" || docker pull ${IMAGE}:${TAG}
 
 if test ${UID_GID/:*/} != 1000; then
     echo "Updating /etc/passwd for UID $TRAVIS_UID" >&2
@@ -189,6 +191,7 @@ set -x  # Show user the command
 # hide --it
 exec docker run \
     --rm \
+    --tty \
     "${DOCKER_EXTRA_OPTS[@]}" \
     -u ${UID_GID} -e USER=${USER} \
     -v ${HOME}:${HOME} -e HOME=${HOME} \
