@@ -1,0 +1,301 @@
+include(FindPkgConfig)
+if(NOT PKG_CONFIG_FOUND)
+    message(FATAL_ERROR "pkg-config not found: install pkg-config")
+endif()
+
+# check debian version
+execute_process(COMMAND lsb_release -rs
+    OUTPUT_VARIABLE RELEASE_NUMBER
+    OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+if(RELEASE_NUMBER VERSION_GREATER "9.99")
+    set(GT_STRETCH 1)
+endif()
+
+if(NOT CMAKE_VERSION VERSION_LESS "3.12")
+    find_package(Python2 COMPONENTS Interpreter Development)
+else()
+    find_package(Python2_local)
+endif()
+set(HAVE_PYTHON ${Python2_VERSION})
+
+if(NOT IS_DIRECTORY ${Python2_SITELIB}/google/protobuf)
+    message(FATAL_ERROR "python-protobuf not found: install python-protobuf")
+endif()
+
+pkg_check_modules(AVAHI avahi-client)
+if(NOT AVAHI_FOUND)
+    message(FATAL_ERROR "avahi-client not found: install libavahi-client-dev")
+endif()
+set(HAVE_AVAHI 1)
+
+find_program(CYTHON cython)
+if(NOT CYTHON)
+    message(FATAL_ERROR "cython not found: install cython")
+endif()
+
+set(Python_ADDITIONAL_VERSIONS 2.7)
+find_package(PythonLibs REQUIRED)
+
+find_package(Boost COMPONENTS python27 thread)
+if(NOT Boost_FOUND)
+    message(FATAL_ERROR "boost not found: install libboost-python-dev")
+endif()
+set(HAVE_BOOST 1)
+set(HAVE_BOOST_PYTHON 1)
+
+pkg_check_modules(LCG libcgroup)
+if(NOT LCG_FOUND)
+    message(FATAL_ERROR "libcgroup not found: install libcgroup-dev")
+endif()
+set(HAVE_LIBCGROUP 1)
+
+pkg_check_modules(LCK ck)
+if(LCK_FOUND)
+    set(HAVE_CK 1)
+else()
+    message("libck-dev not found: install libck-dev")
+endif()
+
+pkg_check_modules(CZMQ libczmq>=4.0.2)
+if(NOT CZMQ_FOUND)
+    message(FATAL_ERROR "libczmq not found: install libczmq-dev")
+endif()
+set(HAVE_CZMQ 1)
+
+if(WITH_GTK)
+    find_package(GTK2 REQUIRED)
+    if(NOT GTK2_FOUND)
+        message(FATAL_ERROR "libgtk2.0 not found: install libgtk2.0-dev")
+    endif()
+    set(HAVE_GTK 1)
+    pkg_check_modules(GLU glu)
+    if(NOT GLU_FOUND)
+        message(FATAL_ERROR "libglu1-mesa-dev not found: install libglu1-mesa-dev")
+    endif()
+    set(HAVE_GLU 1)
+    pkg_check_modules(GL gl)
+    if(NOT GL_FOUND)
+        message(FATAL_ERROR "libgl-dev not found: install libgl-dev")
+    endif()
+    set(HAVE_GL 1)
+    pkg_check_modules(XAW xaw7)
+    if(NOT XAW_FOUND)
+        message(FATAL_ERROR "libxaw7-dev not found: install libxaw7-dev")
+    endif()
+    set(HAVE_XAW 1)
+    pkg_check_modules(X11 x11)
+    if(NOT X11_FOUND)
+        message(FATAL_ERROR "libx11-dev not found: install libx11-dev")
+    endif()
+    set(HAVE_X11 1)
+    pkg_check_modules(XINERAMA xinerama)
+    if(NOT XINERAMA_FOUND)
+        message(FATAL_ERROR "libXinerama-dev not found: install libXinerama-dev")
+    endif()
+    set(HAVE_XINERAMA 1)
+endif()
+
+pkg_check_modules(JANSSON jansson>=2.5)
+if(NOT JANSSON_FOUND)
+    message(FATAL_ERROR "jansson not found: install libjansson-dev")
+endif()
+set(HAVE_JANSSON 1)
+
+include(FindTCL)
+if(NOT TCL_FOUND)
+    message(FATAL_ERROR "tcl not found: install tcl8.6-dev")
+endif()
+
+if(WITH_MODBUS)
+    pkg_check_modules(MODBUS libmodbus>=3)
+    if(NOT MODBUS_FOUND)
+        message(FATAL_ERROR "libmodbus not found: install libmodbus-dev")
+    endif()
+endif()
+
+if(CMAKE_VERSION VERSION_LESS "3.6")
+    find_package(Protobuf)
+    set(Protobuf_FOUND ${PROTOBUF_FOUND})
+    set(Protobuf_INCLUDE_DIR ${PROTOBUF_INCLUDE_DIRS})
+else()
+    find_package(Protobuf 2.4.1)
+endif()
+
+if(NOT Protobuf_FOUND)
+    message(FATAL_ERROR "protobuf not found: install libprotobuf-dev")
+endif()
+set(HAVE_PROTOBUF 1)
+
+if(WITH_LIBUSB10)
+    pkg_check_modules(LIBUSB libusb-1.0)
+    if(NOT LIBUSB_FOUND)
+        message(FATAL_ERROR "libusb not found: install libusb-1.0-0-dev")
+    endif()
+endif()
+
+pkg_check_modules(LWS libwebsockets)
+if(NOT LWS_FOUND)
+    message(FATAL_ERROR "websockets not found: install libwebsockets-dev")
+endif()
+set(HAVE_LWS 1)
+
+find_program(PROTOC protoc)
+if(NOT PROTOC)
+    message(FATAL_ERROR "protoc not found: install protobuf-compiler")
+endif()
+
+find_program(PATCHELF patchelf)
+if(NOT PATCHELF)
+    message(FATAL_ERROR "patchelf not found: install patchelf")
+endif()
+
+pkg_check_modules(UUID uuid)
+if(NOT UUID_FOUND)
+    message(FATAL_ERROR "uuid not found: install uuid-dev")
+endif()
+set(HAVE_UUID 1)
+
+if(GT_STRETCH)
+    find_program(YAPPS yapps2)
+else()
+    find_program(YAPPS yapps)
+endif()
+if(NOT YAPPS)
+    message(FATAL_ERROR "yapps not found: install yapps2 package")
+endif()
+
+if(GT_STRETCH)
+    if(NOT IS_DIRECTORY ${Python2_SITELIB}/yapps)
+        message(FATAL_ERROR "python-yapps not found: install python-yapps")
+    endif()
+endif()
+
+# Note: cludge TARGET_ARCH for cross-compiling support
+if(NOT TARGET_ARCH)
+    # Find the machine type
+    execute_process(
+      COMMAND uname -m
+      OUTPUT_VARIABLE MACHINE_TYPE
+      OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+
+    set(TARGET_ARCH ${MACHINE_TYPE})
+endif()
+
+check_include_file(readline/readline.h HAVE_READLINE_INC)
+find_library(HAVE_READLINE_LIB readline HINTS /usr/lib/${TARGET_ARCH}-linux-gnu)
+if(HAVE_READLINE_INC AND HAVE_READLINE_LIB)
+    set(READLINE_LIBRARY_PATH "/usr/lib/${TARGET_ARCH}-linux-gnu")
+    message("/usr/lib/${TARGET_ARCH}-linux-gnu")
+else()
+    message(FATAL_ERROR "readline not found: install libreadline-dev")
+endif()
+
+find_package(Threads REQUIRED)
+
+find_program(CCACHE_FOUND ccache)
+if(CCACHE_FOUND)
+    set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
+    set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
+endif(CCACHE_FOUND)
+
+if(WITH_USERMODE_PCI)
+    pkg_check_modules(UDEV libudev)
+    if(NOT UDEV_FOUND)
+        message(FATAL_ERROR "udev not found: install libudev-dev")
+    endif()
+    set(HAVE_LIBUDEV 1)
+endif()
+
+find_program(PIDOF pidof)
+if(NOT PIDOF)
+    message(FATAL_ERROR "pidof not found: install sysvinit-utils")
+endif()
+
+find_program(PS ps)
+find_program(AWK awk)
+
+pkg_check_modules(SSL REQUIRED libssl)
+pkg_check_modules(URIPARSER liburiparser)
+if(NOT URIPARSER_FOUND)
+    message(FATAL_ERROR "liburiparser not found: install liburiparser-dev")
+endif()
+
+pkg_check_modules(TK_DEV tk)
+if(NOT TK_DEV_FOUND)
+    message(FATAL_ERROR "tk-dev not found: install tk-dev")
+endif()
+
+if(WITH_POSIX)
+    set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
+    set(THREADS_PREFER_PTHREAD_FLAG TRUE)
+    find_package(Threads)
+    if(NOT THREADS_FOUND)
+      message(FATAL_ERROR "POSIX threads not found!")
+    endif()
+    set(HAVE_POSIX_THREADS 1)
+elseif(WITH_RT_PREEMPT)
+    include(FindThreads)
+    if(NOT THREADS_FOUND)
+      message(FATAL_ERROR "RT_PREEMPT threads not found!")
+    endif()
+    set(HAVE_PREEMPT_THREADS 1)
+elseif(WITH_XENOMAI)
+    include(FindThreads)
+    if(NOT THREADS_FOUND)
+      message(FATAL_ERROR "XENOMAI threads not found!")
+    endif()
+    set(HAVE_XENOMAI_THREADS 1)
+elseif(WITH_XENOMAI_KERNEL)
+    include(FindThreads)
+    if(NOT THREADS_FOUND)
+      message(FATAL_ERROR "XENOMAI_KERNEL threads not found!")
+    endif()
+    set(HAVE_XENOMAI_KERNEL_THREADS 1)
+elseif(WITH_RTAI_KERNEL)
+    include(FindThreads)
+    if(NOT THREADS_FOUND)
+      message(FATAL_ERROR "RTAI_KERNEL threads not found!")
+    endif()
+    set(HAVE_RTAI_KERNEL_THREADS 1)
+else()
+    message(FATAL "No thread support selected!") 
+endif()
+
+# Define to 1 if asm/msr.h is usable and defines rdtscll
+check_symbol_exists(rdtscll "asm/msr.h" MSR_H_USABLE)
+
+if(MSR_H_USABLE)
+    set(HAVE_MSR_H_USABLE)
+endif()
+
+# Define to 1 if linux/hidraw.h is usable and defines HIDIOCGRAWINFO
+check_symbol_exists(HIDIOCGRAWINFO "linux/hidraw.h" HIDRAW_H_USABLE)
+
+if(HIDRAW_H_USABLE)
+    set(HAVE_HIDRAW_H_USABLE)
+endif()
+
+pkg_check_modules(LTTNG_UST lttng-ust)
+if(NOT HAVE_LTTNG_UST)
+    message("lttng-ust not found: install liblttng-ust-dev")
+endif()
+
+pkg_check_modules(LIBBACKTRACE libbacktrace)
+
+# The installation location of machinekit-hal
+find_path(mkHalIncludes hal.h PATHS /usr/local/include/machinekit ${MACHINEKIT_INCLUDE_DIR})
+if(NOT mkHalIncludes)
+    message(FATAL_ERROR "Can't find machinekit-hal include directory, try setting MACHINEKIT_INCLUDE_DIR")
+endif()
+include_directories(${mkHalIncludes})
+
+# Needed for libnml
+find_library(rtapi_math MACHINEKIT_RTAPI_MATH_FOUND)
+
+include(FindGettext)
+
+include(FindKernelHeaders)
+
+include(FindCurses)

@@ -14,8 +14,8 @@
 #ifndef TP_TYPES_H
 #define TP_TYPES_H
 
-#include "config.h"
-#include "posemath.h"
+#include <machinekit/config.h>
+#include <posemath/posemath.h>
 #include "tc_types.h"
 #include "tcq.h"
 #include <stdbool.h>

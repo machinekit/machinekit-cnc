@@ -18,13 +18,13 @@
 *
 ********************************************************************/
 
-#include "rs274ngc.hh"
-#include "rs274ngc_interp.hh"
-#include "rs274ngc_return.hh"
-#include "inifile.hh"		// INIFILE
-#include "canon.hh"		// _parameter_file_name
-#include "config.h"		// LINELEN
-#include "tool_parse.h"
+#include <rs274ngc/rs274ngc.hh>
+#include <rs274ngc/rs274ngc_interp.hh>
+#include <rs274ngc/rs274ngc_return.hh>
+#include <machinekit/inifile.hh>		// INIFILE
+#include <nml_intf/canon.hh>		// _parameter_file_name
+#include <machinekit/config.h>		// LINELEN
+#include <rs274ngc/tool_parse.h>
 #include <stdio.h>    /* gets, etc. */
 #include <stdlib.h>   /* exit       */
 #include <string.h>   /* strcpy     */

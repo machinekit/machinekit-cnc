@@ -38,7 +38,7 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <ctype.h>
-#include "rtapi_math.h"
+#include <machinekit/rtapi_math.h>
 #include <fcntl.h>
 #include <errno.h>
 #include <termios.h>
@@ -46,15 +46,15 @@
 #include <getopt.h>
 #include <string.h>
 
-#include "rcs.hh"
-#include "posemath.h"		// PM_POSE, TO_RAD
-#include "emc.hh"		// EMC NML
-#include "canon.hh"		// CANON_UNITS, CANON_UNITS_INCHES,MM,CM
-#include "emcglb.h"		// EMC_NMLFILE, TRAJ_MAX_VELOCITY, etc.
-#include "emccfg.h"		// DEFAULT_TRAJ_MAX_VELOCITY
-#include "inifile.hh"		// INIFILE
-#include "config.h"		// Standard path definitions
-#include "rcs_print.hh"
+#include <rcs/rcs.hh>
+#include <posemath/posemath.h>		// PM_POSE, TO_RAD
+#include <nml_intf/emc.hh>		// EMC NML
+#include <nml_intf/canon.hh>		// CANON_UNITS, CANON_UNITS_INCHES,MM,CM
+#include <nml_intf/emcglb.h>		// EMC_NMLFILE, TRAJ_MAX_VELOCITY, etc.
+#include <nml_intf/emccfg.h>		// DEFAULT_TRAJ_MAX_VELOCITY
+#include <machinekit/inifile.hh>		// INIFILE
+#include <machinekit/config.h>		// Standard path definitions
+#include <rcs/rcs_print.hh>
 #include "sockets.h"		// TCP/IP common socket functions
 #include "shcom.hh"		// Common NML messaging routines
 

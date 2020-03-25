@@ -35,5 +35,5 @@ enum RCS_STATUS {               /* Originally from nml_mod.hh */
     RCS_ERROR = 3
 };
 
-#include "nml_type.hh"
+#include <nml/nml_type.hh>
 #endif /* !defined(RCS_HH) */

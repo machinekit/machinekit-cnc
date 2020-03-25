@@ -19,9 +19,9 @@
 ********************************************************************/
 
 #include "locmem.hh"		// class LOCMEM
-#include "cms.hh"		// class CMS
-#include "linklist.hh"		// class LinkedList
-#include "rcs_print.hh"		// rcs_print_error()
+#include <cms/cms.hh>		// class CMS
+#include <linklist/linklist.hh>		// class LinkedList
+#include <rcs/rcs_print.hh>		// rcs_print_error()
 
 #ifdef __cplusplus
 extern "C" {

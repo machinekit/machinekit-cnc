@@ -16,11 +16,11 @@
 #define TC_TYPES_H
 
 #include "spherical_arc.h"
-#include "posemath.h"
-#include "emcpos.h"
-#include "emcmotcfg.h"  // EMCMOT_MAX_DIO, EMCMOT_MAX_AIO
-#include "state_tag.h"
-#include "rtapi_bitops.h"
+#include <posemath/posemath.h>
+#include <nml_intf/emcpos.h>
+#include <motion/emcmotcfg.h>  // EMCMOT_MAX_DIO, EMCMOT_MAX_AIO
+#include <motion/state_tag.h>
+#include <machinekit/rtapi_bitops.h>
 
 #define BLEND_DIST_FRACTION 0.5
 /* values for endFlag */

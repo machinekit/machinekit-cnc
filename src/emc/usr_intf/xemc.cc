@@ -26,15 +26,15 @@
 #include <unistd.h>
 #include <fcntl.h>              // O_CREAT
 
-#include "rcs.hh"               // etime()
-#include "emc.hh"               // EMC NML
-#include "emc_nml.hh"
-#include "emcglb.h"             // EMC_NMLFILE, TRAJ_MAX_VELOCITY, TOOL_TABLE_FILE
-#include "emccfg.h"             // DEFAULT_TRAJ_MAX_VELOCITY
-#include "inifile.hh"           // INIFILE
-#include "rcs_print.hh"
-#include "nml_oi.hh"
-#include "timer.hh"
+#include <rcs/rcs.hh>               // etime()
+#include <nml_intf/emc.hh>               // EMC NML
+#include <nml_intf/emc_nml.hh>
+#include <nml_intf/emcglb.h>             // EMC_NMLFILE, TRAJ_MAX_VELOCITY, TOOL_TABLE_FILE
+#include <nml_intf/emccfg.h>             // DEFAULT_TRAJ_MAX_VELOCITY
+#include <machinekit/inifile.hh>           // INIFILE
+#include <rcs/rcs_print.hh>
+#include <nml/nml_oi.hh>
+#include <os_intf/timer.hh>
 
 /*
  * Include files required for all Toolkit programs

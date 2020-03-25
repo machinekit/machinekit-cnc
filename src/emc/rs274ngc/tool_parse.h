@@ -16,7 +16,7 @@
 #ifndef TOOL_PARSE_H
 #define TOOL_PARSE_H
 
-#include "emctool.h"
+#include <nml_intf/emctool.h>
 #ifdef CPLUSPLUS
 extern "C"  {
 #endif

@@ -77,15 +77,15 @@ to another.
 #ifndef MOTION_H
 #define MOTION_H
 
-#include "hal.h"
-#include "posemath.h"		/* PmCartesian, PmPose, pmCartMag() */
-#include "emcpos.h"		/* EmcPose */
-#include "cubic.h"		/* CUBIC_STRUCT, CUBIC_COEFF */
+#include <machinekit/hal.h>
+#include <posemath/posemath.h>		/* PmCartesian, PmPose, pmCartMag() */
+#include <nml_intf/emcpos.h>		/* EmcPose */
+#include <kinematics/cubic.h>		/* CUBIC_STRUCT, CUBIC_COEFF */
 #include "emcmotcfg.h"		/* EMCMOT_MAX_JOINTS */
-#include "kinematics.h"
-#include "rtapi_limits.h"
+#include <kinematics/kinematics.h>
+#include <limits.h>         /* INT_MIN */
 #include "motion_id.h"
-#include "tp.h"
+#include <tp/tp.h>
 #include <stdarg.h>
 #include "state_tag.h"
 

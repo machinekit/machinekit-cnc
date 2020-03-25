@@ -25,7 +25,7 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
-#include "cms_user.hh"		/* class CMS_USER */
+#include <cms/cms_user.hh>		/* class CMS_USER */
 class LinkedList;
 /* Generic NML Stuff */
 #include "nml_type.hh"

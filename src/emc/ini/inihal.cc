@@ -18,11 +18,11 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 ----------------------------------------------------------------------*/
-#include "rcs_print.hh"
-#include "emc.hh"
+#include <rcs/rcs_print.hh>
+#include <nml_intf/emc.hh>
 #include <stdio.h>
-#include "hal.h"
-#include "rtapi.h"
+#include <machinekit/hal.h>
+#include <machinekit/rtapi.h>
 #include "inihal.hh"
 
 static int debug=1;

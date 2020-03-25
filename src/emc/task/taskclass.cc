@@ -18,22 +18,22 @@
 * Last change:
 ********************************************************************/
 
-#include "rtapi_math.h"		// fabs()
+#include <machinekit/rtapi_math.h>		// fabs()
 #include <float.h>		// DBL_MAX
 #include <string.h>		// memcpy() strncpy()
 #include <stdlib.h>		// malloc()
 #include <sys/wait.h>
 
-#include "rcs.hh"		// RCS_CMD_CHANNEL, etc.
-#include "rcs_print.hh"
-#include "timer.hh"             // esleep, etc.
-#include "emc.hh"		// EMC NML
-#include "emc_nml.hh"
-#include "emcglb.h"		// EMC_INIFILE
+#include <rcs/rcs.hh>		// RCS_CMD_CHANNEL, etc.
+#include <rcs/rcs_print.hh>
+#include <os_intf/timer.hh>             // esleep, etc.
+#include <nml_intf/emc.hh>		// EMC NML
+#include <nml_intf/emc_nml.hh>
+#include <nml_intf/emcglb.h>		// EMC_INIFILE
 
-#include "initool.hh"
+#include <ini/initool.hh>
 
-#include "python_plugin.hh"
+#include <pythonplugin/python_plugin.hh>
 #include "taskclass.hh"
 
 // Python plugin interface

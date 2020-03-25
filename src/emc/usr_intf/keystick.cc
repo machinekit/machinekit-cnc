@@ -23,15 +23,15 @@
 #include <sys/ioctl.h>          // ioctl(), TIOCGWINSZ, struct winsize
 #include <unistd.h>             // STDIN_FILENO
 
-#include "rcs.hh"               // rcs_print_error(), esleep()
-#include "emc.hh"               // EMC NML
-#include "emc_nml.hh"
-#include "emcglb.h"             // EMC_NMLFILE, TRAJ_MAX_VELOCITY
-#include "emccfg.h"             // DEFAULT_TRAJ_MAX_VELOCITY
-#include "inifile.hh"           // INIFILE
-#include "rcs_print.hh"
-#include "nml_oi.hh"
-#include "timer.hh"
+#include <rcs/rcs.hh>               // rcs_print_error(), esleep()
+#include <nml_intf/emc.hh>               // EMC NML
+#include <nml_intf/emc_nml.hh>
+#include <nml_intf/emcglb.h>             // EMC_NMLFILE, TRAJ_MAX_VELOCITY
+#include <nml_intf/emccfg.h>             // DEFAULT_TRAJ_MAX_VELOCITY
+#include <machinekit/inifile.hh>           // INIFILE
+#include <rcs/rcs_print.hh>
+#include <nml/nml_oi.hh>
+#include <os_intf/timer.hh>
 
 #include <ncurses.h>
 #define ESC 27

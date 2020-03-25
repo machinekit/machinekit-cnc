@@ -14,8 +14,8 @@
 
 #include "nml.hh"		// NML_MAIN_Channel_List
 #include "nmldiag.hh"
-#include "rcs_print.hh"
-#include "linklist.hh"
+#include <rcs/rcs_print.hh>
+#include <linklist/linklist.hh>
 #include <time.h>
 
 static char access_name[9][40] = {

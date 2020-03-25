@@ -22,18 +22,18 @@
 
 #include <google/protobuf/message_lite.h>
 
-#include "types.pb.h"
-#include "message.pb.h"
+#include <machinekit/protobuf/types.pb.h>
+#include <machinekit/protobuf/message.pb.h>
 using namespace google::protobuf;
 
 #include "rs274ngc.hh"
 #include "rs274ngc_interp.hh"
-#include "interp_return.hh"
-#include "canon.hh"
-#include "config.h"		// LINELEN
+#include <nml_intf/interp_return.hh>
+#include <nml_intf/canon.hh>
+#include <machinekit/config.h>		// LINELEN
 
-#include "czmq.h"
-#include "pbutil.hh" // hal/haltalk
+#include <czmq.h>
+#include <machinekit/pbutil.hh> // hal/haltalk
 
 static zsock_t *z_preview, *z_status;
 static const char *istat_topic = "status";
@@ -150,12 +150,14 @@ static void z_shutdown(void)
 }
 
 char _parameter_file_name[LINELEN];
-extern "C" void initinterpreter();
-extern "C" void initemccanon();
+//extern "C" void initinterpreter();
+//extern "C" void initemccanon();
+// Forward declaration
+extern "C" void initpreview();
 extern "C" struct _inittab builtin_modules[];
 struct _inittab builtin_modules[] = {
-    { (char *) "interpreter", initinterpreter },
-    { (char *) "emccanon", initemccanon },
+    //{ (char *) "interpreter", initinterpreter },
+    //{ (char *) "emccanon", initemccanon },
     // any others...
     { NULL, NULL }
 };

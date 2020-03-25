@@ -15,8 +15,8 @@
 #ifndef TCPMEM_HH
 #define TCPMEM_HH
 
-#include "cms.hh"		/* class CMS */
-#include "rem_msg.hh"		// REMOTE_CMS_REQUEST_TYPE
+#include <cms/cms.hh>		/* class CMS */
+#include <buffer/rem_msg.hh>		// REMOTE_CMS_REQUEST_TYPE
 
 #ifdef __cplusplus
 extern "C" {

@@ -11,13 +11,13 @@
 ********************************************************************/
 
 #include "kinematics.h"		/* these decls */
-#include "posemath.h"
-#include "hal.h"
-#include "rtapi.h"
-#include "rtapi_math.h"
+#include <posemath/posemath.h>
+#include <machineit/hal.h>
+#include <machineit/rtapi.h>
+#include <machineit/rtapi_math.h>
 
-#include "rtapi.h"		/* RTAPI realtime OS API */
-#include "rtapi_app.h"		/* RTAPI realtime module decls */
+#include <machineit/rtapi.h>		/* RTAPI realtime OS API */
+#include <machineit/rtapi_app.h>		/* RTAPI realtime module decls */
 
 
 #define d2r(d) ((d)*PM_PI/180.0)

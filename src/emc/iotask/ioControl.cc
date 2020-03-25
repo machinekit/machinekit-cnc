@@ -72,18 +72,18 @@
 #include <signal.h>
 #include <ctype.h>
 
-#include "hal.h"		/* access to HAL functions/definitions */
-#include "rtapi.h"		/* rtapi_print_msg */
-#include "rcs.hh"		/* RCS_CMD_CHANNEL */
-#include "emc.hh"		/* EMC NML */
-#include "emc_nml.hh"
-#include "emcglb.h"		/* EMC_NMLFILE, EMC_INIFILE, TOOL_TABLE_FILE */
-#include "inifile.hh"		/* INIFILE */
-#include "initool.hh"		/* iniTool() */
-#include "nml_oi.hh"
-#include "timer.hh"
-#include "rcs_print.hh"
-#include "tool_parse.h"
+#include <machinekit/hal.h>		/* access to HAL functions/definitions */
+#include <machinekit/rtapi.h>		/* rtapi_print_msg */
+#include <rcs/rcs.hh>		/* RCS_CMD_CHANNEL */
+#include <nml_intf/emc.hh>		/* EMC NML */
+#include <nml_intf/emc_nml.hh>
+#include <nml_intf/emcglb.h>	/* EMC_NMLFILE, EMC_INIFILE, TOOL_TABLE_FILE */
+#include <machinekit/inifile.hh>		/* INIFILE */
+#include <ini/initool.hh>		/* iniTool() */
+#include <nml/nml_oi.hh>
+#include <os_intf/timer.hh>
+#include <rcs/rcs_print.hh>
+#include <rs274ngc/tool_parse.h>
 
 static RCS_CMD_CHANNEL *emcioCommandBuffer = 0;
 static RCS_CMD_MSG *emcioCommand = 0;

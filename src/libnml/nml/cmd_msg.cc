@@ -21,11 +21,11 @@ extern "C" {
 #endif
 #include "nml.hh"
 #include "nmlmsg.hh"
-#include "cms.hh"
+#include <cms/cms.hh>
 NMLTYPE nmltype;
 
 #include "cmd_msg.hh"
-#include "linklist.hh"
+#include <linklist/linklist.hh>
 
 RCS_CMD_MSG::RCS_CMD_MSG(NMLTYPE t, long sz):NMLmsg(t, sz)
 {

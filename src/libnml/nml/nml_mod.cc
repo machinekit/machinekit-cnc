@@ -54,7 +54,7 @@ extern "C"
 #include <string.h>		// strcpy()
 #include <errno.h>		// errno
 #include <stdarg.h>
-#include "rtapi_math.h"		// fabs()
+#include <machinekit/rtapi_math.h>		// fabs()
 
 #ifdef __cplusplus
 }
@@ -63,8 +63,8 @@ extern "C"
 
 #include "nml_mod.hh"
 #include "nml_oi.hh"		// NML_ERROR, NML_TEXT, NML_DISPLAY
-#include "rcs_print.hh"
-#include "rcs_exit.hh"
+#include <rcs/rcs_print.hh>
+#include <rcs/rcs_exit.hh>
 
 
 NML_MODULE::NML_MODULE (const char *inifile, const char *section)

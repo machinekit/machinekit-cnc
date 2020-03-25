@@ -57,21 +57,23 @@
 *
 ********************************************************************/
 
+#ifndef _LINUX_TYPES_H
 #include <linux/types.h>
+#endif
 #include <float.h>
-#include "posemath.h"
-#include "rtapi.h"
-#include "hal.h"
-#include "hal_priv.h"
+#include <posemath/posemath.h>
+#include <machinekit/rtapi.h>
+#include <machinekit/hal.h>
+#include <machinekit/hal_priv.h>
 #include "motion.h"
 #include "motion_debug.h"
 #include "motion_struct.h"
 #include "emcmotglb.h"
 #include "mot_priv.h"
-#include "rtapi_math.h"
-#include "motion_types.h"
+#include <machinekit/rtapi_math.h>
+#include <nml_intf/motion_types.h>
 
-#include "tp_debug.h"
+#include <tp/tp_debug.h>
 
 // Mark strings for translation, but defer translation to userspace
 #define _(s) (s)

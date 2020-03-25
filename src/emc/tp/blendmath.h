@@ -13,7 +13,7 @@
 #ifndef BLENDMATH_H
 #define BLENDMATH_H
 
-#include "posemath.h"
+#include <posemath/posemath.h>
 #include "tc_types.h"
 
 #define BLEND_ACC_RATIO_TANGENTIAL 0.5

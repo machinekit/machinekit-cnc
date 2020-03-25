@@ -14,7 +14,7 @@
 #define EMCPOSE_H
 
 #include "emcpos.h"
-#include "posemath.h"
+#include <posemath/posemath.h>
 
 typedef enum {
     EMCPOSE_ERR_OK = 0,

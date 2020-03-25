@@ -10,12 +10,12 @@
 *
 ********************************************************************/
 
-#include "motion.h"		/* these decls */
-#include "hal.h"
-#include "rtapi.h"
-#include "rtapi_math.h"
-#include "rtapi_string.h"
-#include "rtapi_app.h"		/* RTAPI realtime module decls */
+#include <motion/motion.h>		/* these decls */
+#include <machinekit/hal.h>
+#include <machinekit/rtapi.h>
+#include <machinekit/rtapi_math.h>
+#include <machinekit/rtapi_string.h>
+#include <machinekit/rtapi_app.h>		/* RTAPI realtime module decls */
 
 struct data {
     hal_s32_t joints[EMCMOT_MAX_JOINTS];

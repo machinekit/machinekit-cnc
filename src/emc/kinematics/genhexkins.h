@@ -24,7 +24,7 @@
 
   */
 
-#include "posemath.h"		/* PmCartesian */
+#include <posemath/posemath.h>		/* PmCartesian */
 
 /* genhexSetParams lets you set the Cartesian coords of the base and platform,
    overriding the defaults set in the subsequent #defines */

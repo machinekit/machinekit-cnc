@@ -53,12 +53,12 @@
    5-Apr-1996  Fred Proctor created
     */
 
-#include "rcs.hh"
+#include <rcs/rcs.hh>
 #include "nml.hh"		// NML, NMLmsg
 #include "stat_msg.hh"		// RCS_STAT_CHANNEL, RCS_STAT_MSG
 #include "cmd_msg.hh"		// RCS_CMD_CHANNEL, RCS_CMD_MSG
-#include "timer.hh"		// RCS_TIMER
-#include "inifile.hh"		// class INIFILE
+#include <os_intf/timer.hh>		// RCS_TIMER
+#include <machinekit/inifile.hh>		// class INIFILE
 
 
 

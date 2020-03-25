@@ -10,16 +10,20 @@
 ********************************************************************/
 
 #include <stdarg.h>
-#include "rtapi.h"		/* RTAPI realtime OS API */
-#include "rtapi_app.h"		/* RTAPI realtime module decls */
-#include "rtapi_string.h"       /* memset */
-#include "hal.h"		/* decls for HAL implementation */
+#include <machinekit/rtapi.h>		/* RTAPI realtime OS API */
+#include <machinekit/rtapi_app.h>		/* RTAPI realtime module decls */
+#include <machinekit/rtapi_string.h>       /* memset */
+#include <machinekit/hal.h>		/* decls for HAL implementation */
 #include "emcmotglb.h"
 #include "motion.h"
 #include "motion_debug.h"
 #include "motion_struct.h"
 #include "mot_priv.h"
-#include "rtapi_math.h"
+#include <machinekit/rtapi_math.h>
+
+#ifndef _LINUX_MODULE_H
+#include <linux/module.h>
+#endif
 
 // vtable signatures
 #define VTKINS_VERSION VTKINEMATICS_VERSION1

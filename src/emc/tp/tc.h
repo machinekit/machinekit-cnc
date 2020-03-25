@@ -16,8 +16,8 @@
 #define TC_H
 
 #include "spherical_arc.h"
-#include "posemath.h"
-#include "emcpos.h"
+#include <posemath/posemath.h>
+#include <nml_intf/emcpos.h>
 #include "tc_types.h"
 #include "tp_types.h"
 

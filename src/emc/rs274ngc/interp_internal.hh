@@ -16,16 +16,16 @@
 #include <boost/python.hpp>
 #include <boost/range/end.hpp>
 #include <algorithm>
-#include "config.h"
+#include <machinekit/config.h>
 #include <limits.h>
 #include <stdio.h>
 #include <set>
 #include <map>
 #include <bitset>
-#include "canon.hh"
-#include "emcpos.h"
+#include <nml_intf/canon.hh>
+#include <nml_intf/emcpos.h>
 #include "libintl.h"
-#include "python_plugin.hh"
+#include <pythonplugin/python_plugin.hh>
 
 
 #define _(s) gettext(s)

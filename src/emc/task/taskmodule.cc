@@ -5,23 +5,23 @@
 #include <boost/python/class.hpp>
 #include <boost/ref.hpp>
 
-#include "rs274ngc.hh"
-#include "interp_internal.hh"
+#include <rs274ngc/rs274ngc.hh>
+#include <rs274ngc/interp_internal.hh>
 #include "taskclass.hh"
-#include "initool.hh"
-#include "emcglb.h"		// EMC_INIFILE
+#include <ini/initool.hh>
+#include <nml_intf/emcglb.h>		// EMC_INIFILE
 
 namespace bp = boost::python;
 
-#include "array1.hh"
+#include <rs274ngc/array1.hh>
 
 namespace pp = pyplusplus::containers::static_sized;
 
-#include "interp_array_types.hh"  // import activeMCodes,activeGCodes,activeSettings, toolTable
+#include <rs274ngc/interp_array_types.hh>  // import activeMCodes,activeGCodes,activeSettings, toolTable
 
-#include "rcs.hh"		// NML classes, nmlErrorFormat()
-#include "emc.hh"		// EMC NML
-#include "emc_nml.hh"
+#include <rcs/rcs.hh>		// NML classes, nmlErrorFormat()
+#include <nml_intf/emc.hh>		// EMC NML
+#include <nml_intf/emc_nml.hh>
 
 extern void emctask_quit(int sig);
 extern EMC_STAT *emcStatus;

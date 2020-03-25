@@ -23,11 +23,11 @@
 #include <float.h>
 
 #include "kinematics.h"
-#include "rtapi.h"
-#include "rtapi_app.h"
-#include "rtapi_math.h"
-#include "posemath.h"
-#include "hal.h"
+#include <machinekit/rtapi.h>
+#include <machinekit/rtapi_app.h>
+#include <machinekit/rtapi_math.h>
+#include <posemath/posemath.h>
+#include <machinekit/hal.h>
 
 #define VTVERSION VTKINEMATICS_VERSION1
 

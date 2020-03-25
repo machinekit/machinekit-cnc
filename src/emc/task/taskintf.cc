@@ -12,24 +12,24 @@
 *
 ********************************************************************/
 
-#include "rtapi_math.h"		// isnan()
+#include <machinekit/rtapi_math.h>		// isnan()
 #include <float.h>		// DBL_MAX
 #include <string.h>		// memcpy() strncpy()
 #include <unistd.h>             // unlink()
 
-#include "usrmotintf.h"		// usrmotInit(), usrmotReadEmcmotStatus(),
+#include <motion/usrmotintf.h>		// usrmotInit(), usrmotReadEmcmotStatus(),
 				// etc.
-#include "motion.h"		// emcmot_command_t,STATUS, etc.
-#include "motion_debug.h"
-#include "emc.hh"
-#include "emcglb.h"		// EMC_INIFILE
-#include "emc_nml.hh"
-#include "rcs_print.hh"
-#include "timer.hh"
-#include "inifile.hh"
-#include "iniaxis.hh"
-#include "initraj.hh"
-#include "inihal.hh"
+#include <motion/motion.h>		// emcmot_command_t,STATUS, etc.
+#include <motion/motion_debug.h>
+#include <nml_intf/emc.hh>
+#include <nml_intf/emcglb.h>		// EMC_INIFILE
+#include <nml_intf/emc_nml.hh>
+#include <rcs/rcs_print.hh>
+#include <os_intf/timer.hh>
+#include <machinekit/inifile.hh>
+#include <ini/iniaxis.hh>
+#include <ini/initraj.hh>
+#include <ini/inihal.hh>
 
 value_inihal_data old_inihal_data;
 

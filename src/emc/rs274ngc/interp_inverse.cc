@@ -15,13 +15,13 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "rtapi_math.h"
+#include <machinekit/rtapi_math.h>
 #include <string.h>
 #include <ctype.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "rs274ngc.hh"
-#include "interp_return.hh"
+#include <nml_intf/interp_return.hh>
 #include "interp_internal.hh"
 #include "interp_queue.hh"
 #include "rs274ngc_interp.hh"

@@ -28,7 +28,7 @@
 *                           TASK FUNCTIONS                             *
 ************************************************************************/
 
-#include "config.h"
+#include <machinekit/config.h>
 #include <sched.h>		// sched_get_priority_*()
 #include <pthread.h>		/* pthread_* */
 

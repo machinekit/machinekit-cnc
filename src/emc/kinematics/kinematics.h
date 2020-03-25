@@ -15,8 +15,8 @@
 #ifndef KINEMATICS_H
 #define KINEMATICS_H
 
-#include "emcpos.h"		/* EmcPose */
-#include "vtable.h"		// vtable signatures
+#include <nml_intf/emcpos.h>		/* EmcPose */
+#include <machinekit/vtable.h>		// vtable signatures
 
 /*
   The type of kinematics used.

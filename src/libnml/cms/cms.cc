@@ -16,7 +16,7 @@
 * Last change: 
 ********************************************************************/
 
-#include "rcsversion.h"
+#include <rcs/rcsversion.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -37,11 +37,11 @@ extern "C" {
 #include "cms_xup.hh"		/* class CMS_XDR_UPDATER */
 #include "cms_aup.hh"		/* class CMS_ASCII_UPDATER */
 #include "cms_dup.hh"		/* class CMS_DISPLAY_ASCII_UPDATER */
-#include "rcs_print.hh"		/* rcs_print_error(), separate_words() */
+#include <rcs/rcs_print.hh>		/* rcs_print_error(), separate_words() */
 				/* rcs_print_debug() */
 #include "cmsdiag.hh"
-#include "linklist.hh"          /* LinkedList */
-#include "physmem.hh"
+#include <linklist/linklist.hh>          /* LinkedList */
+#include <buffer/physmem.hh>
 
 int instance_no = 0;
 

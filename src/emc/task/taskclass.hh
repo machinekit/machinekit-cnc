@@ -1,10 +1,10 @@
 #ifndef TASKCLASS_HH
 #define TASKCLASS_HH
 
-#include "emc.hh"
-#include "initool.hh"
-#include "tool_parse.h"
-#include "inifile.hh"
+#include <nml_intf/emc.hh>
+#include <ini/initool.hh>
+#include <rs274ngc/tool_parse.h>
+#include <machinekit/inifile.hh>
 
 class Task {
 public:

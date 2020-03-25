@@ -31,10 +31,10 @@
 * Last change:
 ********************************************************************/
 
-#include "canon.hh"
-#include "rs274ngc.hh"
-#include "rs274ngc_interp.hh"
-#include "rtapi_math.h"
+#include <nml_intf/canon.hh>
+#include <rs274ngc/rs274ngc.hh>
+#include <rs274ngc/rs274ngc_interp.hh>
+#include <machinekit/rtapi_math.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>

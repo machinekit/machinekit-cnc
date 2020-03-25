@@ -19,8 +19,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 ----------------------------------------------------------------------*/
 #ifndef INIHAL_H
 #define INIHAL_H
-#include "hal.h"
-#include "emcmotcfg.h"
+#include <machinekit/hal.h>
+#include <motion/emcmotcfg.h>
 
 int check_ini_hal_items();
 int ini_hal_init(void);

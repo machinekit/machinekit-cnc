@@ -34,8 +34,8 @@
 
 #include "cms.hh"		/* class CMS */
 #include "cmsdiag.hh"		// class CMS_DIAG_PROC_INFO, CMS_DIAG_HEADER
-#include "rcs_print.hh"		/* rcs_print_error() */
-#include "physmem.hh"		/* class PHYSMEM_HANDLE */
+#include <rcs/rcs_print.hh>		/* rcs_print_error() */
+#include <buffer/physmem.hh>		/* class PHYSMEM_HANDLE */
 
 /* CMS Member Functions. */
 

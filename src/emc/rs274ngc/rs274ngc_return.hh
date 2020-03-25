@@ -15,7 +15,7 @@
 //    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef RS274NGC_RETURN_HH
 #define RS274NGC_RETURN_HH
-#include "interp_return.hh"
+#include <nml_intf/interp_return.hh>
 #define NCE_A_FILE_IS_ALREADY_OPEN _("A file is already open")
 #define NCE_ALL_AXES_MISSING_WITH_G52_OR_G92 \
     _("All axes missing with g52 or g92")

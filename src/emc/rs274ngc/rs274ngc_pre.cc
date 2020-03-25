@@ -115,8 +115,8 @@ Interp::Interp()
     init_named_parameters();  // need this before Python init.
 
     if (!PythonPlugin::instantiate(builtin_modules)) {  // factory
-	Error("Interp ctor: cant instantiate Python plugin");
-	return;
+        Error("Interp ctor: cant instantiate Python plugin");
+        return;
     }
 
     try {

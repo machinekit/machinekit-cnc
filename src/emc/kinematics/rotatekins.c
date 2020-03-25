@@ -12,11 +12,11 @@
 *
 ********************************************************************/
 
-#include "rtapi_math.h"
+#include <machinekit/rtapi_math.h>
 #include "kinematics.h"		/* these decls */
-#include "rtapi.h"		/* RTAPI realtime OS API */
-#include "rtapi_app.h"		/* RTAPI realtime module decls */
-#include "hal.h"
+#include <machinekit/rtapi.h>		/* RTAPI realtime OS API */
+#include <machinekit/rtapi_app.h>		/* RTAPI realtime module decls */
+#include <machinekit/hal.h>
 
 #define VTVERSION VTKINEMATICS_VERSION1
 

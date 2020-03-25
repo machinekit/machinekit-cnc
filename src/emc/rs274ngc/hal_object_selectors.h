@@ -1,1 +1,0 @@
-../../../fakeinclude/hal_object_selectors.h

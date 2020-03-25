@@ -5,7 +5,7 @@
 #ifndef TP_PRIVATE_H
 #define TP_PRIVATE_H
 
-#include "posemath.h"
+#include <posemath/posemath.h>
 #include "tc_types.h"
 #include "tp_types.h"
 #include "tcq.h"

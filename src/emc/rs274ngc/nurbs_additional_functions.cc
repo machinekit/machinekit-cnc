@@ -10,9 +10,9 @@
 
 /* Those functions are needed to calculate NURBS points */
 
-#include "rtapi_math.h"
+#include <machinekit/rtapi_math.h>
 #include <algorithm>
-#include "canon.hh"
+#include <nml_intf/canon.hh>
 
 static void unit(PLANE_POINT &p) {
     double h = rtapi_hypot(p.X, p.Y);

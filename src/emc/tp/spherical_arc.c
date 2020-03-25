@@ -11,10 +11,10 @@
  *
  ********************************************************************/
 
-#include "posemath.h"
+#include <posemath/posemath.h>
 #include "spherical_arc.h"
 #include "tp_types.h"
-#include "rtapi_math.h"
+#include <machinekit/rtapi_math.h>
 
 #include "tp_debug.h"
 

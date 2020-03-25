@@ -15,7 +15,7 @@
 * Last change:
 ********************************************************************/
 
-#include "config.h"     	/* LINELEN definition */
+#include <machinekit/config.h>     	/* LINELEN definition */
 #include <stdlib.h>		/* exit() */
 #include <sys/stat.h>
 #include <string.h>		/* memcpy() */
@@ -26,15 +26,15 @@
 #include "emcmotcfg.h"		/* EMCMOT_ERROR_NUM,LEN */
 #include "emcmotglb.h"		/* SHMEM_KEY */
 #include "usrmotintf.h"		/* these decls */
-#include "_timer.h"
-#include "rcs_print.hh"
+#include <os_intf/_timer.h>
+#include <rcs/rcs_print.hh>
 
-#include "inifile.hh"
+#include <machinekit/inifile.hh>
 
 #define READ_TIMEOUT_SEC 0	/* seconds for timeout */
 #define READ_TIMEOUT_USEC 100000	/* microseconds for timeout */
 
-#include "rtapi.h"
+#include <machinekit/rtapi.h>
 
 #include "dbuf.h"
 #include "stashf.h"

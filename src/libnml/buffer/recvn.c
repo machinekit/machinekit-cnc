@@ -30,9 +30,9 @@
 #include <sys/time.h>		/* struct timeval */
 #include <stdlib.h>		/* malloc(), free() */
 #include <string.h>		/* strerror() */
-#include "rtapi_math.h"		/* modf() */
-#include "rcs_print.hh"		/* rcs_print_error() */
-#include "_timer.h"		/* etime(), esleep() */
+#include <machinekit/rtapi_math.h>		/* modf() */
+#include <rcs/rcs_print.hh>		/* rcs_print_error() */
+#include <os_intf/_timer.h>		/* etime(), esleep() */
 
 int recvn_timedout = 0;
 int print_recvn_timeout_errors = 1;

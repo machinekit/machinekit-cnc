@@ -14,21 +14,21 @@
 ********************************************************************/
 
 #include <stdio.h>		// sscanf()
-#include "rtapi_math.h"		// fabs()
+#include <machinekit/rtapi_math.h>		// fabs()
 #include <stdlib.h>		// exit()
 #include <string.h>		// strncpy()
 #include <unistd.h>             // _exit()
 #include <signal.h>
 
-#include "rcs.hh"		// EMC NML
-#include "emc.hh"		// EMC NML
-#include "emc_nml.hh"		// EMC NML
-#include "emcglb.h"		// emcGetArgs(), EMC_NMLFILE
-#include "inifile.hh"
-#include "rcs_print.hh"
-#include "nml_oi.hh"
-#include "timer.hh"
-#include "nml_srv.hh"           // run_nml_servers()
+#include <rcs/rcs.hh>		// EMC NML
+#include <nml_intf/emc.hh>		// EMC NML
+#include <nml_intf/emc_nml.hh>		// EMC NML
+#include <nml_intf/emcglb.h>		// emcGetArgs(), EMC_NMLFILE
+#include <machinekit/inifile.hh>
+#include <rcs/rcs_print.hh>
+#include <nml/nml_oi.hh>
+#include <os_intf/timer.hh>
+#include <nml/nml_srv.hh>           // run_nml_servers()
 
 static int tool_channels = 1;
 
